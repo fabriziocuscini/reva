@@ -2,5 +2,32 @@
   "name": "@reva/panda-preset",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@reva/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@pandacss/dev": "^0",
+    "@pandacss/types": "^0",
+    "tsdown": "^0.20.3",
+    "typescript": "^5"
+  }
 }
