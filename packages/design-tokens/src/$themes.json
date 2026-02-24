@@ -3,26 +3,26 @@
     "id": "light",
     "name": "light",
     "selectedTokenSets": {
-      "foundation/color": "source",
+      "foundation/colors": "source",
       "foundation/spacing": "source",
       "foundation/typography": "source",
-      "foundation/radius": "source",
-      "foundation/shadow": "source",
-      "semantic/color": "enabled",
-      "semantic/color-dark": "disabled"
+      "foundation/radii": "source",
+      "foundation/shadows": "source",
+      "semantic/colors": "enabled",
+      "semantic/colors-dark": "disabled"
     }
   },
   {
     "id": "dark",
     "name": "dark",
     "selectedTokenSets": {
-      "foundation/color": "source",
+      "foundation/colors": "source",
       "foundation/spacing": "source",
       "foundation/typography": "source",
-      "foundation/radius": "source",
-      "foundation/shadow": "source",
-      "semantic/color": "disabled",
-      "semantic/color-dark": "enabled"
+      "foundation/radii": "source",
+      "foundation/shadows": "source",
+      "semantic/colors": "disabled",
+      "semantic/colors-dark": "enabled"
     }
   }
 ]

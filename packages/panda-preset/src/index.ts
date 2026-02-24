@@ -6,10 +6,10 @@ import { keyframes } from './keyframes'
 import { button } from './recipes'
 import { semanticTokens } from './semantic-tokens'
 import { textStyles } from './text-styles'
-import { themeContract } from './themes'
 import { tokens } from './tokens'
 
 export const revaPreset = definePreset({
+  name: '@reva/panda-preset',
   conditions,
   globalCss,
   theme: {
@@ -21,6 +21,4 @@ export const revaPreset = definePreset({
     keyframes,
     textStyles,
   },
-  themes: {},
-  themesContract: themeContract,
 })

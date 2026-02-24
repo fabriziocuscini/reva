@@ -1,5 +1,5 @@
 {
-  "radius": {
+  "radii": {
     "$type": "borderRadius",
     "$description": "PLACEHOLDER — Border radius scale",
     "none": { "$value": "0px" },

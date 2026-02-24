@@ -11,7 +11,9 @@
     "./css/*": "./dist/css/*",
     "./ts/*": "./dist/ts/*",
     "./json-dtcg/*": "./dist/json-dtcg/*",
-    "./json-mobile/*": "./dist/json-mobile/*"
+    "./json-mobile/*": "./dist/json-mobile/*",
+    "./panda/tokens": "./dist/panda/tokens.json",
+    "./panda/semantic-tokens": "./dist/panda/semantic-tokens.json"
   },
   "devDependencies": {
     "@tokens-studio/sd-transforms": "^1",

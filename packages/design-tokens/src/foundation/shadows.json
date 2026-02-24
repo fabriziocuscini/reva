@@ -1,5 +1,5 @@
 {
-  "shadow": {
+  "shadows": {
     "$type": "shadow",
     "$description": "PLACEHOLDER — Box shadows",
     "sm": {

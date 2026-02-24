@@ -1,11 +1,11 @@
 {
   "tokenSetOrder": [
-    "foundation/color",
+    "foundation/colors",
     "foundation/spacing",
     "foundation/typography",
-    "foundation/radius",
-    "foundation/shadow",
-    "semantic/color",
-    "semantic/color-dark"
+    "foundation/radii",
+    "foundation/shadows",
+    "semantic/colors",
+    "semantic/colors-dark"
   ]
 }

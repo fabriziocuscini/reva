@@ -68,13 +68,13 @@ bun run format:check  # Check formatting
 
 ## Token Rules
 
-- **Singular namespace convention**: `color` (not `colors`), `spacing` (not `spacings`), `radius` (not `radii`), `shadow` (not `shadows`)
+- **Panda-aligned plural namespace**: `colors`, `spacing`, `radii`, `shadows`, `fonts`, `fontSizes`, `fontWeights`, `lineHeights`. Matches Panda CSS category names for zero-mapping between token source and Panda preset.
 - **Three layers**: foundation → semantic → component
-- **Colour foundation tokens NEVER in recipes or app code** — always go through the semantic layer (`color.fg.default`, `color.bg.surface`, `color.brand.solid`)
+- **Colour foundation tokens NEVER in recipes or app code** — always go through the semantic layer (`colors.fg.default`, `colors.bg.surface`, `colors.brand.solid`)
 - **Non-colour foundation tokens** (spacing, radii, borders, z-indices, durations, easings) MAY be used directly in recipes (`py: '4'`, `rounded: 'md'`)
 - **Component tokens** used sparingly, only when semantic tokens don't fit; must reference semantic tokens
 - **DTCG format**: Always use `$value`, `$type`, `$description` (dollar-prefixed keys). No comments in JSON source files.
-- Token source files use singular filenames: `color.json`, `radius.json`, `shadow.json`
+- **Token pipeline**: `@reva/tokens` builds Panda-compatible JSON (`dist/panda/`) that `@reva/panda-preset` imports directly — no hardcoded values in the preset.
 
 ## Key Architectural Decisions
 

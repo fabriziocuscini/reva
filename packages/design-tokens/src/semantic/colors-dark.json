@@ -1,0 +1,29 @@
+{
+  "colors": {
+    "$type": "color",
+    "fg": {
+      "$description": "PLACEHOLDER — Foreground / text colours (dark mode)",
+      "default": { "$value": "{colors.neutral.50}" },
+      "subtle": { "$value": "{colors.neutral.400}" },
+      "disabled": { "$value": "{colors.neutral.600}" },
+      "onBrand": { "$value": "{colors.white}" }
+    },
+    "bg": {
+      "$description": "PLACEHOLDER — Background colours (dark mode)",
+      "surface": { "$value": "{colors.neutral.950}" },
+      "subtle": { "$value": "{colors.neutral.900}" },
+      "muted": { "$value": "{colors.neutral.800}" }
+    },
+    "border": {
+      "$description": "PLACEHOLDER — Border colours (dark mode)",
+      "default": { "$value": "{colors.neutral.700}" },
+      "subtle": { "$value": "{colors.neutral.800}" }
+    },
+    "brand": {
+      "$description": "PLACEHOLDER — Brand accent colours (dark mode)",
+      "solid": { "$value": "{colors.brand.500}" },
+      "subtle": { "$value": "{colors.brand.900}" },
+      "fg": { "$value": "{colors.brand.300}" }
+    }
+  }
+}

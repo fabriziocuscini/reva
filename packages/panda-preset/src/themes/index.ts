@@ -1,1 +1,0 @@
-export { themeContract } from './contract'
