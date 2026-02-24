@@ -1,8 +1,8 @@
 import { defineConfig } from '@pandacss/dev'
-import { revaPreset } from '@reva/panda-preset'
+import { revaPandaConfig } from '@reva/panda-preset'
 
 export default defineConfig({
-  presets: [revaPreset],
+  ...revaPandaConfig,
   include: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './examples/**/*.{ts,tsx}'],
   outdir: 'styled-system',
   outExtension: 'js',

@@ -10,8 +10,4 @@ export const globalCss = defineGlobalStyles({
     WebkitFontSmoothing: 'antialiased',
     MozOsxFontSmoothing: 'grayscale',
   },
-  '*, *::before, *::after': {
-    borderColor: 'border.default',
-    borderStyle: 'solid',
-  },
 })
