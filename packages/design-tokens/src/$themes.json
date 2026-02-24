@@ -1,0 +1,28 @@
+[
+  {
+    "id": "light",
+    "name": "light",
+    "selectedTokenSets": {
+      "foundation/color": "source",
+      "foundation/spacing": "source",
+      "foundation/typography": "source",
+      "foundation/radius": "source",
+      "foundation/shadow": "source",
+      "semantic/color": "enabled",
+      "semantic/color-dark": "disabled"
+    }
+  },
+  {
+    "id": "dark",
+    "name": "dark",
+    "selectedTokenSets": {
+      "foundation/color": "source",
+      "foundation/spacing": "source",
+      "foundation/typography": "source",
+      "foundation/radius": "source",
+      "foundation/shadow": "source",
+      "semantic/color": "disabled",
+      "semantic/color-dark": "enabled"
+    }
+  }
+]

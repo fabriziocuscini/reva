@@ -1,0 +1,40 @@
+{
+  "color": {
+    "$type": "color",
+    "white": {
+      "$value": "#ffffff",
+      "$description": "PLACEHOLDER"
+    },
+    "black": {
+      "$value": "#09090b",
+      "$description": "PLACEHOLDER"
+    },
+    "neutral": {
+      "$description": "PLACEHOLDER — Neutral grey scale",
+      "50": { "$value": "#fafafa" },
+      "100": { "$value": "#f4f4f5" },
+      "200": { "$value": "#e4e4e7" },
+      "300": { "$value": "#d4d4d8" },
+      "400": { "$value": "#a1a1aa" },
+      "500": { "$value": "#71717a" },
+      "600": { "$value": "#52525b" },
+      "700": { "$value": "#3f3f46" },
+      "800": { "$value": "#27272a" },
+      "900": { "$value": "#18181b" },
+      "950": { "$value": "#09090b" }
+    },
+    "brand": {
+      "$description": "PLACEHOLDER — Primary brand colour scale (indigo)",
+      "50": { "$value": "#eef2ff" },
+      "100": { "$value": "#e0e7ff" },
+      "200": { "$value": "#c7d2fe" },
+      "300": { "$value": "#a5b4fc" },
+      "400": { "$value": "#818cf8" },
+      "500": { "$value": "#6366f1" },
+      "600": { "$value": "#4f46e5" },
+      "700": { "$value": "#4338ca" },
+      "800": { "$value": "#3730a3" },
+      "900": { "$value": "#312e81" }
+    }
+  }
+}

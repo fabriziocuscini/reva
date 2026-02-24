@@ -2,5 +2,21 @@
   "name": "@reva/tokens",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "build": "bun run config/build.ts",
+    "tokens:build": "bun run config/build.ts"
+  },
+  "exports": {
+    "./css/*": "./dist/css/*",
+    "./ts/*": "./dist/ts/*",
+    "./json-dtcg/*": "./dist/json-dtcg/*",
+    "./json-mobile/*": "./dist/json-mobile/*"
+  },
+  "devDependencies": {
+    "@tokens-studio/sd-transforms": "^1",
+    "@types/node": "^22",
+    "style-dictionary": "^4",
+    "typescript": "^5"
+  }
 }

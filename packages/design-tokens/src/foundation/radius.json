@@ -1,0 +1,12 @@
+{
+  "radius": {
+    "$type": "borderRadius",
+    "$description": "PLACEHOLDER — Border radius scale",
+    "none": { "$value": "0px" },
+    "sm": { "$value": "4px" },
+    "md": { "$value": "8px" },
+    "lg": { "$value": "12px" },
+    "xl": { "$value": "16px" },
+    "full": { "$value": "9999px" }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "shadow": {
+    "$type": "shadow",
+    "$description": "PLACEHOLDER — Box shadows",
+    "sm": {
+      "$value": {
+        "color": "#0000001a",
+        "x": "0",
+        "y": "1",
+        "blur": "2",
+        "spread": "0",
+        "type": "dropShadow"
+      }
+    },
+    "md": {
+      "$value": [
+        {
+          "color": "#0000001a",
+          "x": "0",
+          "y": "4",
+          "blur": "6",
+          "spread": "-1",
+          "type": "dropShadow"
+        },
+        {
+          "color": "#0000001a",
+          "x": "0",
+          "y": "2",
+          "blur": "4",
+          "spread": "-2",
+          "type": "dropShadow"
+        }
+      ]
+    }
+  }
+}
