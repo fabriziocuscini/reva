@@ -13,6 +13,7 @@
     "foundation/zIndex",
     "foundation/borderWidths",
     "foundation/opacity",
+    "foundation/cursors",
     "foundation/shadows",
     "semantic/colors",
     "semantic/colors-dark"

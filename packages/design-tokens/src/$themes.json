@@ -16,6 +16,7 @@
       "foundation/zIndex": "source",
       "foundation/borderWidths": "source",
       "foundation/opacity": "source",
+      "foundation/cursors": "source",
       "foundation/shadows": "source",
       "semantic/colors": "enabled",
       "semantic/colors-dark": "disabled"
@@ -38,6 +39,7 @@
       "foundation/zIndex": "source",
       "foundation/borderWidths": "source",
       "foundation/opacity": "source",
+      "foundation/cursors": "source",
       "foundation/shadows": "source",
       "semantic/colors": "disabled",
       "semantic/colors-dark": "enabled"

@@ -1,0 +1,37 @@
+{
+  "cursors": {
+    "$type": "other",
+    "button": {
+      "$value": "pointer",
+      "$description": "Cursor for clickable buttons"
+    },
+    "checkbox": {
+      "$value": "default",
+      "$description": "Cursor for checkbox controls"
+    },
+    "disabled": {
+      "$value": "not-allowed",
+      "$description": "Cursor for disabled elements"
+    },
+    "menuitem": {
+      "$value": "default",
+      "$description": "Cursor for menu items"
+    },
+    "option": {
+      "$value": "default",
+      "$description": "Cursor for select options"
+    },
+    "radio": {
+      "$value": "default",
+      "$description": "Cursor for radio controls"
+    },
+    "slider": {
+      "$value": "default",
+      "$description": "Cursor for slider controls"
+    },
+    "switch": {
+      "$value": "pointer",
+      "$description": "Cursor for toggle switches"
+    }
+  }
+}
