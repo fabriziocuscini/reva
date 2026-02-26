@@ -1,0 +1,29 @@
+{
+  "blurs": {
+    "$type": "dimension",
+    "none": {
+      "$value": "0px",
+      "$description": "No blur for crisp, sharp edges on elements that require maximum clarity"
+    },
+    "xs": {
+      "$value": "2px",
+      "$description": "Extra small blur for ultra-subtle softening on fine details, icons, or delicate layered elements"
+    },
+    "sm": {
+      "$value": "4px",
+      "$description": "Small blur for gentle softening on subtle UI elements like tooltips or small overlays"
+    },
+    "md": {
+      "$value": "8px",
+      "$description": "Medium blur for balanced softness on shadows, card surfaces, or background elements"
+    },
+    "lg": {
+      "$value": "16px",
+      "$description": "Large blur for visible softening on modal backdrops, dropdown menus, or layered components"
+    },
+    "xl": {
+      "$value": "24px",
+      "$description": "Extra large blur for strong softness on glass morphism effects, heavy overlays, or dramatic depth"
+    }
+  }
+}

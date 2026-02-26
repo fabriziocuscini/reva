@@ -4,6 +4,7 @@
     "foundation/spacing",
     "foundation/typography",
     "foundation/radii",
+    "foundation/blurs",
     "foundation/shadows",
     "semantic/colors",
     "semantic/colors-dark"
