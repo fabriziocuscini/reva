@@ -8,6 +8,7 @@
     "foundation/durations",
     "foundation/aspectRatios",
     "foundation/breakpoints",
+    "foundation/zIndex",
     "foundation/shadows",
     "semantic/colors",
     "semantic/colors-dark"

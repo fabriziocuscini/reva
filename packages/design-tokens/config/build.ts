@@ -123,6 +123,7 @@ async function build() {
     'foundation/durations.json',
     'foundation/aspectRatios.json',
     'foundation/breakpoints.json',
+    'foundation/zIndex.json',
     'foundation/shadows.json',
   ]
   const foundationSources = await Promise.all(

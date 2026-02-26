@@ -1,0 +1,53 @@
+{
+  "zIndex": {
+    "$type": "number",
+    "hide": {
+      "$value": -1,
+      "$description": "Z-index for elements that should be hidden behind other content"
+    },
+    "base": {
+      "$value": 0,
+      "$description": "Default z-index for normal content and base layer elements"
+    },
+    "docked": {
+      "$value": 10,
+      "$description": "Z-index for fixed or docked elements like sidebars, headers, or navigation bars"
+    },
+    "dropdown": {
+      "$value": 1000,
+      "$description": "Z-index for dropdown menus and select components"
+    },
+    "sticky": {
+      "$value": 1100,
+      "$description": "Z-index for sticky positioned elements that need to stay visible while scrolling"
+    },
+    "banner": {
+      "$value": 1200,
+      "$description": "Z-index for banner notifications and alert bars"
+    },
+    "overlay": {
+      "$value": 1300,
+      "$description": "Z-index for overlay backgrounds and backdrop elements"
+    },
+    "modal": {
+      "$value": 1400,
+      "$description": "Z-index for modal dialogs and dialog overlays"
+    },
+    "popover": {
+      "$value": 1500,
+      "$description": "Z-index for popover components and floating content panels"
+    },
+    "skipLink": {
+      "$value": 1600,
+      "$description": "Z-index for skip navigation links, ensuring accessibility links appear above all content"
+    },
+    "toast": {
+      "$value": 1700,
+      "$description": "Z-index for toast notifications and temporary message displays"
+    },
+    "tooltip": {
+      "$value": 1800,
+      "$description": "Z-index for tooltip components, ensuring they appear above all other UI elements"
+    }
+  }
+}
