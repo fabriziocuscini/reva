@@ -1,6 +1,6 @@
 {
   "shadows": {
-    "$type": "shadow",
+    "$type": "boxShadow",
     "sm": {
       "$value": {
         "color": "#0000001a",

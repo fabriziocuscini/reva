@@ -91,7 +91,7 @@ rejected or silently misinterpreted by Tokens Studio and sd-transforms.
 | `number`        | Unitless number                      | `4`, `1.5`, `300`                     |
 | `letterSpacing` | Percentage string or em dimension    | `"-1%"`, `"0.02em"`                   |
 | `border`        | Composite object                     | See composites section                |
-| `shadow`        | Composite object or array of objects | See composites section                |
+| `boxShadow`     | Composite object or array of objects | See composites section                |
 | `typography`    | Composite object                     | See composites section                |
 
 ### Typography types — ALWAYS use Tokens Studio types
@@ -199,18 +199,20 @@ The `style` property accepts: `"solid"`, `"dashed"`, `"dotted"`.
 }
 ```
 
-### Shadow
+### Box Shadow
 
 Valid properties: `color`, `x`, `y`, `blur`, `spread`, `type`
 
-The `type` property accepts only `"dropShadow"` or `"innerShadow"`.
-Do not use `"shadow"`, `"box-shadow"`, or any other string.
+The `$type` is `"boxShadow"` (not `"shadow"`).
+
+The `type` property inside `$value` accepts only `"dropShadow"` or
+`"innerShadow"`.
 
 Single shadow:
 
 ```jsonc
 {
-  "$type": "shadow",
+  "$type": "boxShadow",
   "$value": {
     "color": "#00000026",
     "x": "0",
@@ -226,7 +228,7 @@ Multiple shadows use an array of objects as the `$value`:
 
 ```jsonc
 {
-  "$type": "shadow",
+  "$type": "boxShadow",
   "$value": [
     {
       "color": "#00000026",
@@ -348,9 +350,9 @@ When creating a new token set file, always add it to the
 3. **Wrong property names in composites.** `"font-family"` is wrong.
    Use `"fontFamily"` (camelCase).
 
-4. **Invalid shadow type string.** Only `"dropShadow"` and
-   `"innerShadow"` are valid. Not `"shadow"`, `"boxShadow"`, or
-   `"box-shadow"`.
+4. **Wrong shadow `$type`.** The token `$type` must be `"boxShadow"`,
+   not `"shadow"`. Inside the `$value` object, the `type` property
+   accepts only `"dropShadow"` or `"innerShadow"`.
 
 5. **Native JSON booleans for `boolean` tokens.** The `boolean` type
    expects the string `"true"` or `"false"`, not the JSON literal
