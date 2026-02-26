@@ -221,7 +221,7 @@ packages/panda-preset/
 
 1. **Recipe** (defined in `@reva/panda-preset`): `defineSlotRecipe` or `cva` defining slots, base styles, variants, compound variants. Slots derived from Ark UI anatomy via `anatomyKeys()`.
 
-2. **Styled wrapper** (in `@reva/ui`): Uses `createStyleContext` to distribute recipe classes to Ark UI compound component parts. No style logic here, just wiring.
+2. **Styled wrapper** (in `@reva/ui`): Uses Panda `styled(ark.<element>, recipe)` for single-element components (Button, Badge, Input); uses `createStyleContext` for compound components (Accordion, Dialog). No style logic here, just wiring.
 
 3. **Consumer component** (optional, in `@reva/ui`): Simplified API on top of the styled wrapper for common use cases.
 
@@ -457,8 +457,8 @@ When building a component, consult sources in this order:
 1. **Ark UI MCP/docs**: Primary source for component API, anatomy, accessibility, and state management. Every component is built on Ark UI.
 2. **Panda CSS MCP/docs**: Primary source for styling API, token usage, recipe patterns, and theme configuration.
 3. **Chakra UI MCP/docs**: Inspiration for component design, variant naming, prop APIs, and overall developer experience. Adapt styling from Emotion to Panda CSS.
-4. **Park UI components** (https://park-ui.com): Reference for architectural decisions and component structure only. Do NOT follow their styling approach as it uses the Radix colour system, which differs from our colour architecture.
-5. **Installed project skill ("Frontend Patterns")**: Definitive rules for our specific patterns (createStyleContext, slot recipes, token usage rules, etc.).
+4. **Park UI components** (https://park-ui.com): Reference for the `styled()` pattern and component structure. Follow their styled-primitive approach for single-element components. Do NOT follow their styling approach as it uses the Radix colour system, which differs from our colour architecture.
+5. **Installed project skill ("ui-component-patterns")**: Definitive rules for our specific patterns (`styled()` for single-element, `createStyleContext` for compound, slot recipes, token usage rules, etc.).
 
 ### Important Rules
 - **Never web search for Panda CSS, Ark UI, or Chakra UI questions** when MCP servers are available. Use the MCP servers first.
@@ -488,8 +488,8 @@ In `@reva/panda-preset`, create the slot recipe (or CVA for single-element compo
 
 ### Step 4: Implement the React component
 In `@reva/ui`:
-- Create styled wrappers using `createStyleContext`
-- Wire recipe classes to Ark UI compound component parts
+- Single-element: use `styled(ark.<element>, recipe)` from `styled-system/jsx`
+- Compound: use `createStyleContext` to wire slot recipe classes to Ark UI parts
 - Export as namespace (e.g. `Accordion.Root`, `Accordion.Item`)
 - Export variant types via `RecipeVariantProps`
 - Add `forwardRef` to leaf parts
@@ -530,7 +530,7 @@ Write a Playwright component test covering:
 ### Component patterns
 - Anatomy-first: always derive slots from Ark UI anatomy
 - Compound component pattern with namespace exports
-- `createStyleContext` for class distribution; no prop drilling of classNames
+- `styled()` for single-element, `createStyleContext` for compound; no prop drilling of classNames
 - Ark UI owns ARIA, keyboard nav, focus; never re-implement
 - `forwardRef` on all DOM-rendering parts
 - `cva` for single-element components; `defineSlotRecipe` for multi-part
@@ -622,7 +622,8 @@ Covers component implementation with Ark UI + Panda CSS. Auto-invoked when creat
 
 Key rules enforced by this skill:
 - Anatomy-first approach: import from `@ark-ui/react/anatomy`, use `.keys()` for slots
-- `createStyleContext` pattern for distributing recipe classes to compound component parts
+- `styled(ark.<element>, recipe)` for single-element components (north star, Park UI pattern)
+- `createStyleContext` for distributing slot recipe classes to compound component parts
 - Data-attribute conditions (`_open`, `_closed`, `_disabled`, `_highlighted`, `_checked`, `_focus`, `_invalid`) for interactive state styling
 - Three-layer token architecture: colour foundation tokens never in recipes (always use semantic layer), non-colour foundation tokens (spacing, radii, etc.) may be used directly, component tokens sparingly
 - Panda-aligned plural token namespace (`colors`, `radii`, `shadows`, `fonts`, `fontSizes`, `fontWeights`, `lineHeights`, `spacing`)

@@ -26,9 +26,9 @@ Reva is a design system, component library, and application platform for AI-enab
 reva/
 ├── apps/
 │   ├── docs/                  # @reva/docs — Fumadocs + Next.js documentation site
-│   ├── website-static/        # @reva/website-static — Current static site (Vite + PostCSS + PostHTML, manually copied)
-│   ├── advisor-portal/        # @reva/advisor-portal — Advisor-facing web portal (Vite + React)
-│   └── client-portal/         # @reva/client-portal — End-client web portal, white-labelled (Vite + React)
+│   ├── reva-website/           # @reva/website-static — Current static site (Vite + PostCSS + PostHTML)
+│   ├── advisor-portal/        # @reva/advisor-portal — Advisor-facing web portal (Vite + React, placeholder)
+│   └── client-portal/         # @reva/client-portal — End-client web portal, white-labelled (Vite + React, placeholder)
 ├── packages/
 │   ├── design-tokens/         # @reva/tokens — Platform-agnostic, multi-themeable design tokens
 │   ├── panda-preset/          # @reva/panda-preset — Panda CSS preset, themes, recipes
@@ -41,15 +41,16 @@ reva/
 ```
 
 ### Future additions (do not scaffold yet)
-- `apps/website/` — Next.js marketing site replacing `website-static`, consuming `@reva/tokens` and `@reva/ui`
+- `apps/website/` — Next.js marketing site eventually replacing `reva-website`, consuming `@reva/tokens` and `@reva/ui`
 - `apps/client-app/` — React Native + Expo mobile app consuming `@reva/tokens`
 - `apps/sandbox/` — Internal component testing and experimentation
 
 ## Package Details
 
 - **@reva/tokens** (`packages/design-tokens`): Authored in Tokens Studio DTCG format (`$value`, `$type`, `$description`). Transformed via Style Dictionary v4 with `@tokens-studio/sd-transforms` into CSS custom properties, TypeScript constants, W3C DTCG JSON, and React Native JSON. Code is source of truth; Figma syncs bidirectionally via Tokens Studio plugin.
-- **@reva/panda-preset** (`packages/panda-preset`): Bridges design tokens into Panda CSS. Defines base Reva theme, client themes (white-labelling), light/dark mode conditions (`data-color-mode` attribute), and all component recipes. Does NOT include `@pandacss/preset-panda` (Panda's opinionated tokens); `@pandacss/preset-base` (utility mappings) is auto-included.
-- **@reva/ui** (`packages/ui`): Anatomy-first, fully typed, accessible-by-default React components built on Ark UI and Panda CSS slot recipes. Uses `createStyleContext` for distributing recipe classes to compound component parts.
+- **@reva/website-static** (`apps/reva-website`): Current static marketing site (Vite + PostCSS + PostHTML). Will be updated to consume CSS custom properties from `@reva/tokens` once the token package is published. A more complex Next.js `website` app will eventually replace it.
+- **@reva/panda-preset** (`packages/panda-preset`): Bridges design tokens into Panda CSS. Defines base Reva theme, client themes (white-labelling), light/dark mode conditions (`data-color-mode` attribute), and component recipes (currently: Button). Does NOT include `@pandacss/preset-panda` (Panda's opinionated tokens); `@pandacss/preset-base` (utility mappings) is auto-included.
+- **@reva/ui** (`packages/ui`): Anatomy-first, fully typed, accessible-by-default React components built on Ark UI and Panda CSS. Uses Panda `styled()` for single-element components (`styled(ark.<element>, recipe)`) and `createStyleContext` for compound slot recipes. Currently ships Button; more components to follow.
 - **@reva/config** (`packages/config`): Shared ESLint 9 flat config (typescript-eslint, @pandacss/eslint-plugin, react, react-hooks, jsx-a11y, simple-import-sort), Prettier config, and base TypeScript configs.
 
 ## Common Commands
@@ -85,6 +86,10 @@ bun run format:check  # Check formatting
 - **Code is source of truth for tokens** — never create Figma variables manually; go code-first
 - **Anatomy-first components** — always derive slots from Ark UI anatomy via `anatomyKeys()`, never hardcode
 - **Root config files use relative paths** — `.prettierrc.mjs` and `eslint.config.mjs` re-export from `./packages/config/` via relative path (not `@reva/config` specifier) due to Bun workspace hoisting behaviour
+- **Docs site hybrid CSS** — Tailwind v4 handles the Fumadocs shell; Panda CSS handles component styling. PostCSS only runs `@tailwindcss/postcss` (no Panda PostCSS plugin). Panda CSS is generated via `panda cssgen --outfile styled-system/styles.css` and imported after explicit `@layer` declarations (`panda_base`, `panda_tokens`, `panda_recipes`, `panda_utilities`).
+- **Portal apps use standard Panda PostCSS** — `@pandacss/dev/postcss` + `postcss-discard-duplicates`, no Tailwind.
+- **`sizes` token mapping** — because we omit `@pandacss/preset-panda`, Panda has no built-in `sizes` category. The preset maps `sizes: pandaTokens.spacing` so that `h`, `w`, `minH`, `maxH` utilities resolve to token values instead of raw pixel values.
+- **Styled primitives via Panda `styled()`** — For single-element components, use `styled(ark.<element>, recipe)` from `styled-system/jsx`. This is the north star (Park UI pattern). Avoids type assertions and manual `cx()`. Use `createStyleContext` only for compound components with slot recipes.
 
 ## Build Chain
 
@@ -93,9 +98,17 @@ bun run format:check  # Check formatting
 @reva/tokens        → Style Dictionary → dist/
 @reva/panda-preset  → tsdown → dist/
 @reva/ui            → panda codegen → styled-system/ → tsdown → dist/
-@reva/docs          → panda codegen → styled-system/ → next build
-apps/*              → panda codegen → styled-system/ → vite build
+@reva/docs          → panda codegen + panda cssgen → styled-system/ → next build
+portal apps         → panda codegen → styled-system/ → tsc -b → vite build
 ```
+
+## Not Yet Implemented
+
+The following are planned but not yet configured:
+
+- **CI/CD** — GitHub Actions workflows for build, lint, typecheck, and publish
+- **Testing** — Playwright end-to-end tests
+- **Deployment** — Vercel project configuration
 
 ## Licence
 
