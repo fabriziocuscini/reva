@@ -21,14 +21,15 @@ Colour foundation tokens are **never used directly** in recipes or app code — 
 | Token set | Panda category | Description |
 | --- | --- | --- |
 | `colors` | `colors` | Colour palettes — neutral, brand, and common (white/black) |
-| `spacing` | `spacing` | Spatial scale for padding, margins, and gaps (`0`–`16` = 0–64px) |
-| `sizes` | `sizes` | Container widths (`container.md`–`container.8xl`), viewport units, and intrinsic sizing keywords (`full`, `min`, `max`, `fit`, `prose`) — merged with spacing in the Panda preset |
+| `spacing` | `spacing` | Spatial scale for padding, margins, and gaps (`0`–`60` = 0–240px) |
+| `sizes` | `sizes` | Numeric scale with half-unit granularity (`0`–`16`, plus `half`, `1_half`, etc.), named large sizes (`xs`–`8xl` in rem), viewport units, and intrinsic sizing keywords (`full`, `min`, `max`, `fit`, `prose`) |
+| `containerSizes` | `containerSizes` | Container max-widths (`xs` 320px – `8xl` 1440px) — used by Panda's `theme.containerSizes`, not as tokens |
 | `typography` | `fonts`, `fontSizes`, `fontWeights`, `lineHeights` | Font families, sizes, weights, and line heights |
 | `radii` | `radii` | Border radius scale (`none`–`4xl`, `full`) |
 | `blurs` | `blurs` | Blur radius scale for backdrop/filter effects (`none`–`xl`) |
 | `durations` | `durations` | Animation/transition timing (`fastest` 50ms – `slowest` 500ms) |
 | `aspectRatios` | `aspectRatios` | Common aspect ratios (`square`, `landscape`, `portrait`, `wide`, `ultrawide`, `golden`) |
-| `breakpoints` | `breakpoints` | Responsive breakpoints (`sm` 640px – `2xl` 1920px) |
+| `breakpoints` | `breakpoints` | Responsive breakpoints (`sm` 640px – `2xl` 1920px) — used by Panda's `theme.breakpoints`, not as tokens |
 | `zIndex` | `zIndex` | Stacking order from `hide` (-1) through `tooltip` (1800) |
 | `shadows` | `shadows` | Elevation shadows (`sm`, `md`) |
 
@@ -59,10 +60,9 @@ bun run build           # Same, via Turborepo
 
 ## How Panda CSS Consumes Tokens
 
-`@reva/panda-preset` imports from `@reva/tokens/panda/tokens` and `@reva/tokens/panda/semantic-tokens`. The preset performs two mappings:
+`@reva/panda-preset` imports `@reva/tokens/panda/tokens` and `@reva/tokens/panda/semantic-tokens` and passes them to `defineTokens` / `defineSemanticTokens`.
 
-- **`sizes`**: merges `spacing` + `sizes` tokens (so `h: '10'` resolves spacing while `maxW: 'container.3xl'` resolves container widths)
-- **`breakpoints`**: flattens from `{ value }` token format to Panda's flat `{ sm: '640px' }` map
+`breakpoints` and `containerSizes` are defined directly in the preset as flat maps — they are Panda theme config, not token categories.
 
 ## Source of Truth
 
