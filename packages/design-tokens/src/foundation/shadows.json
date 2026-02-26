@@ -1,15 +1,45 @@
 {
   "shadows": {
     "$type": "boxShadow",
-    "sm": {
+    "2xs": {
       "$value": {
-        "color": "#0000001a",
+        "color": "#0000000d",
+        "x": "0",
+        "y": "1",
+        "blur": "0",
+        "spread": "0",
+        "type": "dropShadow"
+      }
+    },
+    "xs": {
+      "$value": {
+        "color": "#0000000d",
         "x": "0",
         "y": "1",
         "blur": "2",
         "spread": "0",
         "type": "dropShadow"
       }
+    },
+    "sm": {
+      "$value": [
+        {
+          "color": "#0000001a",
+          "x": "0",
+          "y": "1",
+          "blur": "3",
+          "spread": "0",
+          "type": "dropShadow"
+        },
+        {
+          "color": "#0000001a",
+          "x": "0",
+          "y": "1",
+          "blur": "2",
+          "spread": "-1",
+          "type": "dropShadow"
+        }
+      ]
     },
     "md": {
       "$value": [
@@ -30,6 +60,56 @@
           "type": "dropShadow"
         }
       ]
+    },
+    "lg": {
+      "$value": [
+        {
+          "color": "#0000001a",
+          "x": "0",
+          "y": "10",
+          "blur": "15",
+          "spread": "-3",
+          "type": "dropShadow"
+        },
+        {
+          "color": "#0000001a",
+          "x": "0",
+          "y": "4",
+          "blur": "6",
+          "spread": "-4",
+          "type": "dropShadow"
+        }
+      ]
+    },
+    "xl": {
+      "$value": [
+        {
+          "color": "#0000001a",
+          "x": "0",
+          "y": "20",
+          "blur": "25",
+          "spread": "-5",
+          "type": "dropShadow"
+        },
+        {
+          "color": "#0000001a",
+          "x": "0",
+          "y": "8",
+          "blur": "10",
+          "spread": "-6",
+          "type": "dropShadow"
+        }
+      ]
+    },
+    "2xl": {
+      "$value": {
+        "color": "#00000040",
+        "x": "0",
+        "y": "25",
+        "blur": "50",
+        "spread": "-12",
+        "type": "dropShadow"
+      }
     }
   }
 }
