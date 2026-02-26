@@ -8,6 +8,7 @@
       "foundation/typography": "source",
       "foundation/radii": "source",
       "foundation/blurs": "source",
+      "foundation/durations": "source",
       "foundation/shadows": "source",
       "semantic/colors": "enabled",
       "semantic/colors-dark": "disabled"
@@ -22,6 +23,7 @@
       "foundation/typography": "source",
       "foundation/radii": "source",
       "foundation/blurs": "source",
+      "foundation/durations": "source",
       "foundation/shadows": "source",
       "semantic/colors": "disabled",
       "semantic/colors-dark": "enabled"

@@ -1,0 +1,33 @@
+{
+  "durations": {
+    "$type": "dimension",
+    "fastest": {
+      "$value": "50ms",
+      "$description": "Fastest speed for instant feedback and micro-interactions"
+    },
+    "faster": {
+      "$value": "100ms",
+      "$description": "Faster speed for quick transitions and hover effects"
+    },
+    "fast": {
+      "$value": "150ms",
+      "$description": "Fast speed for snappy transitions on interactive elements"
+    },
+    "normal": {
+      "$value": "200ms",
+      "$description": "Normal (default) speed for standard transitions and animations"
+    },
+    "slow": {
+      "$value": "300ms",
+      "$description": "Slow speed for more noticeable transitions and emphasis"
+    },
+    "slower": {
+      "$value": "400ms",
+      "$description": "Slower speed for deliberate transitions and prominent animations"
+    },
+    "slowest": {
+      "$value": "500ms",
+      "$description": "Slowest speed for very deliberate transitions and dramatic effects"
+    }
+  }
+}
