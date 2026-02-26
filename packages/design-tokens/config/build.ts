@@ -123,6 +123,7 @@ async function build() {
     'foundation/blurs.json',
     'foundation/durations.json',
     'foundation/aspectRatios.json',
+    'foundation/borderWidths.json',
     'foundation/zIndex.json',
     'foundation/shadows.json',
   ]

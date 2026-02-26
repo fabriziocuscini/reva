@@ -14,6 +14,7 @@
       "foundation/aspectRatios": "source",
       "foundation/breakpoints": "source",
       "foundation/zIndex": "source",
+      "foundation/borderWidths": "source",
       "foundation/shadows": "source",
       "semantic/colors": "enabled",
       "semantic/colors-dark": "disabled"
@@ -34,6 +35,7 @@
       "foundation/aspectRatios": "source",
       "foundation/breakpoints": "source",
       "foundation/zIndex": "source",
+      "foundation/borderWidths": "source",
       "foundation/shadows": "source",
       "semantic/colors": "disabled",
       "semantic/colors-dark": "enabled"

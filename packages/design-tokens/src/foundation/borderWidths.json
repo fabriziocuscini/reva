@@ -1,0 +1,17 @@
+{
+  "borderWidths": {
+    "$type": "dimension",
+    "default": {
+      "$value": "1px",
+      "$description": "Standard border width (1px)"
+    },
+    "medium": {
+      "$value": "1.5px",
+      "$description": "Medium border for emphasis (1.5px)"
+    },
+    "thick": {
+      "$value": "2px",
+      "$description": "Thick border for strong visual separation (2px)"
+    }
+  }
+}

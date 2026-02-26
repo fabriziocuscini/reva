@@ -11,6 +11,7 @@
     "foundation/aspectRatios",
     "foundation/breakpoints",
     "foundation/zIndex",
+    "foundation/borderWidths",
     "foundation/shadows",
     "semantic/colors",
     "semantic/colors-dark"
