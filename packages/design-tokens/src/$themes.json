@@ -19,8 +19,8 @@
       "foundation/opacity": "source",
       "foundation/cursors": "source",
       "foundation/shadows": "source",
-      "semantic/colors": "enabled",
-      "semantic/colors-dark": "disabled"
+      "colorMode/light": "enabled",
+      "colorMode/dark": "disabled"
     }
   },
   {
@@ -43,8 +43,8 @@
       "foundation/opacity": "source",
       "foundation/cursors": "source",
       "foundation/shadows": "source",
-      "semantic/colors": "disabled",
-      "semantic/colors-dark": "enabled"
+      "colorMode/light": "disabled",
+      "colorMode/dark": "enabled"
     }
   }
 ]

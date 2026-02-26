@@ -16,7 +16,7 @@
     "foundation/opacity",
     "foundation/cursors",
     "foundation/shadows",
-    "semantic/colors",
-    "semantic/colors-dark"
+    "colorMode/light",
+    "colorMode/dark"
   ]
 }

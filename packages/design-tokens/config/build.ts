@@ -145,10 +145,10 @@ async function build() {
   const pandaTokens = buildPandaTokens(foundationSources, lightDtcg)
 
   const lightSemantic = JSON.parse(
-    await readFile(resolve(srcDir, 'semantic/colors.json'), 'utf-8'),
+    await readFile(resolve(srcDir, 'colorMode/light.json'), 'utf-8'),
   )
   const darkSemantic = JSON.parse(
-    await readFile(resolve(srcDir, 'semantic/colors-dark.json'), 'utf-8'),
+    await readFile(resolve(srcDir, 'colorMode/dark.json'), 'utf-8'),
   )
   const pandaSemanticTokens = buildPandaSemanticTokens(
     lightSemantic,
