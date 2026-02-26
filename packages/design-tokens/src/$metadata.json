@@ -5,6 +5,7 @@
     "foundation/sizes",
     "foundation/containerSizes",
     "foundation/typography",
+    "foundation/textStyles",
     "foundation/radii",
     "foundation/blurs",
     "foundation/durations",

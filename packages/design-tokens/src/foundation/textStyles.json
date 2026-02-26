@@ -1,0 +1,277 @@
+{
+  "textStyles": {
+    "$type": "typography",
+    "marketing": {
+      "heading": {
+        "h1": {
+          "$value": {
+            "fontFamily": "{fonts.serif}",
+            "fontSize": "{fontSizes.6xl}",
+            "fontWeight": "{fontWeights.medium}",
+            "lineHeight": "{lineHeights.tight}",
+            "letterSpacing": "{letterSpacings.dense}"
+          },
+          "$description": "Marketing heading 1 — 64px serif"
+        },
+        "h2": {
+          "$value": {
+            "fontFamily": "{fonts.serif}",
+            "fontSize": "{fontSizes.5xl}",
+            "fontWeight": "{fontWeights.medium}",
+            "lineHeight": "{lineHeights.tight}",
+            "letterSpacing": "{letterSpacings.dense}"
+          },
+          "$description": "Marketing heading 2 — 48px serif"
+        },
+        "h3": {
+          "$value": {
+            "fontFamily": "{fonts.serif}",
+            "fontSize": "{fontSizes.4xl}",
+            "fontWeight": "{fontWeights.medium}",
+            "lineHeight": "{lineHeights.compact}",
+            "letterSpacing": "{letterSpacings.dense}"
+          },
+          "$description": "Marketing heading 3 — 40px serif"
+        },
+        "h4": {
+          "$value": {
+            "fontFamily": "{fonts.serif}",
+            "fontSize": "{fontSizes.2xl}",
+            "fontWeight": "{fontWeights.semibold}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Marketing heading 4 — 24px serif"
+        },
+        "h5": {
+          "$value": {
+            "fontFamily": "{fonts.serif}",
+            "fontSize": "{fontSizes.lg}",
+            "fontWeight": "{fontWeights.semibold}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.relaxed}"
+          },
+          "$description": "Marketing heading 5 — 18px serif"
+        },
+        "h6": {
+          "$value": {
+            "fontFamily": "{fonts.serif}",
+            "fontSize": "{fontSizes.md}",
+            "fontWeight": "{fontWeights.semibold}",
+            "lineHeight": "{lineHeights.relaxed}",
+            "letterSpacing": "{letterSpacings.wide}"
+          },
+          "$description": "Marketing heading 6 — 16px serif"
+        },
+        "overline": {
+          "$value": {
+            "fontFamily": "{fonts.serif}",
+            "fontSize": "{fontSizes.2xs}",
+            "fontWeight": "{fontWeights.medium}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.spacious}"
+          },
+          "$description": "Marketing overline — 12px uppercase serif"
+        }
+      },
+      "body": {
+        "lead1": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.2xl}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.relaxed}"
+          },
+          "$description": "Marketing lead 1 — 24px sans-serif"
+        },
+        "lead2": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.lg}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Marketing lead 2 — 18px sans-serif"
+        },
+        "body": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.md}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.wide}"
+          },
+          "$description": "Marketing body — 16px sans-serif"
+        },
+        "caption": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.sm}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.wide}"
+          },
+          "$description": "Marketing caption — 14px sans-serif"
+        },
+        "footnote": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.2xs}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.loose}"
+          },
+          "$description": "Marketing footnote — 12px sans-serif"
+        }
+      }
+    },
+    "product": {
+      "heading": {
+        "h1": {
+          "$value": {
+            "fontFamily": "{fonts.display}",
+            "fontSize": "{fontSizes.5xl}",
+            "fontWeight": "{fontWeights.medium}",
+            "lineHeight": "{lineHeights.compact}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Product heading 1 — 48px sans-serif"
+        },
+        "h2": {
+          "$value": {
+            "fontFamily": "{fonts.display}",
+            "fontSize": "{fontSizes.4xl}",
+            "fontWeight": "{fontWeights.semibold}",
+            "lineHeight": "{lineHeights.compact}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Product heading 2 — 40px sans-serif"
+        },
+        "h3": {
+          "$value": {
+            "fontFamily": "{fonts.display}",
+            "fontSize": "{fontSizes.3xl}",
+            "fontWeight": "{fontWeights.semibold}",
+            "lineHeight": "{lineHeights.compact}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Product heading 3 — 32px sans-serif"
+        },
+        "h4": {
+          "$value": {
+            "fontFamily": "{fonts.display}",
+            "fontSize": "{fontSizes.2xl}",
+            "fontWeight": "{fontWeights.semibold}",
+            "lineHeight": "{lineHeights.compact}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Product heading 4 — 24px sans-serif"
+        },
+        "h5": {
+          "$value": {
+            "fontFamily": "{fonts.display}",
+            "fontSize": "{fontSizes.xl}",
+            "fontWeight": "{fontWeights.semibold}",
+            "lineHeight": "{lineHeights.compact}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Product heading 5 — 20px sans-serif"
+        },
+        "h6": {
+          "$value": {
+            "fontFamily": "{fonts.display}",
+            "fontSize": "{fontSizes.lg}",
+            "fontWeight": "{fontWeights.semibold}",
+            "lineHeight": "{lineHeights.compact}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Product heading 6 — 18px sans-serif"
+        }
+      },
+      "body": {
+        "lead2": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.2xl}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Product lead 2 — 24px sans-serif"
+        },
+        "lead1": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.xl}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.normal}"
+          },
+          "$description": "Product lead 1 — 20px sans-serif"
+        },
+        "body2": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.lg}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.relaxed}"
+          },
+          "$description": "Product body 2 — 18px sans-serif"
+        },
+        "body1": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.md}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.relaxed}"
+          },
+          "$description": "Product body 1 — 16px sans-serif"
+        },
+        "caption2": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.sm}",
+            "fontWeight": "{fontWeights.regular}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.wide}"
+          },
+          "$description": "Product caption 2 — 14px sans-serif"
+        },
+        "caption1": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.xs}",
+            "fontWeight": "{fontWeights.medium}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.wide}"
+          },
+          "$description": "Product caption 1 — 13px sans-serif"
+        },
+        "footnote2": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.2xs}",
+            "fontWeight": "{fontWeights.medium}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.loose}"
+          },
+          "$description": "Product footnote 2 — 12px sans-serif"
+        },
+        "footnote1": {
+          "$value": {
+            "fontFamily": "{fonts.text}",
+            "fontSize": "{fontSizes.3xs}",
+            "fontWeight": "{fontWeights.medium}",
+            "lineHeight": "{lineHeights.normal}",
+            "letterSpacing": "{letterSpacings.loose}"
+          },
+          "$description": "Product footnote 1 — 11px sans-serif"
+        }
+      }
+    }
+  }
+}

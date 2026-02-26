@@ -25,9 +25,13 @@ async function build() {
     await readFile(resolve(srcDir, '$themes.json'), 'utf-8'),
   )
 
+  // Token sets that live in $themes.json for Tokens Studio / Figma sync
+  // but should not be processed by Style Dictionary (e.g., composite styles)
+  const sdExclude = new Set(['foundation/textStyles'])
+
   for (const theme of $themes) {
     const source = Object.entries(theme.selectedTokenSets)
-      .filter(([, status]) => status !== 'disabled')
+      .filter(([set, status]) => status !== 'disabled' && !sdExclude.has(set))
       .map(([tokenset]) => resolve(srcDir, `${tokenset}.json`))
 
     const sd = new StyleDictionary({
