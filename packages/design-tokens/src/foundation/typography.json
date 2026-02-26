@@ -1,48 +1,141 @@
 {
   "fonts": {
     "$type": "fontFamilies",
-    "text": { "$value": "Inter Tight", "$description": "Primary sans-serif for body text" },
-    "display": { "$value": "Inter Tight", "$description": "Sans-serif for product headings" },
-    "serif": { "$value": "Playfair Display", "$description": "Serif for marketing headings" },
-    "mono": { "$value": "Geist Mono", "$description": "Monospace for code" }
+    "text": {
+      "$value": "Inter Tight",
+      "$description": "Primary sans-serif for body text"
+    },
+    "display": {
+      "$value": "Inter Tight",
+      "$description": "Sans-serif for product headings"
+    },
+    "serif": {
+      "$value": "Playfair Display",
+      "$description": "Serif for marketing headings"
+    },
+    "mono": {
+      "$value": "Geist Mono",
+      "$description": "Monospace for code"
+    }
   },
   "fontSizes": {
     "$type": "fontSizes",
-    "3xs": { "$value": "11px", "$description": "Smallest text size (11px)" },
-    "2xs": { "$value": "12px", "$description": "Extra extra small text (12px)" },
-    "xs": { "$value": "13px", "$description": "Extra small text (13px)" },
-    "sm": { "$value": "14px", "$description": "Small text (14px)" },
-    "md": { "$value": "16px", "$description": "Base body text (16px)" },
-    "lg": { "$value": "18px", "$description": "Large text (18px)" },
-    "xl": { "$value": "20px", "$description": "Extra large text (20px)" },
-    "2xl": { "$value": "24px", "$description": "2x large text (24px)" },
-    "3xl": { "$value": "32px", "$description": "3x large, heading size (32px)" },
-    "4xl": { "$value": "40px", "$description": "4x large, display size (40px)" },
-    "5xl": { "$value": "48px", "$description": "5x large, display size (48px)" },
-    "6xl": { "$value": "64px", "$description": "6x large, largest display size (64px)" }
+    "3xs": {
+      "$value": "11px",
+      "$description": "Smallest text size (11px)"
+    },
+    "2xs": {
+      "$value": "12px",
+      "$description": "Extra extra small text (12px)"
+    },
+    "xs": {
+      "$value": "13px",
+      "$description": "Extra small text (13px)"
+    },
+    "sm": {
+      "$value": "14px",
+      "$description": "Small text (14px)"
+    },
+    "md": {
+      "$value": "16px",
+      "$description": "Base body text (16px)"
+    },
+    "lg": {
+      "$value": "18px",
+      "$description": "Large text (18px)"
+    },
+    "xl": {
+      "$value": "20px",
+      "$description": "Extra large text (20px)"
+    },
+    "2xl": {
+      "$value": "24px",
+      "$description": "2x large text (24px)"
+    },
+    "3xl": {
+      "$value": "32px",
+      "$description": "3x large, heading size (32px)"
+    },
+    "4xl": {
+      "$value": "40px",
+      "$description": "4x large, display size (40px)"
+    },
+    "5xl": {
+      "$value": "48px",
+      "$description": "5x large, display size (48px)"
+    },
+    "6xl": {
+      "$value": "64px",
+      "$description": "6x large, largest display size (64px)"
+    }
   },
   "fontWeights": {
     "$type": "fontWeights",
-    "regular": { "$value": 400, "$description": "Regular weight" },
-    "medium": { "$value": 500, "$description": "Medium weight" },
-    "semibold": { "$value": 600, "$description": "Semibold weight" },
-    "bold": { "$value": 700, "$description": "Bold weight" }
+    "regular": {
+      "$value": "400",
+      "$description": "Regular weight"
+    },
+    "medium": {
+      "$value": "500",
+      "$description": "Medium weight"
+    },
+    "semibold": {
+      "$value": "600",
+      "$description": "Semibold weight"
+    },
+    "bold": {
+      "$value": "700",
+      "$description": "Bold weight"
+    }
   },
   "letterSpacings": {
     "$type": "letterSpacing",
-    "dense": { "$value": "-2%", "$description": "Tightest tracking for display headings (40–64px)" },
-    "tight": { "$value": "-1%", "$description": "Tight tracking for large headings (24–32px)" },
-    "normal": { "$value": "0%", "$description": "Neutral tracking for body copy (20–24px)" },
-    "relaxed": { "$value": "1%", "$description": "Slightly open tracking for body text (18px)" },
-    "wide": { "$value": "2%", "$description": "Open tracking for smaller body text (14–16px)" },
-    "loose": { "$value": "4%", "$description": "Loose tracking for footnotes and captions (12px)" },
-    "spacious": { "$value": "10%", "$description": "Very open tracking for uppercase labels (12px)" }
+    "dense": {
+      "$value": "-2%",
+      "$description": "Tightest tracking for display headings (40–64px)"
+    },
+    "tight": {
+      "$value": "-1%",
+      "$description": "Tight tracking for large headings (24–32px)"
+    },
+    "normal": {
+      "$value": "0%",
+      "$description": "Neutral tracking for body copy (20–24px)"
+    },
+    "relaxed": {
+      "$value": "1%",
+      "$description": "Slightly open tracking for body text (18px)"
+    },
+    "wide": {
+      "$value": "2%",
+      "$description": "Open tracking for smaller body text (14–16px)"
+    },
+    "loose": {
+      "$value": "4%",
+      "$description": "Loose tracking for footnotes and captions (12px)"
+    },
+    "spacious": {
+      "$value": "10%",
+      "$description": "Very open tracking for uppercase labels (12px)"
+    }
   },
   "lineHeights": {
     "$type": "lineHeights",
-    "tight": { "$value": 1.15, "$description": "Tight leading for display headings (48–64px)" },
-    "compact": { "$value": 1.2, "$description": "Compact leading for section headings (40px)" },
-    "normal": { "$value": 1.3, "$description": "Standard leading for body text and subtitles (12–24px)" },
-    "relaxed": { "$value": 1.4, "$description": "Relaxed leading for smaller body text and UI elements" }
+    "tight": {
+      "$value": "1.15",
+      "$description": "Tight leading for display headings (48–64px)"
+    },
+    "compact": {
+      "$value": "1.2",
+      "$description": "Compact leading for section headings (40px)"
+    },
+    "normal": {
+      "$value": "1.3",
+      "$description": "Standard leading for body text and subtitles (12–24px)"
+    },
+    "relaxed": {
+      "$value": "1.4",
+      "$description": "Relaxed leading for smaller body text and UI elements"
+    }
   }
 }

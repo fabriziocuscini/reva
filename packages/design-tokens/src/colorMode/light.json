@@ -1,25 +1,20 @@
 {
   "colors": {
-    "$type": "color",
     "fg": {
-      "default": { "$value": "{colors.neutral.950}" },
-      "subtle": { "$value": "{colors.neutral.600}" },
-      "disabled": { "$value": "{colors.neutral.400}" },
-      "onBrand": { "$value": "{colors.white}" }
+      "primary": {
+        "$type": "color",
+        "$value": "{colors.neutral.950}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{colors.neutral.800}"
+      }
     },
     "bg": {
-      "surface": { "$value": "{colors.white}" },
-      "subtle": { "$value": "{colors.neutral.50}" },
-      "muted": { "$value": "{colors.neutral.100}" }
-    },
-    "border": {
-      "default": { "$value": "{colors.neutral.200}" },
-      "subtle": { "$value": "{colors.neutral.100}" }
-    },
-    "brand": {
-      "solid": { "$value": "{colors.brand.600}" },
-      "subtle": { "$value": "{colors.brand.100}" },
-      "fg": { "$value": "{colors.brand.700}" }
+      "surface": {
+        "$type": "color",
+        "$value": "{colors.white}"
+      }
     }
   }
 }
