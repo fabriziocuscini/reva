@@ -5,35 +5,35 @@
       "$value": "0",
       "$description": "No border radius for square elements"
     },
-    "xs": {
+    "2xs": {
       "$value": "2px",
       "$description": "Extra small radius for subtle rounding on small elements"
     },
-    "sm": {
+    "xs": {
       "$value": "4px",
       "$description": "Small radius for gentle rounding on compact components"
     },
-    "md": {
+    "sm": {
       "$value": "6px",
       "$description": "Medium radius for standard rounding on most UI elements"
     },
-    "lg": {
+    "md": {
       "$value": "8px",
       "$description": "Large radius for noticeable rounding on prominent components"
     },
-    "xl": {
+    "lg": {
       "$value": "12px",
       "$description": "Extra large radius for prominent rounding on large elements"
     },
-    "2xl": {
+    "xl": {
       "$value": "16px",
       "$description": "Very large radius for strong rounding on containers and cards"
     },
-    "3xl": {
+    "2xl": {
       "$value": "24px",
       "$description": "Extra extra large radius for very strong rounding on large containers"
     },
-    "4xl": {
+    "3xl": {
       "$value": "32px",
       "$description": "Maximum radius for extremely strong rounding before full circle"
     },
