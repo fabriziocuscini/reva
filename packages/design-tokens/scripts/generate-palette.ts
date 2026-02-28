@@ -286,6 +286,45 @@ const PALETTES: PaletteConfig[] = [
       950: 0.4582, // Pin dark wine chroma (0.0460 / 0.1004)
     },
   },
+
+  // -----------------------------------------------------------------------
+  // Refined TW palettes — same hue & chroma, standardised L=0.704 midpoint
+  // -----------------------------------------------------------------------
+  {
+    name: "yellow",
+    anchor: [0.704, 0.1617, 86.039], // TW Yellow 500 hue & chroma, standardised L
+  },
+  {
+    name: "orange",
+    anchor: [0.704, 0.1867, 47.601], // TW Orange 500 hue & chroma, standardised L
+  },
+  {
+    name: "red",
+    anchor: [0.704, 0.2079, 25.334], // TW Red 500 hue & chroma, standardised L
+  },
+  {
+    name: "green",
+    anchor: [0.704, 0.1920, 149.577], // TW Green 500 hue & chroma, standardised L
+  },
+  {
+    name: "sky",
+    anchor: [0.704, 0.1478, 237.314], // TW Sky 500 hue & chroma, standardised L
+  },
+  {
+    name: "gray",
+    anchor: [0.5555, 0.0000, 0], // TW Gray 500 — pure achromatic
+    anchorStep: 600,
+  },
+  {
+    name: "stone",
+    anchor: [0.5534, 0.0116, 58.091], // TW Stone 500 — warm neutral
+    anchorStep: 600,
+  },
+  {
+    name: "zinc",
+    anchor: [0.5517, 0.0138, 285.988], // TW Zinc 500 — cool neutral
+    anchorStep: 600,
+  },
 ];
 
 // ---------------------------------------------------------------------------

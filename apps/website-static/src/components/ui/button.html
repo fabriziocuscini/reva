@@ -1,0 +1,10 @@
+<script props>
+  module.exports = {
+    href: props.href || '#',
+    size: props.size || 'md',
+  };
+</script>
+
+<a href="{{ href }}" class="button button--{{ size }}">
+  <yield />
+</a>

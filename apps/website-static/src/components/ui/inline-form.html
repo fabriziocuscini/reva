@@ -1,0 +1,95 @@
+<script props>
+  module.exports = {
+    placeholder: props.placeholder || 'Your email address',
+  };
+</script>
+
+<div class="inline-form-wrapper">
+  <form class="inline-form">
+    <label for="inline-form-email" class="sr-only">Email address</label>
+    <input
+      id="inline-form-email"
+      class="inline-form__input"
+      type="email"
+      name="email"
+      placeholder="{{ placeholder }}"
+      required
+      autocomplete="email"
+    />
+    <button class="inline-form__submit" type="submit" aria-label="Submit email">
+      <svg
+        class="inline-form__icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="currentColor"
+        viewBox="0 0 256 256"
+        aria-hidden="true"
+      >
+        <path
+          d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"
+        ></path>
+      </svg>
+    </button>
+  </form>
+  <p class="inline-form__message" role="status" hidden></p>
+</div>
+
+<script>
+  document.querySelectorAll('.inline-form').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var btn = form.querySelector('.inline-form__submit');
+      var wrapper = form.closest('.inline-form-wrapper');
+      var message = wrapper.querySelector('.inline-form__message');
+      var email = form
+        .querySelector('.inline-form__input')
+        .value.trim()
+        .replace(/[\x00-\x1f\x7f]/g, '');
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        message.textContent = 'Please enter a valid email address.';
+        message.classList.add('inline-form__message--error');
+        message.hidden = false;
+        return;
+      }
+
+      btn.disabled = true;
+      form.setAttribute('aria-busy', 'true');
+      message.hidden = true;
+      message.classList.remove('inline-form__message--error');
+
+      fetch(
+        'https://kxwi7cgy3clpieshy6ioie6pvu0vbrtg.lambda-url.eu-west-2.on.aws',
+        {
+          method: 'POST',
+          body: JSON.stringify({ email: email }),
+          headers: { 'Content-Type': 'application/json' },
+        },
+      )
+        .then(function (response) {
+          if (response.ok) {
+            form.hidden = true;
+            message.textContent =
+              'Thanks for joining. We will reach out to connect you with our early community \u0026 team.';
+            message.hidden = false;
+          } else {
+            throw new Error('Form submission failed');
+          }
+        })
+        .catch(function () {
+          message.textContent = 'Something went wrong. Please try again.';
+          message.classList.add('inline-form__message--error');
+          message.hidden = false;
+          btn.disabled = false;
+          setTimeout(function () {
+            message.hidden = true;
+          }, 4000);
+        })
+        .finally(function () {
+          form.removeAttribute('aria-busy');
+        });
+    });
+  });
+</script>

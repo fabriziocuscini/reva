@@ -1,0 +1,15 @@
+@import './globals/reset.css';
+@import './globals/base.css';
+@import './globals/typography.css';
+@import './globals/layout.css';
+@import './globals/utils.css';
+@import './components/button.css';
+@import './components/inline-form.css';
+@import './sections/header.css';
+@import './sections/hero.css';
+@import './sections/vision.css';
+@import './sections/benefits.css';
+@import './sections/infrastructure.css';
+@import './sections/founding-community.css';
+@import './sections/footer.css';
+@import './sections/legal.css';

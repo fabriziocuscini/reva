@@ -1,0 +1,5 @@
+:root {
+  --shadow-card:
+    0 12px 60px 0 var(--color-black-a20),
+    0 12px 32px -16px var(--color-black-a30);
+}

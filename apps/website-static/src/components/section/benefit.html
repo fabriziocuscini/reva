@@ -1,0 +1,25 @@
+<script props>
+  module.exports = {
+    title: props.title || '',
+    description: props.description || '',
+    image: props.image || '',
+    imageDescription: props['image-description'] || '',
+    reversed: props.reversed === true || props.reversed === 'true',
+  };
+</script>
+
+<div class="benefit" data-reversed="{{ reversed }}" role="listitem">
+  <div class="benefit__image-panel">
+    <img
+      src="{{ image }}"
+      alt="{{ imageDescription }}"
+      class="benefit__image"
+      width="400"
+      height="480"
+    />
+  </div>
+  <div class="vstack vstack--loose benefit__content">
+    <h3 class="benefit__title">{{ title }}</h3>
+    <p class="lead benefit__description">{{ description }}</p>
+  </div>
+</div>

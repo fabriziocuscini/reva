@@ -1,0 +1,34 @@
+.hero {
+  padding-block: var(--spacing-30);
+  @media (--screen-md) {
+    padding-block: var(--spacing-40);
+  }
+  @media (--screen-lg) {
+    padding-block: var(--spacing-60);
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__subtitle {
+    color: var(--color-text-muted);
+    max-width: 31.25rem; /* 500px */
+    margin-inline: auto;
+  }
+  &__footnote {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+  }
+  .vstack {
+    text-align: center;
+    max-width: 80vw;
+    @media (--screen-md) {
+      width: 70vw;
+    }
+    @media (--screen-lg) {
+      max-width: 800px;
+    }
+  }
+}
