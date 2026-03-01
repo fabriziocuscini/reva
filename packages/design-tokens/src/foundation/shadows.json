@@ -3,7 +3,7 @@
     "$type": "boxShadow",
     "2xs": {
       "$value": {
-        "color": "{colors.common.black.a5}",
+        "color": "{colors.black.a5}",
         "x": "0",
         "y": "1",
         "blur": "0",
@@ -13,7 +13,7 @@
     },
     "xs": {
       "$value": {
-        "color": "{colors.common.black.a5}",
+        "color": "{colors.black.a5}",
         "x": "0",
         "y": "1",
         "blur": "2",
@@ -24,7 +24,7 @@
     "sm": {
       "$value": [
         {
-          "color": "{colors.common.black.a10}",
+          "color": "{colors.black.a10}",
           "x": "0",
           "y": "1",
           "blur": "3",
@@ -32,7 +32,7 @@
           "type": "dropShadow"
         },
         {
-          "color": "{colors.common.black.a10}",
+          "color": "{colors.black.a10}",
           "x": "0",
           "y": "1",
           "blur": "2",
@@ -44,7 +44,7 @@
     "md": {
       "$value": [
         {
-          "color": "{colors.common.black.a10}",
+          "color": "{colors.black.a10}",
           "x": "0",
           "y": "4",
           "blur": "6",
@@ -52,7 +52,7 @@
           "type": "dropShadow"
         },
         {
-          "color": "{colors.common.black.a10}",
+          "color": "{colors.black.a10}",
           "x": "0",
           "y": "2",
           "blur": "4",
@@ -64,7 +64,7 @@
     "lg": {
       "$value": [
         {
-          "color": "{colors.common.black.a10}",
+          "color": "{colors.black.a10}",
           "x": "0",
           "y": "10",
           "blur": "15",
@@ -72,7 +72,7 @@
           "type": "dropShadow"
         },
         {
-          "color": "{colors.common.black.a10}",
+          "color": "{colors.black.a10}",
           "x": "0",
           "y": "4",
           "blur": "6",
@@ -84,7 +84,7 @@
     "xl": {
       "$value": [
         {
-          "color": "{colors.common.black.a10}",
+          "color": "{colors.black.a10}",
           "x": "0",
           "y": "20",
           "blur": "25",
@@ -92,7 +92,7 @@
           "type": "dropShadow"
         },
         {
-          "color": "{colors.common.black.a10}",
+          "color": "{colors.black.a10}",
           "x": "0",
           "y": "8",
           "blur": "10",
@@ -103,7 +103,7 @@
     },
     "2xl": {
       "$value": {
-        "color": "{colors.common.black.a25}",
+        "color": "{colors.black.a25}",
         "x": "0",
         "y": "25",
         "blur": "50",

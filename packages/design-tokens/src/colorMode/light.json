@@ -13,7 +13,7 @@
     "bg": {
       "surface": {
         "$type": "color",
-        "$value": "{colors.white}"
+        "$value": "{colors.white.solid}"
       }
     }
   }
