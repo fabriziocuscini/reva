@@ -1,25 +1,81 @@
 {
   "spacing": {
+    "0": {
+      "$value": "0px",
+      "$description": "No spacing"
+    },
+    "1": {
+      "$value": "4px",
+      "$description": "Base spacing unit (4px)"
+    },
+    "2": {
+      "$value": "8px",
+      "$description": "2x base (8px)"
+    },
+    "3": {
+      "$value": "12px",
+      "$description": "3x base (12px)"
+    },
+    "4": {
+      "$value": "16px",
+      "$description": "4x base (16px)"
+    },
+    "5": {
+      "$value": "20px",
+      "$description": "5x base (20px)"
+    },
+    "6": {
+      "$value": "24px",
+      "$description": "6x base (24px)"
+    },
+    "8": {
+      "$value": "32px",
+      "$description": "8x base (32px)"
+    },
+    "10": {
+      "$value": "40px",
+      "$description": "10x base (40px)"
+    },
+    "12": {
+      "$value": "48px",
+      "$description": "12x base (48px)"
+    },
+    "16": {
+      "$value": "64px",
+      "$description": "16x base (64px)"
+    },
+    "20": {
+      "$value": "80px",
+      "$description": "20x base (80px)"
+    },
+    "24": {
+      "$value": "96px",
+      "$description": "24x base (96px)"
+    },
+    "30": {
+      "$value": "120px",
+      "$description": "30x base (120px)"
+    },
+    "40": {
+      "$value": "160px",
+      "$description": "40x base (160px)"
+    },
+    "50": {
+      "$value": "200px",
+      "$description": "50x base (200px)"
+    },
+    "60": {
+      "$value": "240px",
+      "$description": "60x base (240px)"
+    },
     "$type": "dimension",
-    "0": { "$value": "0px", "$description": "No spacing" },
-    "half": { "$value": "2px", "$description": "Smallest spacing unit (2px)" },
-    "1": { "$value": "4px", "$description": "Base spacing unit (4px)" },
-    "1_half": { "$value": "6px", "$description": "Between base and 2 (6px)" },
-    "2": { "$value": "8px", "$description": "2x base (8px)" },
-    "3": { "$value": "12px", "$description": "3x base (12px)" },
-    "4": { "$value": "16px", "$description": "4x base (16px)" },
-    "5": { "$value": "20px", "$description": "5x base (20px)" },
-    "6": { "$value": "24px", "$description": "6x base (24px)" },
-    "8": { "$value": "32px", "$description": "8x base (32px)" },
-    "10": { "$value": "40px", "$description": "10x base (40px)" },
-    "12": { "$value": "48px", "$description": "12x base (48px)" },
-    "16": { "$value": "64px", "$description": "16x base (64px)" },
-    "20": { "$value": "80px", "$description": "20x base (80px)" },
-    "24": { "$value": "96px", "$description": "24x base (96px)" },
-    "30": { "$value": "120px", "$description": "30x base (120px)" },
-    "32": { "$value": "128px", "$description": "32x base (128px)" },
-    "40": { "$value": "160px", "$description": "40x base (160px)" },
-    "50": { "$value": "200px", "$description": "50x base (200px)" },
-    "60": { "$value": "240px", "$description": "60x base (240px)" }
+    "half": {
+      "$value": "2px",
+      "$description": "Smallest spacing unit (2px)"
+    },
+    "1_half": {
+      "$value": "6px",
+      "$description": "Between base and 2 (6px)"
+    }
   }
 }
