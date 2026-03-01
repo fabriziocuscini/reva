@@ -1,7 +1,5 @@
 :root {
-  --font-body:
-    var(--reva-fonts-text), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: var(--reva-fonts-text), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-heading: var(--reva-fonts-serif), Georgia, 'Times New Roman', serif;
-  --font-mono:
-    var(--reva-fonts-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-mono: var(--reva-fonts-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 }

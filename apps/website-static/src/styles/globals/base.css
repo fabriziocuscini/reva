@@ -10,11 +10,7 @@ html {
 
 body {
   color: var(--color-text);
-  background: linear-gradient(
-      to bottom,
-      var(--reva-colors-olive-200),
-      var(--color-brand-porcelain)
-    )
+  background: linear-gradient(to bottom, var(--reva-colors-olive-200), var(--color-brand-porcelain))
     no-repeat;
   background-size: 100% 100vh;
   background-color: var(--color-bg);

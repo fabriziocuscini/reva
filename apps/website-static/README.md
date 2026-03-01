@@ -21,13 +21,13 @@ bun run dev          # Starts all apps including this one
 
 ## Scripts
 
-| Command               | Description                         |
-| --------------------- | ----------------------------------- |
-| `bun run dev`         | Start Vite dev server               |
-| `bun run build`       | Production build to `dist/`         |
-| `bun run preview`     | Preview production build locally    |
-| `bun run format`       | Format all files with Prettier      |
-| `bun run format:check` | Check formatting without writing    |
+| Command                | Description                      |
+| ---------------------- | -------------------------------- |
+| `bun run dev`          | Start Vite dev server            |
+| `bun run build`        | Production build to `dist/`      |
+| `bun run preview`      | Preview production build locally |
+| `bun run format`       | Format all files with Prettier   |
+| `bun run format:check` | Check formatting without writing |
 
 ## Project Structure
 

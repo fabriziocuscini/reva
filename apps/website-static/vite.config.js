@@ -1,8 +1,8 @@
-import { resolve } from 'path';
-import posthtml from '@malobre/vite-plugin-posthtml';
-import components from 'posthtml-component';
-import FullReload from 'vite-plugin-full-reload';
-import { defineConfig } from 'vite';
+import posthtml from '@malobre/vite-plugin-posthtml'
+import { resolve } from 'path'
+import components from 'posthtml-component'
+import { defineConfig } from 'vite'
+import FullReload from 'vite-plugin-full-reload'
 
 export default defineConfig({
   server: {
@@ -29,11 +29,6 @@ export default defineConfig({
         recognizeSelfClosing: true,
       },
     }),
-    FullReload([
-      'index.html',
-      'terms.html',
-      'privacy.html',
-      'src/components/**/*.html',
-    ]),
+    FullReload(['index.html', 'terms.html', 'privacy.html', 'src/components/**/*.html']),
   ],
-});
+})

@@ -1,5 +1,4 @@
 :root {
   --shadow-card:
-    0 12px 60px 0 var(--reva-colors-black-a20),
-    0 12px 32px -16px var(--reva-colors-black-a30);
+    0 12px 60px 0 var(--reva-colors-black-a20), 0 12px 32px -16px var(--reva-colors-black-a30);
 }

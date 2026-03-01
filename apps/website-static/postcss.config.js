@@ -3,4 +3,4 @@ export default {
     'postcss-custom-media': {},
     'postcss-nested': {},
   },
-};
+}
