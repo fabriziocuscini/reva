@@ -59,62 +59,64 @@
       "950": {
         "$value": "#110904"
       },
-      "a5": {
-        "$value": "#d78d3f0d"
-      },
-      "a10": {
-        "$value": "#d78d3f1a"
-      },
-      "a15": {
-        "$value": "#d78d3f26"
-      },
-      "a20": {
-        "$value": "#d78d3f33"
-      },
-      "a25": {
-        "$value": "#d78d3f40"
-      },
-      "a30": {
-        "$value": "#d78d3f4d"
-      },
-      "a35": {
-        "$value": "#d78d3f59"
-      },
-      "a40": {
-        "$value": "#d78d3f66"
-      },
-      "a45": {
-        "$value": "#d78d3f73"
-      },
-      "a50": {
-        "$value": "#d78d3f80"
-      },
-      "a55": {
-        "$value": "#d78d3f8c"
-      },
-      "a60": {
-        "$value": "#d78d3f99"
-      },
-      "a65": {
-        "$value": "#d78d3fa6"
-      },
-      "a70": {
-        "$value": "#d78d3fb3"
-      },
-      "a75": {
-        "$value": "#d78d3fbf"
-      },
-      "a80": {
-        "$value": "#d78d3fcc"
-      },
-      "a85": {
-        "$value": "#d78d3fd9"
-      },
-      "a90": {
-        "$value": "#d78d3fe6"
-      },
-      "a95": {
-        "$value": "#d78d3ff2"
+      "alpha": {
+        "a5": {
+          "$value": "#d78d3f0d"
+        },
+        "a10": {
+          "$value": "#d78d3f1a"
+        },
+        "a15": {
+          "$value": "#d78d3f26"
+        },
+        "a20": {
+          "$value": "#d78d3f33"
+        },
+        "a25": {
+          "$value": "#d78d3f40"
+        },
+        "a30": {
+          "$value": "#d78d3f4d"
+        },
+        "a35": {
+          "$value": "#d78d3f59"
+        },
+        "a40": {
+          "$value": "#d78d3f66"
+        },
+        "a45": {
+          "$value": "#d78d3f73"
+        },
+        "a50": {
+          "$value": "#d78d3f80"
+        },
+        "a55": {
+          "$value": "#d78d3f8c"
+        },
+        "a60": {
+          "$value": "#d78d3f99"
+        },
+        "a65": {
+          "$value": "#d78d3fa6"
+        },
+        "a70": {
+          "$value": "#d78d3fb3"
+        },
+        "a75": {
+          "$value": "#d78d3fbf"
+        },
+        "a80": {
+          "$value": "#d78d3fcc"
+        },
+        "a85": {
+          "$value": "#d78d3fd9"
+        },
+        "a90": {
+          "$value": "#d78d3fe6"
+        },
+        "a95": {
+          "$value": "#d78d3ff2"
+        }
       }
     },
     "fern": {
@@ -175,62 +177,64 @@
       "950": {
         "$value": "#070D06"
       },
-      "a5": {
-        "$value": "#61ab540d"
-      },
-      "a10": {
-        "$value": "#61ab541a"
-      },
-      "a15": {
-        "$value": "#61ab5426"
-      },
-      "a20": {
-        "$value": "#61ab5433"
-      },
-      "a25": {
-        "$value": "#61ab5440"
-      },
-      "a30": {
-        "$value": "#61ab544d"
-      },
-      "a35": {
-        "$value": "#61ab5459"
-      },
-      "a40": {
-        "$value": "#61ab5466"
-      },
-      "a45": {
-        "$value": "#61ab5473"
-      },
-      "a50": {
-        "$value": "#61ab5480"
-      },
-      "a55": {
-        "$value": "#61ab548c"
-      },
-      "a60": {
-        "$value": "#61ab5499"
-      },
-      "a65": {
-        "$value": "#61ab54a6"
-      },
-      "a70": {
-        "$value": "#61ab54b3"
-      },
-      "a75": {
-        "$value": "#61ab54bf"
-      },
-      "a80": {
-        "$value": "#61ab54cc"
-      },
-      "a85": {
-        "$value": "#61ab54d9"
-      },
-      "a90": {
-        "$value": "#61ab54e6"
-      },
-      "a95": {
-        "$value": "#61ab54f2"
+      "alpha": {
+        "a5": {
+          "$value": "#61ab540d"
+        },
+        "a10": {
+          "$value": "#61ab541a"
+        },
+        "a15": {
+          "$value": "#61ab5426"
+        },
+        "a20": {
+          "$value": "#61ab5433"
+        },
+        "a25": {
+          "$value": "#61ab5440"
+        },
+        "a30": {
+          "$value": "#61ab544d"
+        },
+        "a35": {
+          "$value": "#61ab5459"
+        },
+        "a40": {
+          "$value": "#61ab5466"
+        },
+        "a45": {
+          "$value": "#61ab5473"
+        },
+        "a50": {
+          "$value": "#61ab5480"
+        },
+        "a55": {
+          "$value": "#61ab548c"
+        },
+        "a60": {
+          "$value": "#61ab5499"
+        },
+        "a65": {
+          "$value": "#61ab54a6"
+        },
+        "a70": {
+          "$value": "#61ab54b3"
+        },
+        "a75": {
+          "$value": "#61ab54bf"
+        },
+        "a80": {
+          "$value": "#61ab54cc"
+        },
+        "a85": {
+          "$value": "#61ab54d9"
+        },
+        "a90": {
+          "$value": "#61ab54e6"
+        },
+        "a95": {
+          "$value": "#61ab54f2"
+        }
       }
     },
     "gold": {
@@ -291,62 +295,64 @@
       "950": {
         "$value": "#100A03"
       },
-      "a5": {
-        "$value": "#e2a3360d"
-      },
-      "a10": {
-        "$value": "#e2a3361a"
-      },
-      "a15": {
-        "$value": "#e2a33626"
-      },
-      "a20": {
-        "$value": "#e2a33633"
-      },
-      "a25": {
-        "$value": "#e2a33640"
-      },
-      "a30": {
-        "$value": "#e2a3364d"
-      },
-      "a35": {
-        "$value": "#e2a33659"
-      },
-      "a40": {
-        "$value": "#e2a33666"
-      },
-      "a45": {
-        "$value": "#e2a33673"
-      },
-      "a50": {
-        "$value": "#e2a33680"
-      },
-      "a55": {
-        "$value": "#e2a3368c"
-      },
-      "a60": {
-        "$value": "#e2a33699"
-      },
-      "a65": {
-        "$value": "#e2a336a6"
-      },
-      "a70": {
-        "$value": "#e2a336b3"
-      },
-      "a75": {
-        "$value": "#e2a336bf"
-      },
-      "a80": {
-        "$value": "#e2a336cc"
-      },
-      "a85": {
-        "$value": "#e2a336d9"
-      },
-      "a90": {
-        "$value": "#e2a336e6"
-      },
-      "a95": {
-        "$value": "#e2a336f2"
+      "alpha": {
+        "a5": {
+          "$value": "#e2a3360d"
+        },
+        "a10": {
+          "$value": "#e2a3361a"
+        },
+        "a15": {
+          "$value": "#e2a33626"
+        },
+        "a20": {
+          "$value": "#e2a33633"
+        },
+        "a25": {
+          "$value": "#e2a33640"
+        },
+        "a30": {
+          "$value": "#e2a3364d"
+        },
+        "a35": {
+          "$value": "#e2a33659"
+        },
+        "a40": {
+          "$value": "#e2a33666"
+        },
+        "a45": {
+          "$value": "#e2a33673"
+        },
+        "a50": {
+          "$value": "#e2a33680"
+        },
+        "a55": {
+          "$value": "#e2a3368c"
+        },
+        "a60": {
+          "$value": "#e2a33699"
+        },
+        "a65": {
+          "$value": "#e2a336a6"
+        },
+        "a70": {
+          "$value": "#e2a336b3"
+        },
+        "a75": {
+          "$value": "#e2a336bf"
+        },
+        "a80": {
+          "$value": "#e2a336cc"
+        },
+        "a85": {
+          "$value": "#e2a336d9"
+        },
+        "a90": {
+          "$value": "#e2a336e6"
+        },
+        "a95": {
+          "$value": "#e2a336f2"
+        }
       }
     },
     "olive": {
@@ -407,62 +413,64 @@
       "950": {
         "$value": "#0C0B06"
       },
-      "a5": {
-        "$value": "#ada0650d"
-      },
-      "a10": {
-        "$value": "#ada0651a"
-      },
-      "a15": {
-        "$value": "#ada06526"
-      },
-      "a20": {
-        "$value": "#ada06533"
-      },
-      "a25": {
-        "$value": "#ada06540"
-      },
-      "a30": {
-        "$value": "#ada0654d"
-      },
-      "a35": {
-        "$value": "#ada06559"
-      },
-      "a40": {
-        "$value": "#ada06566"
-      },
-      "a45": {
-        "$value": "#ada06573"
-      },
-      "a50": {
-        "$value": "#ada06580"
-      },
-      "a55": {
-        "$value": "#ada0658c"
-      },
-      "a60": {
-        "$value": "#ada06599"
-      },
-      "a65": {
-        "$value": "#ada065a6"
-      },
-      "a70": {
-        "$value": "#ada065b3"
-      },
-      "a75": {
-        "$value": "#ada065bf"
-      },
-      "a80": {
-        "$value": "#ada065cc"
-      },
-      "a85": {
-        "$value": "#ada065d9"
-      },
-      "a90": {
-        "$value": "#ada065e6"
-      },
-      "a95": {
-        "$value": "#ada065f2"
+      "alpha": {
+        "a5": {
+          "$value": "#ada0650d"
+        },
+        "a10": {
+          "$value": "#ada0651a"
+        },
+        "a15": {
+          "$value": "#ada06526"
+        },
+        "a20": {
+          "$value": "#ada06533"
+        },
+        "a25": {
+          "$value": "#ada06540"
+        },
+        "a30": {
+          "$value": "#ada0654d"
+        },
+        "a35": {
+          "$value": "#ada06559"
+        },
+        "a40": {
+          "$value": "#ada06566"
+        },
+        "a45": {
+          "$value": "#ada06573"
+        },
+        "a50": {
+          "$value": "#ada06580"
+        },
+        "a55": {
+          "$value": "#ada0658c"
+        },
+        "a60": {
+          "$value": "#ada06599"
+        },
+        "a65": {
+          "$value": "#ada065a6"
+        },
+        "a70": {
+          "$value": "#ada065b3"
+        },
+        "a75": {
+          "$value": "#ada065bf"
+        },
+        "a80": {
+          "$value": "#ada065cc"
+        },
+        "a85": {
+          "$value": "#ada065d9"
+        },
+        "a90": {
+          "$value": "#ada065e6"
+        },
+        "a95": {
+          "$value": "#ada065f2"
+        }
       }
     },
     "copper": {
@@ -523,62 +531,64 @@
       "950": {
         "$value": "#120904"
       },
-      "a5": {
-        "$value": "#d2763b0d"
-      },
-      "a10": {
-        "$value": "#d2763b1a"
-      },
-      "a15": {
-        "$value": "#d2763b26"
-      },
-      "a20": {
-        "$value": "#d2763b33"
-      },
-      "a25": {
-        "$value": "#d2763b40"
-      },
-      "a30": {
-        "$value": "#d2763b4d"
-      },
-      "a35": {
-        "$value": "#d2763b59"
-      },
-      "a40": {
-        "$value": "#d2763b66"
-      },
-      "a45": {
-        "$value": "#d2763b73"
-      },
-      "a50": {
-        "$value": "#d2763b80"
-      },
-      "a55": {
-        "$value": "#d2763b8c"
-      },
-      "a60": {
-        "$value": "#d2763b99"
-      },
-      "a65": {
-        "$value": "#d2763ba6"
-      },
-      "a70": {
-        "$value": "#d2763bb3"
-      },
-      "a75": {
-        "$value": "#d2763bbf"
-      },
-      "a80": {
-        "$value": "#d2763bcc"
-      },
-      "a85": {
-        "$value": "#d2763bd9"
-      },
-      "a90": {
-        "$value": "#d2763be6"
-      },
-      "a95": {
-        "$value": "#d2763bf2"
+      "alpha": {
+        "a5": {
+          "$value": "#d2763b0d"
+        },
+        "a10": {
+          "$value": "#d2763b1a"
+        },
+        "a15": {
+          "$value": "#d2763b26"
+        },
+        "a20": {
+          "$value": "#d2763b33"
+        },
+        "a25": {
+          "$value": "#d2763b40"
+        },
+        "a30": {
+          "$value": "#d2763b4d"
+        },
+        "a35": {
+          "$value": "#d2763b59"
+        },
+        "a40": {
+          "$value": "#d2763b66"
+        },
+        "a45": {
+          "$value": "#d2763b73"
+        },
+        "a50": {
+          "$value": "#d2763b80"
+        },
+        "a55": {
+          "$value": "#d2763b8c"
+        },
+        "a60": {
+          "$value": "#d2763b99"
+        },
+        "a65": {
+          "$value": "#d2763ba6"
+        },
+        "a70": {
+          "$value": "#d2763bb3"
+        },
+        "a75": {
+          "$value": "#d2763bbf"
+        },
+        "a80": {
+          "$value": "#d2763bcc"
+        },
+        "a85": {
+          "$value": "#d2763bd9"
+        },
+        "a90": {
+          "$value": "#d2763be6"
+        },
+        "a95": {
+          "$value": "#d2763bf2"
+        }
       }
     },
     "cobalt": {
@@ -639,62 +649,64 @@
       "950": {
         "$value": "#060C12"
       },
-      "a5": {
-        "$value": "#4286bd0d"
-      },
-      "a10": {
-        "$value": "#4286bd1a"
-      },
-      "a15": {
-        "$value": "#4286bd26"
-      },
-      "a20": {
-        "$value": "#4286bd33"
-      },
-      "a25": {
-        "$value": "#4286bd40"
-      },
-      "a30": {
-        "$value": "#4286bd4d"
-      },
-      "a35": {
-        "$value": "#4286bd59"
-      },
-      "a40": {
-        "$value": "#4286bd66"
-      },
-      "a45": {
-        "$value": "#4286bd73"
-      },
-      "a50": {
-        "$value": "#4286bd80"
-      },
-      "a55": {
-        "$value": "#4286bd8c"
-      },
-      "a60": {
-        "$value": "#4286bd99"
-      },
-      "a65": {
-        "$value": "#4286bda6"
-      },
-      "a70": {
-        "$value": "#4286bdb3"
-      },
-      "a75": {
-        "$value": "#4286bdbf"
-      },
-      "a80": {
-        "$value": "#4286bdcc"
-      },
-      "a85": {
-        "$value": "#4286bdd9"
-      },
-      "a90": {
-        "$value": "#4286bde6"
-      },
-      "a95": {
-        "$value": "#4286bdf2"
+      "alpha": {
+        "a5": {
+          "$value": "#4286bd0d"
+        },
+        "a10": {
+          "$value": "#4286bd1a"
+        },
+        "a15": {
+          "$value": "#4286bd26"
+        },
+        "a20": {
+          "$value": "#4286bd33"
+        },
+        "a25": {
+          "$value": "#4286bd40"
+        },
+        "a30": {
+          "$value": "#4286bd4d"
+        },
+        "a35": {
+          "$value": "#4286bd59"
+        },
+        "a40": {
+          "$value": "#4286bd66"
+        },
+        "a45": {
+          "$value": "#4286bd73"
+        },
+        "a50": {
+          "$value": "#4286bd80"
+        },
+        "a55": {
+          "$value": "#4286bd8c"
+        },
+        "a60": {
+          "$value": "#4286bd99"
+        },
+        "a65": {
+          "$value": "#4286bda6"
+        },
+        "a70": {
+          "$value": "#4286bdb3"
+        },
+        "a75": {
+          "$value": "#4286bdbf"
+        },
+        "a80": {
+          "$value": "#4286bdcc"
+        },
+        "a85": {
+          "$value": "#4286bdd9"
+        },
+        "a90": {
+          "$value": "#4286bde6"
+        },
+        "a95": {
+          "$value": "#4286bdf2"
+        }
       }
     },
     "mulberry": {
@@ -755,62 +767,64 @@
       "950": {
         "$value": "#140708"
       },
-      "a5": {
-        "$value": "#bf40530d"
-      },
-      "a10": {
-        "$value": "#bf40531a"
-      },
-      "a15": {
-        "$value": "#bf405326"
-      },
-      "a20": {
-        "$value": "#bf405333"
-      },
-      "a25": {
-        "$value": "#bf405340"
-      },
-      "a30": {
-        "$value": "#bf40534d"
-      },
-      "a35": {
-        "$value": "#bf405359"
-      },
-      "a40": {
-        "$value": "#bf405366"
-      },
-      "a45": {
-        "$value": "#bf405373"
-      },
-      "a50": {
-        "$value": "#bf405380"
-      },
-      "a55": {
-        "$value": "#bf40538c"
-      },
-      "a60": {
-        "$value": "#bf405399"
-      },
-      "a65": {
-        "$value": "#bf4053a6"
-      },
-      "a70": {
-        "$value": "#bf4053b3"
-      },
-      "a75": {
-        "$value": "#bf4053bf"
-      },
-      "a80": {
-        "$value": "#bf4053cc"
-      },
-      "a85": {
-        "$value": "#bf4053d9"
-      },
-      "a90": {
-        "$value": "#bf4053e6"
-      },
-      "a95": {
-        "$value": "#bf4053f2"
+      "alpha": {
+        "a5": {
+          "$value": "#bf40530d"
+        },
+        "a10": {
+          "$value": "#bf40531a"
+        },
+        "a15": {
+          "$value": "#bf405326"
+        },
+        "a20": {
+          "$value": "#bf405333"
+        },
+        "a25": {
+          "$value": "#bf405340"
+        },
+        "a30": {
+          "$value": "#bf40534d"
+        },
+        "a35": {
+          "$value": "#bf405359"
+        },
+        "a40": {
+          "$value": "#bf405366"
+        },
+        "a45": {
+          "$value": "#bf405373"
+        },
+        "a50": {
+          "$value": "#bf405380"
+        },
+        "a55": {
+          "$value": "#bf40538c"
+        },
+        "a60": {
+          "$value": "#bf405399"
+        },
+        "a65": {
+          "$value": "#bf4053a6"
+        },
+        "a70": {
+          "$value": "#bf4053b3"
+        },
+        "a75": {
+          "$value": "#bf4053bf"
+        },
+        "a80": {
+          "$value": "#bf4053cc"
+        },
+        "a85": {
+          "$value": "#bf4053d9"
+        },
+        "a90": {
+          "$value": "#bf4053e6"
+        },
+        "a95": {
+          "$value": "#bf4053f2"
+        }
       }
     },
     "gray": {
@@ -871,62 +885,64 @@
       "950": {
         "$value": "#0B0B0B"
       },
-      "a5": {
-        "$value": "#7373730d"
-      },
-      "a10": {
-        "$value": "#7373731a"
-      },
-      "a15": {
-        "$value": "#73737326"
-      },
-      "a20": {
-        "$value": "#73737333"
-      },
-      "a25": {
-        "$value": "#73737340"
-      },
-      "a30": {
-        "$value": "#7373734d"
-      },
-      "a35": {
-        "$value": "#73737359"
-      },
-      "a40": {
-        "$value": "#73737366"
-      },
-      "a45": {
-        "$value": "#73737373"
-      },
-      "a50": {
-        "$value": "#73737380"
-      },
-      "a55": {
-        "$value": "#7373738c"
-      },
-      "a60": {
-        "$value": "#73737399"
-      },
-      "a65": {
-        "$value": "#737373a6"
-      },
-      "a70": {
-        "$value": "#737373b3"
-      },
-      "a75": {
-        "$value": "#737373bf"
-      },
-      "a80": {
-        "$value": "#737373cc"
-      },
-      "a85": {
-        "$value": "#737373d9"
-      },
-      "a90": {
-        "$value": "#737373e6"
-      },
-      "a95": {
-        "$value": "#737373f2"
+      "alpha": {
+        "a5": {
+          "$value": "#7373730d"
+        },
+        "a10": {
+          "$value": "#7373731a"
+        },
+        "a15": {
+          "$value": "#73737326"
+        },
+        "a20": {
+          "$value": "#73737333"
+        },
+        "a25": {
+          "$value": "#73737340"
+        },
+        "a30": {
+          "$value": "#7373734d"
+        },
+        "a35": {
+          "$value": "#73737359"
+        },
+        "a40": {
+          "$value": "#73737366"
+        },
+        "a45": {
+          "$value": "#73737373"
+        },
+        "a50": {
+          "$value": "#73737380"
+        },
+        "a55": {
+          "$value": "#7373738c"
+        },
+        "a60": {
+          "$value": "#73737399"
+        },
+        "a65": {
+          "$value": "#737373a6"
+        },
+        "a70": {
+          "$value": "#737373b3"
+        },
+        "a75": {
+          "$value": "#737373bf"
+        },
+        "a80": {
+          "$value": "#737373cc"
+        },
+        "a85": {
+          "$value": "#737373d9"
+        },
+        "a90": {
+          "$value": "#737373e6"
+        },
+        "a95": {
+          "$value": "#737373f2"
+        }
       }
     },
     "stone": {
@@ -987,62 +1003,64 @@
       "950": {
         "$value": "#0C0B0A"
       },
-      "a5": {
-        "$value": "#78716c0d"
-      },
-      "a10": {
-        "$value": "#78716c1a"
-      },
-      "a15": {
-        "$value": "#78716c26"
-      },
-      "a20": {
-        "$value": "#78716c33"
-      },
-      "a25": {
-        "$value": "#78716c40"
-      },
-      "a30": {
-        "$value": "#78716c4d"
-      },
-      "a35": {
-        "$value": "#78716c59"
-      },
-      "a40": {
-        "$value": "#78716c66"
-      },
-      "a45": {
-        "$value": "#78716c73"
-      },
-      "a50": {
-        "$value": "#78716c80"
-      },
-      "a55": {
-        "$value": "#78716c8c"
-      },
-      "a60": {
-        "$value": "#78716c99"
-      },
-      "a65": {
-        "$value": "#78716ca6"
-      },
-      "a70": {
-        "$value": "#78716cb3"
-      },
-      "a75": {
-        "$value": "#78716cbf"
-      },
-      "a80": {
-        "$value": "#78716ccc"
-      },
-      "a85": {
-        "$value": "#78716cd9"
-      },
-      "a90": {
-        "$value": "#78716ce6"
-      },
-      "a95": {
-        "$value": "#78716cf2"
+      "alpha": {
+        "a5": {
+          "$value": "#78716c0d"
+        },
+        "a10": {
+          "$value": "#78716c1a"
+        },
+        "a15": {
+          "$value": "#78716c26"
+        },
+        "a20": {
+          "$value": "#78716c33"
+        },
+        "a25": {
+          "$value": "#78716c40"
+        },
+        "a30": {
+          "$value": "#78716c4d"
+        },
+        "a35": {
+          "$value": "#78716c59"
+        },
+        "a40": {
+          "$value": "#78716c66"
+        },
+        "a45": {
+          "$value": "#78716c73"
+        },
+        "a50": {
+          "$value": "#78716c80"
+        },
+        "a55": {
+          "$value": "#78716c8c"
+        },
+        "a60": {
+          "$value": "#78716c99"
+        },
+        "a65": {
+          "$value": "#78716ca6"
+        },
+        "a70": {
+          "$value": "#78716cb3"
+        },
+        "a75": {
+          "$value": "#78716cbf"
+        },
+        "a80": {
+          "$value": "#78716ccc"
+        },
+        "a85": {
+          "$value": "#78716cd9"
+        },
+        "a90": {
+          "$value": "#78716ce6"
+        },
+        "a95": {
+          "$value": "#78716cf2"
+        }
       }
     },
     "black": {
@@ -1050,85 +1068,87 @@
         "$value": "#00000000",
         "$description": "Black, fully transparent (0%)"
       },
-      "a5": {
-        "$value": "#0000000d",
-        "$description": "Black with very low opacity (5%)"
-      },
-      "a10": {
-        "$value": "#0000001a",
-        "$description": "Black with very low opacity (10%)"
-      },
-      "a15": {
-        "$value": "#00000026",
-        "$description": "Black with low opacity (15%)"
-      },
-      "a20": {
-        "$value": "#00000033",
-        "$description": "Black with low opacity (20%)"
-      },
-      "a25": {
-        "$value": "#00000040",
-        "$description": "Black with low-medium opacity (25%)"
-      },
-      "a30": {
-        "$value": "#0000004d",
-        "$description": "Black with low-medium opacity (30%)"
-      },
-      "a35": {
-        "$value": "#00000059",
-        "$description": "Black with low-medium opacity (35%)"
-      },
-      "a40": {
-        "$value": "#00000066",
-        "$description": "Black with medium opacity (40%)"
-      },
-      "a45": {
-        "$value": "#00000073",
-        "$description": "Black with medium opacity (45%)"
-      },
-      "a50": {
-        "$value": "#00000080",
-        "$description": "Black with medium opacity (50%)"
-      },
-      "a55": {
-        "$value": "#0000008c",
-        "$description": "Black with medium-high opacity (55%)"
-      },
-      "a60": {
-        "$value": "#00000099",
-        "$description": "Black with medium-high opacity (60%)"
-      },
-      "a65": {
-        "$value": "#000000a6",
-        "$description": "Black with medium-high opacity (65%)"
-      },
-      "a70": {
-        "$value": "#000000b3",
-        "$description": "Black with high opacity (70%)"
-      },
-      "a75": {
-        "$value": "#000000bf",
-        "$description": "Black with high opacity (75%)"
-      },
-      "a80": {
-        "$value": "#000000cc",
-        "$description": "Black with high opacity (80%)"
-      },
-      "a85": {
-        "$value": "#000000d9",
-        "$description": "Black with very high opacity (85%)"
-      },
-      "a90": {
-        "$value": "#000000e6",
-        "$description": "Black with very high opacity (90%)"
-      },
-      "a95": {
-        "$value": "#000000f2",
-        "$description": "Black with very high opacity (95%)"
-      },
       "solid": {
         "$value": "#000000",
         "$description": "Pure black"
+      },
+      "alpha": {
+        "a5": {
+          "$value": "#0000000d",
+          "$description": "Black with very low opacity (5%)"
+        },
+        "a10": {
+          "$value": "#0000001a",
+          "$description": "Black with very low opacity (10%)"
+        },
+        "a15": {
+          "$value": "#00000026",
+          "$description": "Black with low opacity (15%)"
+        },
+        "a20": {
+          "$value": "#00000033",
+          "$description": "Black with low opacity (20%)"
+        },
+        "a25": {
+          "$value": "#00000040",
+          "$description": "Black with low-medium opacity (25%)"
+        },
+        "a30": {
+          "$value": "#0000004d",
+          "$description": "Black with low-medium opacity (30%)"
+        },
+        "a35": {
+          "$value": "#00000059",
+          "$description": "Black with low-medium opacity (35%)"
+        },
+        "a40": {
+          "$value": "#00000066",
+          "$description": "Black with medium opacity (40%)"
+        },
+        "a45": {
+          "$value": "#00000073",
+          "$description": "Black with medium opacity (45%)"
+        },
+        "a50": {
+          "$value": "#00000080",
+          "$description": "Black with medium opacity (50%)"
+        },
+        "a55": {
+          "$value": "#0000008c",
+          "$description": "Black with medium-high opacity (55%)"
+        },
+        "a60": {
+          "$value": "#00000099",
+          "$description": "Black with medium-high opacity (60%)"
+        },
+        "a65": {
+          "$value": "#000000a6",
+          "$description": "Black with medium-high opacity (65%)"
+        },
+        "a70": {
+          "$value": "#000000b3",
+          "$description": "Black with high opacity (70%)"
+        },
+        "a75": {
+          "$value": "#000000bf",
+          "$description": "Black with high opacity (75%)"
+        },
+        "a80": {
+          "$value": "#000000cc",
+          "$description": "Black with high opacity (80%)"
+        },
+        "a85": {
+          "$value": "#000000d9",
+          "$description": "Black with very high opacity (85%)"
+        },
+        "a90": {
+          "$value": "#000000e6",
+          "$description": "Black with very high opacity (90%)"
+        },
+        "a95": {
+          "$value": "#000000f2",
+          "$description": "Black with very high opacity (95%)"
+        }
       }
     },
     "white": {
@@ -1136,85 +1156,87 @@
         "$value": "#ffffff00",
         "$description": "White, fully transparent (0%)"
       },
-      "a5": {
-        "$value": "#ffffff0d",
-        "$description": "White with very low opacity (5%)"
-      },
-      "a10": {
-        "$value": "#ffffff1a",
-        "$description": "White with very low opacity (10%)"
-      },
-      "a15": {
-        "$value": "#ffffff26",
-        "$description": "White with low opacity (15%)"
-      },
-      "a20": {
-        "$value": "#ffffff33",
-        "$description": "White with low opacity (20%)"
-      },
-      "a25": {
-        "$value": "#ffffff40",
-        "$description": "White with low-medium opacity (25%)"
-      },
-      "a30": {
-        "$value": "#ffffff4d",
-        "$description": "White with low-medium opacity (30%)"
-      },
-      "a35": {
-        "$value": "#ffffff59",
-        "$description": "White with low-medium opacity (35%)"
-      },
-      "a40": {
-        "$value": "#ffffff66",
-        "$description": "White with medium opacity (40%)"
-      },
-      "a45": {
-        "$value": "#ffffff73",
-        "$description": "White with medium opacity (45%)"
-      },
-      "a50": {
-        "$value": "#ffffff80",
-        "$description": "White with medium opacity (50%)"
-      },
-      "a55": {
-        "$value": "#ffffff8c",
-        "$description": "White with medium-high opacity (55%)"
-      },
-      "a60": {
-        "$value": "#ffffff99",
-        "$description": "White with medium-high opacity (60%)"
-      },
-      "a65": {
-        "$value": "#ffffffa6",
-        "$description": "White with medium-high opacity (65%)"
-      },
-      "a70": {
-        "$value": "#ffffffb3",
-        "$description": "White with high opacity (70%)"
-      },
-      "a75": {
-        "$value": "#ffffffbf",
-        "$description": "White with high opacity (75%)"
-      },
-      "a80": {
-        "$value": "#ffffffcc",
-        "$description": "White with high opacity (80%)"
-      },
-      "a85": {
-        "$value": "#ffffffd9",
-        "$description": "White with very high opacity (85%)"
-      },
-      "a90": {
-        "$value": "#ffffffe6",
-        "$description": "White with very high opacity (90%)"
-      },
-      "a95": {
-        "$value": "#fffffff2",
-        "$description": "White with very high opacity (95%)"
-      },
       "solid": {
         "$value": "#FFFFFF",
         "$description": "Pure white"
+      },
+      "alpha": {
+        "a5": {
+          "$value": "#ffffff0d",
+          "$description": "White with very low opacity (5%)"
+        },
+        "a10": {
+          "$value": "#ffffff1a",
+          "$description": "White with very low opacity (10%)"
+        },
+        "a15": {
+          "$value": "#ffffff26",
+          "$description": "White with low opacity (15%)"
+        },
+        "a20": {
+          "$value": "#ffffff33",
+          "$description": "White with low opacity (20%)"
+        },
+        "a25": {
+          "$value": "#ffffff40",
+          "$description": "White with low-medium opacity (25%)"
+        },
+        "a30": {
+          "$value": "#ffffff4d",
+          "$description": "White with low-medium opacity (30%)"
+        },
+        "a35": {
+          "$value": "#ffffff59",
+          "$description": "White with low-medium opacity (35%)"
+        },
+        "a40": {
+          "$value": "#ffffff66",
+          "$description": "White with medium opacity (40%)"
+        },
+        "a45": {
+          "$value": "#ffffff73",
+          "$description": "White with medium opacity (45%)"
+        },
+        "a50": {
+          "$value": "#ffffff80",
+          "$description": "White with medium opacity (50%)"
+        },
+        "a55": {
+          "$value": "#ffffff8c",
+          "$description": "White with medium-high opacity (55%)"
+        },
+        "a60": {
+          "$value": "#ffffff99",
+          "$description": "White with medium-high opacity (60%)"
+        },
+        "a65": {
+          "$value": "#ffffffa6",
+          "$description": "White with medium-high opacity (65%)"
+        },
+        "a70": {
+          "$value": "#ffffffb3",
+          "$description": "White with high opacity (70%)"
+        },
+        "a75": {
+          "$value": "#ffffffbf",
+          "$description": "White with high opacity (75%)"
+        },
+        "a80": {
+          "$value": "#ffffffcc",
+          "$description": "White with high opacity (80%)"
+        },
+        "a85": {
+          "$value": "#ffffffd9",
+          "$description": "White with very high opacity (85%)"
+        },
+        "a90": {
+          "$value": "#ffffffe6",
+          "$description": "White with very high opacity (90%)"
+        },
+        "a95": {
+          "$value": "#fffffff2",
+          "$description": "White with very high opacity (95%)"
+        }
       }
     }
   }
