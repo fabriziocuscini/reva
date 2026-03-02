@@ -4,7 +4,7 @@
   &__card {
     position: relative;
     overflow: clip;
-    background-color: var(--reva-colors-dusty-mauve-950);
+    background-color: var(--reva-colors-mulberry-950);
     background-image: url('/images/section-infra-bg.jpg');
     background-position: center;
     background-repeat: no-repeat;

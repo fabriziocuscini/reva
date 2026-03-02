@@ -269,8 +269,8 @@ const PALETTES: PaletteConfig[] = [
     },
   },
   {
-    name: "dustyMauve",
-    anchor: [0.7044, 0.1004, 10.364], // Reva Dusty Mauve #D68591
+    name: "mulberry",
+    anchor: [0.7044, 0.1004, 10.364], // Reva Mulberry #D68591
     // anchorStep defaults to 500
     lightnessOverrides: {
       800: 0.2598, // Reva Burgundy #460815

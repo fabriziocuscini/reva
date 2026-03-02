@@ -369,7 +369,7 @@
         "$value": "#ada065f2"
       }
     },
-    "spicedPumpkin": {
+    "copper": {
       "50": {
         "$value": "#f7eee8"
       },
@@ -461,7 +461,7 @@
         "$value": "#d2763bf2"
       }
     },
-    "steelBlue": {
+    "cobalt": {
       "50": {
         "$value": "#d7dee3"
       },
@@ -553,7 +553,7 @@
         "$value": "#4286bdf2"
       }
     },
-    "dustyMauve": {
+    "mulberry": {
       "50": {
         "$value": "#f9ecee"
       },
