@@ -1,7 +1,6 @@
 {
   "colors": {
     "$type": "color",
-
     "bg": {
       "canvas": {
         "$value": "{colors.olive.50}",
@@ -30,7 +29,6 @@
         }
       }
     },
-
     "fg": {
       "default": {
         "$value": "{colors.stone.900}",
@@ -75,7 +73,6 @@
         }
       }
     },
-
     "border": {
       "default": {
         "$value": "{colors.stone.300}",
@@ -90,7 +87,6 @@
         "$description": "Barely-there separators"
       }
     },
-
     "brand": {
       "subtle": {
         "$value": "{colors.gold.100}",
@@ -137,7 +133,6 @@
         "$description": "Text on brand solid fills"
       }
     },
-
     "primary": {
       "subtle": {
         "$value": "{colors.amber.100}",
@@ -184,7 +179,6 @@
         "$description": "Text on primary solid fills"
       }
     },
-
     "accent": {
       "subtle": {
         "$value": "{colors.olive.100}",
@@ -231,7 +225,6 @@
         "$description": "Text on accent solid fills"
       }
     },
-
     "neutral": {
       "subtle": {
         "$value": "{colors.stone.100}",
@@ -278,7 +271,6 @@
         "$description": "Text on neutral solid fills"
       }
     },
-
     "error": {
       "subtle": {
         "$value": "{colors.mulberry.100}",
@@ -325,7 +317,6 @@
         "$description": "Text on error solid fills"
       }
     },
-
     "warning": {
       "subtle": {
         "$value": "{colors.copper.100}",
@@ -372,7 +363,6 @@
         "$description": "Text on warning solid fills"
       }
     },
-
     "success": {
       "subtle": {
         "$value": "{colors.fern.100}",
@@ -419,7 +409,6 @@
         "$description": "Text on success solid fills"
       }
     },
-
     "info": {
       "subtle": {
         "$value": "{colors.cobalt.100}",
@@ -465,6 +454,30 @@
         "$value": "{colors.white.solid}",
         "$description": "Text on info solid fills"
       }
+    },
+    "misc": {
+      "transparent": {
+        "$type": "color",
+        "$value": "{colors.white.transparent}"
+      },
+      "whiteToBlack": {
+        "$type": "color",
+        "$value": "{colors.white.solid}"
+      },
+      "blackToWhite": {
+        "$type": "color",
+        "$value": "{colors.black.solid}"
+      }
+    }
+  },
+  "misc": {
+    "lightMode": {
+      "$type": "boolean",
+      "$value": "true"
+    },
+    "darkMode": {
+      "$type": "boolean",
+      "$value": "false"
     }
   }
 }
