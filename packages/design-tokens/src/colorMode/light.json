@@ -11,8 +11,18 @@
         "$description": "Cards, form inputs, modals, content panels"
       },
       "overlay": {
-        "$value": "{colors.black.alpha.a60}",
-        "$description": "Modal/dialog backdrops"
+        "default": {
+          "$value": "{colors.black.alpha.a60}",
+          "$description": "Modal/dialog backdrops"
+        },
+        "muted": {
+          "$value": "{colors.black.alpha.a40}",
+          "$description": "Secondary overlay"
+        },
+        "subtle": {
+          "$value": "{colors.black.alpha.a30}",
+          "$description": "Lightest overlay"
+        }
       },
       "translucent": {
         "default": {
@@ -35,7 +45,7 @@
         "$description": "Primary text, headings"
       },
       "muted": {
-        "$value": "{colors.stone.600}",
+        "$value": "{colors.stone.550}",
         "$description": "Secondary text, labels"
       },
       "subtle": {
@@ -43,7 +53,7 @@
         "$description": "Helper text, captions"
       },
       "placeholder": {
-        "$value": "{colors.stone.350}",
+        "$value": "{colors.black.alpha.a35}",
         "$description": "Input placeholders"
       },
       "link": {
@@ -64,7 +74,7 @@
           "$description": "Tertiary text on solid fills"
         },
         "disabled": {
-          "$value": "{colors.white.alpha.a30}",
+          "$value": "{colors.white.alpha.a25}",
           "$description": "Disabled text on solid fills"
         },
         "placeholder": {
@@ -75,15 +85,15 @@
     },
     "border": {
       "default": {
-        "$value": "{colors.stone.300}",
+        "$value": "{colors.stone.150}",
         "$description": "Standard borders"
       },
       "muted": {
-        "$value": "{colors.stone.200}",
+        "$value": "{colors.stone.100}",
         "$description": "Softer borders, dividers"
       },
       "subtle": {
-        "$value": "{colors.stone.100}",
+        "$value": "{colors.stone.50}",
         "$description": "Barely-there separators"
       }
     },
