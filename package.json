@@ -9,6 +9,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:docs": "turbo run dev --filter=@reva/docs...",
+    "dev:advisor": "turbo run dev --filter=@reva/advisor-portal...",
+    "dev:client": "turbo run dev --filter=@reva/client-portal...",
+    "dev:website": "turbo run dev --filter=@reva/website-static...",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
