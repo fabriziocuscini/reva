@@ -415,61 +415,61 @@
       },
       "alpha": {
         "a5": {
-          "$value": "#ada0650d"
+          "$value": "#8a825c0d"
         },
         "a10": {
-          "$value": "#ada0651a"
+          "$value": "#8a825c1a"
         },
         "a15": {
-          "$value": "#ada06526"
+          "$value": "#8a825c26"
         },
         "a20": {
-          "$value": "#ada06533"
+          "$value": "#8a825c33"
         },
         "a25": {
-          "$value": "#ada06540"
+          "$value": "#8a825c40"
         },
         "a30": {
-          "$value": "#ada0654d"
+          "$value": "#8a825c4d"
         },
         "a35": {
-          "$value": "#ada06559"
+          "$value": "#8a825c59"
         },
         "a40": {
-          "$value": "#ada06566"
+          "$value": "#8a825c66"
         },
         "a45": {
-          "$value": "#ada06573"
+          "$value": "#8a825c73"
         },
         "a50": {
-          "$value": "#ada06580"
+          "$value": "#8a825c80"
         },
         "a55": {
-          "$value": "#ada0658c"
+          "$value": "#8a825c8c"
         },
         "a60": {
-          "$value": "#ada06599"
+          "$value": "#8a825c99"
         },
         "a65": {
-          "$value": "#ada065a6"
+          "$value": "#8a825ca6"
         },
         "a70": {
-          "$value": "#ada065b3"
+          "$value": "#8a825cb3"
         },
         "a75": {
-          "$value": "#ada065bf"
+          "$value": "#8a825cbf"
         },
         "a80": {
-          "$value": "#ada065cc"
+          "$value": "#8a825ccc"
         },
         "a85": {
-          "$value": "#ada065d9"
+          "$value": "#8a825cd9"
         },
         "a90": {
-          "$value": "#ada065e6"
+          "$value": "#8a825ce6"
         },
         "a95": {
-          "$value": "#ada065f2"
+          "$value": "#8a825cf2"
         }
       }
     },
