@@ -12,7 +12,7 @@
       },
       "overlay": {
         "default": {
-          "$value": "{colors.black.alpha.nowa60}",
+          "$value": "{colors.black.alpha.a60}",
           "$description": "Modal/dialog backdrops"
         },
         "muted": {
