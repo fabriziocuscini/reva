@@ -118,7 +118,7 @@
       },
       "fg": {
         "default": {
-          "$value": "{colors.gold.700}",
+          "$value": "{colors.gold.600}",
           "$description": "Brand-coloured text and icons"
         },
         "emphasized": {
@@ -166,7 +166,7 @@
       },
       "fg": {
         "default": {
-          "$value": "{colors.amber.700}",
+          "$value": "{colors.amber.600}",
           "$description": "Accent-coloured text, links"
         },
         "emphasized": {
@@ -262,7 +262,7 @@
       },
       "fg": {
         "default": {
-          "$value": "{colors.mulberry.700}",
+          "$value": "{colors.mulberry.600}",
           "$description": "Error text, validation messages"
         },
         "emphasized": {
@@ -310,7 +310,7 @@
       },
       "fg": {
         "default": {
-          "$value": "{colors.copper.700}",
+          "$value": "{colors.copper.600}",
           "$description": "Warning text"
         },
         "emphasized": {
@@ -358,7 +358,7 @@
       },
       "fg": {
         "default": {
-          "$value": "{colors.fern.700}",
+          "$value": "{colors.fern.600}",
           "$description": "Success text"
         },
         "emphasized": {
@@ -406,7 +406,7 @@
       },
       "fg": {
         "default": {
-          "$value": "{colors.cobalt.700}",
+          "$value": "{colors.cobalt.600}",
           "$description": "Info text"
         },
         "emphasized": {
