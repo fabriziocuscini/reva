@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Sun, Moon, ArrowCounterClockwise } from "@phosphor-icons/react"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
@@ -37,9 +38,40 @@ export default function App() {
     resetLightness,
     resetChroma,
     resetHue,
+    undo,
+    redo,
   } = usePalette()
 
   const { dark, toggle } = useTheme()
+
+  // Keyboard shortcuts: ⌘Z undo, ⌘⇧Z redo, D toggle dark mode
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      // Ignore when typing in inputs
+      const tag = (e.target as HTMLElement).tagName
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return
+
+      if (e.key === "d" || e.key === "D") {
+        if (!e.metaKey && !e.ctrlKey && !e.altKey) {
+          e.preventDefault()
+          toggle()
+        }
+        return
+      }
+
+      if ((e.metaKey || e.ctrlKey) && e.key === "z") {
+        e.preventDefault()
+        if (e.shiftKey) {
+          redo()
+        } else {
+          undo()
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handler)
+    return () => document.removeEventListener("keydown", handler)
+  }, [undo, redo, toggle])
 
   return (
     <TooltipProvider>
