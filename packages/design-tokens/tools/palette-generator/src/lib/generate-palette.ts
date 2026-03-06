@@ -1,20 +1,23 @@
-import { parseToOklch, oklchToSafeHex, hexToHslDisplay } from "./color"
-import { STEPS } from "./constants"
-import type { PaletteParams, PaletteStep } from "./types"
+import { hexToHslDisplay, oklchToSafeHex, parseToOklch } from './color'
+import { STEPS } from './constants'
+import type { PaletteParams, PaletteStep } from './types'
 
-export function generatePalette(
-  midpointHex: string,
-  params: PaletteParams
-): PaletteStep[] {
+export function generatePalette(midpointHex: string, params: PaletteParams): PaletteStep[] {
   const anchor = parseToOklch(midpointHex)
   const La = anchor.l
   const Ca = anchor.c
   const Ha = anchor.h ?? 0
 
   const {
-    L_max, L_min, L_ease,
-    C_ease, C_taper_light, C_taper_dark,
-    H_shift_light, H_shift_dark, H_ease,
+    L_max,
+    L_min,
+    L_ease,
+    C_ease,
+    C_taper_light,
+    C_taper_dark,
+    H_shift_light,
+    H_shift_dark,
+    H_ease,
   } = params
 
   return STEPS.map((step) => {

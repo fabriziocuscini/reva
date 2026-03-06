@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react"
-import { copyToClipboard } from "@/lib/clipboard"
-import { ALPHA_STEPS, ALPHA_SUFFIXES } from "@/lib/constants"
+import { copyToClipboard } from '@/lib/clipboard'
+import { ALPHA_STEPS, ALPHA_SUFFIXES } from '@/lib/constants'
+import { useMemo, useState } from 'react'
 
 interface AlphaStripProps {
   midpointHex: string
@@ -10,7 +10,7 @@ export function AlphaStrip({ midpointHex }: AlphaStripProps) {
   const [copiedStep, setCopiedStep] = useState<number | null>(null)
 
   const alphaSwatches = useMemo(() => {
-    const base = midpointHex.replace("#", "").toLowerCase()
+    const base = midpointHex.replace('#', '').toLowerCase()
     return ALPHA_STEPS.map((step) => ({
       step,
       hex: `#${base}${ALPHA_SUFFIXES[step]}`,
@@ -49,14 +49,11 @@ export function AlphaStrip({ midpointHex }: AlphaStripProps) {
                   hsl(var(--muted)) 0% 25%,
                   transparent 0% 50%
                 )`,
-              backgroundSize: "12px 12px",
+              backgroundSize: '12px 12px',
             }}
             title={`Click to copy ${hex}`}
           >
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: hex }}
-            />
+            <div className="absolute inset-0" style={{ backgroundColor: hex }} />
             {copiedStep === step && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/55 text-white text-[9px] font-bold font-mono tracking-wider z-10">
                 Copied

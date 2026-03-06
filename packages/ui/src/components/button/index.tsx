@@ -5,12 +5,10 @@ import { button, type ButtonVariantProps } from 'styled-system/recipes'
 
 const BaseButton = styled(ark.button, button)
 
-export interface ButtonProps
-  extends React.ComponentProps<typeof BaseButton>,
-    ButtonVariantProps {}
+export interface ButtonProps extends React.ComponentProps<typeof BaseButton>, ButtonVariantProps {}
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref) => <BaseButton ref={ref} {...props} />,
-)
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
+  <BaseButton ref={ref} {...props} />
+))
 
 Button.displayName = 'Button'

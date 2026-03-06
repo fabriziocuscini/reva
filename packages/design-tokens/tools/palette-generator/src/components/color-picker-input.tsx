@@ -1,11 +1,7 @@
-import { HexColorPicker } from "react-colorful"
-import { isValidHex } from "@/lib/color"
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group"
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { isValidHex } from '@/lib/color'
+import { HexColorPicker } from 'react-colorful'
 
 interface ColorPickerInputProps {
   value: string
@@ -24,7 +20,7 @@ export function ColorPickerInput({ value, onChange }: ColorPickerInputProps) {
               type="button"
               className="size-4 rounded-sm shrink-0 border border-border cursor-pointer"
               style={{
-                backgroundColor: valid ? value : "var(--muted)",
+                backgroundColor: valid ? value : 'var(--muted)',
               }}
               aria-label="Pick a color"
             />
@@ -38,17 +34,9 @@ export function ColorPickerInput({ value, onChange }: ColorPickerInputProps) {
           aria-invalid={!valid || undefined}
         />
       </InputGroup>
-      <PopoverContent
-        side="bottom"
-        align="end"
-        sideOffset={8}
-        className="w-auto p-3"
-      >
+      <PopoverContent side="bottom" align="end" sideOffset={8} className="w-auto p-3">
         <div className="color-picker-wrapper">
-          <HexColorPicker
-            color={valid ? value : "#000000"}
-            onChange={onChange}
-          />
+          <HexColorPicker color={valid ? value : '#000000'} onChange={onChange} />
         </div>
       </PopoverContent>
     </Popover>

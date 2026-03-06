@@ -15,12 +15,7 @@ const DTCG_META_KEYS = new Set(['$type', '$description', '$extensions'])
  * Checks if a node is a DTCG token leaf (has $value).
  */
 function isTokenLeaf(node: JsonValue): node is JsonObject {
-  return (
-    typeof node === 'object' &&
-    node !== null &&
-    !Array.isArray(node) &&
-    '$value' in node
-  )
+  return typeof node === 'object' && node !== null && !Array.isArray(node) && '$value' in node
 }
 
 /**
@@ -55,10 +50,7 @@ function deepMerge(...sources: JsonObject[]): JsonObject {
  * - Composite $value (shadow objects/arrays) → keep DTCG composite structure
  * - Primitive $value → use as-is (already resolved)
  */
-function resolveValue(
-  rawValue: JsonValue,
-  resolvedValue: JsonValue | undefined,
-): JsonValue {
+function resolveValue(rawValue: JsonValue, resolvedValue: JsonValue | undefined): JsonValue {
   // Composite $value (shadow object or array) — keep the DTCG structure
   if (typeof rawValue === 'object' && rawValue !== null) {
     return rawValue
@@ -96,16 +88,10 @@ function resolveTree(source: JsonObject, resolved: JsonObject): JsonObject {
         }
       }
       result[key] = leaf
-    } else if (
-      typeof value === 'object' &&
-      value !== null &&
-      !Array.isArray(value)
-    ) {
+    } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
       // Group — recurse
       const resolvedChild =
-        typeof resolved[key] === 'object' &&
-        resolved[key] !== null &&
-        !Array.isArray(resolved[key])
+        typeof resolved[key] === 'object' && resolved[key] !== null && !Array.isArray(resolved[key])
           ? (resolved[key] as JsonObject)
           : {}
       result[key] = resolveTree(value as JsonObject, resolvedChild)
@@ -124,10 +110,7 @@ function resolveTree(source: JsonObject, resolved: JsonObject): JsonObject {
  * @param resolvedJson - SD's resolved json/nested output (flat values, no $value/$type)
  * @returns Proper DTCG JSON with $value, $type, $description preserved
  */
-export function buildDtcgOutput(
-  sourceFiles: JsonObject[],
-  resolvedJson: JsonObject,
-): JsonObject {
+export function buildDtcgOutput(sourceFiles: JsonObject[], resolvedJson: JsonObject): JsonObject {
   const merged = deepMerge(...sourceFiles)
   return resolveTree(merged, resolvedJson)
 }

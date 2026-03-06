@@ -1,9 +1,9 @@
-import { parse, formatHex, converter, clampChroma } from "culori"
-import type { Oklch } from "culori"
-import type { HslDisplay } from "./types"
+import type { Oklch } from 'culori'
+import { clampChroma, converter, formatHex, parse } from 'culori'
+import type { HslDisplay } from './types'
 
-const toOklch = converter("oklch")
-const toHsl = converter("hsl")
+const toOklch = converter('oklch')
+const toHsl = converter('hsl')
 
 export function parseToOklch(hex: string): Oklch {
   const parsed = parse(hex)
@@ -12,11 +12,8 @@ export function parseToOklch(hex: string): Oklch {
 }
 
 export function oklchToSafeHex(L: number, C: number, H: number): string {
-  const mapped = clampChroma(
-    { mode: "oklch" as const, l: L, c: C, h: H },
-    "oklch"
-  )
-  return (formatHex(mapped) ?? "#000000").toUpperCase()
+  const mapped = clampChroma({ mode: 'oklch' as const, l: L, c: C, h: H }, 'oklch')
+  return (formatHex(mapped) ?? '#000000').toUpperCase()
 }
 
 export function hexToHslDisplay(hex: string): HslDisplay {
@@ -24,7 +21,7 @@ export function hexToHslDisplay(hex: string): HslDisplay {
   if (!parsed) return { h: 0, s: 0, l: 0 }
   const hsl = toHsl(parsed)
   return {
-    h: (hsl?.h ?? 0),
+    h: hsl?.h ?? 0,
     s: (hsl?.s ?? 0) * 100,
     l: (hsl?.l ?? 0) * 100,
   }

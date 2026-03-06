@@ -1,25 +1,17 @@
-import type { Plugin } from "vite"
-import type { IncomingMessage, ServerResponse } from "node:http"
-import fs from "node:fs/promises"
-import path from "node:path"
-import { ALPHA_STEPS, ALPHA_SUFFIXES } from "./src/lib/constants"
+import fs from 'node:fs/promises'
+import type { IncomingMessage, ServerResponse } from 'node:http'
+import path from 'node:path'
+import type { Plugin } from 'vite'
+import { ALPHA_STEPS, ALPHA_SUFFIXES } from './src/lib/constants'
 
-const COLORS_JSON_PATH = path.resolve(
-  import.meta.dirname,
-  "../../src/foundation/colors.json"
-)
-const PARAMS_JSON_PATH = path.resolve(
-  import.meta.dirname,
-  "palette-params.json"
-)
+const COLORS_JSON_PATH = path.resolve(import.meta.dirname, '../../src/foundation/colors.json')
+const PARAMS_JSON_PATH = path.resolve(import.meta.dirname, 'palette-params.json')
 
 // Special palettes that don't use numeric step keys
-const EXCLUDED_PALETTES = new Set(["black", "white"])
+const EXCLUDED_PALETTES = new Set(['black', 'white'])
 
-function generateAlphaTokens(
-  midpointHex: string
-): Record<string, { $value: string }> {
-  const base = midpointHex.replace("#", "").toLowerCase()
+function generateAlphaTokens(midpointHex: string): Record<string, { $value: string }> {
+  const base = midpointHex.replace('#', '').toLowerCase()
   const result: Record<string, { $value: string }> = {}
   for (const step of ALPHA_STEPS) {
     result[`a${step}`] = { $value: `#${base}${ALPHA_SUFFIXES[step]}` }
@@ -34,19 +26,19 @@ function titleCase(s: string): string {
 function readBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = []
-    req.on("data", (chunk: Buffer) => chunks.push(chunk))
-    req.on("end", () => resolve(Buffer.concat(chunks).toString()))
-    req.on("error", reject)
+    req.on('data', (chunk: Buffer) => chunks.push(chunk))
+    req.on('end', () => resolve(Buffer.concat(chunks).toString()))
+    req.on('error', reject)
   })
 }
 
 function json(res: ServerResponse, status: number, data: unknown): void {
-  res.writeHead(status, { "Content-Type": "application/json" })
+  res.writeHead(status, { 'Content-Type': 'application/json' })
   res.end(JSON.stringify(data))
 }
 
 async function readJsonFile(filepath: string): Promise<unknown> {
-  const raw = await fs.readFile(filepath, "utf-8")
+  const raw = await fs.readFile(filepath, 'utf-8')
   return JSON.parse(raw)
 }
 
@@ -64,29 +56,25 @@ interface ColorsJson {
 
 export function paletteApiPlugin(): Plugin {
   return {
-    name: "palette-api",
+    name: 'palette-api',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         // GET /api/palettes
-        if (req.method === "GET" && req.url === "/api/palettes") {
+        if (req.method === 'GET' && req.url === '/api/palettes') {
           try {
-            const colorsData = (await readJsonFile(
-              COLORS_JSON_PATH
-            )) as ColorsJson
+            const colorsData = (await readJsonFile(COLORS_JSON_PATH)) as ColorsJson
             const paramsData = await readParamsFile()
             const colors = colorsData.colors
 
             const palettes: unknown[] = []
 
             for (const [name, palette] of Object.entries(colors)) {
-              if (name.startsWith("$")) continue
+              if (name.startsWith('$')) continue
               if (EXCLUDED_PALETTES.has(name)) continue
 
               const paletteObj = palette as Record<string, unknown>
               // Must have a "500" key to be a step-based palette
-              const midpointEntry = paletteObj["500"] as
-                | { $value: string }
-                | undefined
+              const midpointEntry = paletteObj['500'] as { $value: string } | undefined
               if (!midpointEntry?.$value) continue
 
               // Collect numeric step values
@@ -107,14 +95,12 @@ export function paletteApiPlugin(): Plugin {
             }
 
             palettes.sort((a, b) =>
-              (a as { name: string }).name.localeCompare(
-                (b as { name: string }).name
-              )
+              (a as { name: string }).name.localeCompare((b as { name: string }).name),
             )
             json(res, 200, { palettes })
           } catch (err) {
             json(res, 500, {
-              error: err instanceof Error ? err.message : "Read failed",
+              error: err instanceof Error ? err.message : 'Read failed',
             })
           }
           return
@@ -122,7 +108,7 @@ export function paletteApiPlugin(): Plugin {
 
         // POST /api/palettes/:name
         const postMatch = req.url?.match(/^\/api\/palettes\/([a-z][a-z0-9-]*)$/)
-        if (req.method === "POST" && postMatch) {
+        if (req.method === 'POST' && postMatch) {
           const name = postMatch[1]
 
           if (EXCLUDED_PALETTES.has(name)) {
@@ -136,29 +122,25 @@ export function paletteApiPlugin(): Plugin {
               params: Record<string, number>
             }
 
-            const colorsData = (await readJsonFile(
-              COLORS_JSON_PATH
-            )) as ColorsJson
+            const colorsData = (await readJsonFile(COLORS_JSON_PATH)) as ColorsJson
             const colors = colorsData.colors
-            const isNew = !colors[name] || name.startsWith("$")
+            const isNew = !colors[name] || name.startsWith('$')
 
             // Find the 500 midpoint for alpha generation
             const midpointStep = body.steps.find((s) => s.step === 500)
             if (!midpointStep) {
-              json(res, 400, { error: "Missing step 500 (midpoint)" })
+              json(res, 400, { error: 'Missing step 500 (midpoint)' })
               return
             }
 
             // Build the palette object
             const paletteObj: Record<string, unknown> = {}
             // Sort steps numerically
-            const sortedSteps = [...body.steps].sort(
-              (a, b) => a.step - b.step
-            )
+            const sortedSteps = [...body.steps].sort((a, b) => a.step - b.step)
             for (const { step, hex } of sortedSteps) {
               paletteObj[step.toString()] = { $value: hex }
             }
-            paletteObj["alpha"] = generateAlphaTokens(midpointStep.hex)
+            paletteObj['alpha'] = generateAlphaTokens(midpointStep.hex)
 
             if (isNew) {
               // Insert before black/white — rebuild the colors object
@@ -184,8 +166,8 @@ export function paletteApiPlugin(): Plugin {
 
             await fs.writeFile(
               COLORS_JSON_PATH,
-              JSON.stringify(colorsData, null, 2) + "\n",
-              "utf-8"
+              JSON.stringify(colorsData, null, 2) + '\n',
+              'utf-8',
             )
 
             // Save params
@@ -193,14 +175,14 @@ export function paletteApiPlugin(): Plugin {
             paramsData[name] = body.params
             await fs.writeFile(
               PARAMS_JSON_PATH,
-              JSON.stringify(paramsData, null, 2) + "\n",
-              "utf-8"
+              JSON.stringify(paramsData, null, 2) + '\n',
+              'utf-8',
             )
 
             json(res, 200, { ok: true, created: isNew })
           } catch (err) {
             json(res, 500, {
-              error: err instanceof Error ? err.message : "Save failed",
+              error: err instanceof Error ? err.message : 'Save failed',
             })
           }
           return

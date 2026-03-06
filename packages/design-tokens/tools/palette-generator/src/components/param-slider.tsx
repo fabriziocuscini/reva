@@ -1,5 +1,5 @@
-import { Slider } from "@/components/ui/slider"
-import type { ParamConfig } from "@/lib/types"
+import { Slider } from '@/components/ui/slider'
+import type { ParamConfig } from '@/lib/types'
 
 interface ParamSliderProps {
   config: ParamConfig
@@ -11,12 +11,10 @@ export function ParamSlider({ config, value, onChange }: ParamSliderProps) {
   return (
     <div className="mb-3.5">
       <div className="flex items-baseline justify-between mb-1.5">
-        <label className="text-xs font-semibold text-foreground">
-          {config.label}
-        </label>
+        <label className="text-xs font-semibold text-foreground">{config.label}</label>
         <span className="text-xs font-mono text-muted-foreground">
           {value}
-          {config.unit ?? ""}
+          {config.unit ?? ''}
         </span>
       </div>
       <div onDoubleClick={() => onChange(config.default)}>
@@ -28,9 +26,7 @@ export function ParamSlider({ config, value, onChange }: ParamSliderProps) {
           step={config.step}
         />
       </div>
-      <p className="text-[11px] text-muted-foreground mt-1 leading-snug">
-        {config.description}
-      </p>
+      <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{config.description}</p>
     </div>
   )
 }

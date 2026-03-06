@@ -108,12 +108,12 @@ Studio types (`fontFamilies`, `fontWeights`, `fontSizes`,
 converts them to their DTCG equivalents at build time, so there is no
 loss on the engineering side.
 
-| `$type`        | `$value` format                      | Examples                              |
-| -------------- | ------------------------------------ | ------------------------------------- |
-| `fontFamilies` | String or array of strings           | `"Inter"`, `["Inter", "sans-serif"]`  |
-| `fontWeights`  | Numeric weight or named string       | `400`, `"Bold"`, `"Semi Bold"`        |
-| `fontSizes`    | Number + unit string (`px` or `rem`) | `"16px"`, `"1rem"`                    |
-| `lineHeights`  | Unitless number or percentage string | `1.5`, `"150%"`                       |
+| `$type`        | `$value` format                      | Examples                             |
+| -------------- | ------------------------------------ | ------------------------------------ |
+| `fontFamilies` | String or array of strings           | `"Inter"`, `["Inter", "sans-serif"]` |
+| `fontWeights`  | Numeric weight or named string       | `400`, `"Bold"`, `"Semi Bold"`       |
+| `fontSizes`    | Number + unit string (`px` or `rem`) | `"16px"`, `"1rem"`                   |
+| `lineHeights`  | Unitless number or percentage string | `1.5`, `"150%"`                      |
 
 ### Other Tokens Studio types
 
@@ -394,6 +394,7 @@ When creating a new token set file, always add it to the
     build script) — never a `$description` key on the group itself.
 
     Wrong:
+
     ```json
     {
       "neutral": {
@@ -404,6 +405,7 @@ When creating a new token set file, always add it to the
     ```
 
     Right — description only on leaf tokens:
+
     ```json
     {
       "neutral": {

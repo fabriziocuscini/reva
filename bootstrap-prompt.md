@@ -45,6 +45,7 @@ reva/
 ```
 
 ### Future additions (do not scaffold yet, but design for them)
+
 - `apps/website/` for the Next.js marketing site, replacing `website-static` and consuming `@reva/tokens` and `@reva/ui`
 - `apps/client-app/` for React Native + Expo mobile app, consuming `@reva/tokens`
 - `apps/sandbox/` or `apps/kitchen-sink/` for internal component testing and experimentation
@@ -73,6 +74,7 @@ reva/
 **Source format:** Tokens Studio JSON format in `src/`. This is the authoring format synced bidirectionally with Figma Variables via the Tokens Studio plugin.
 
 **Token workflow and source of truth:**
+
 - Code is the source of truth for token definitions
 - Token JSON files are authored in Tokens Studio format in `src/`
 - Style Dictionary reads these files directly (using Tokens Studio format parser/transforms) and produces build output
@@ -80,12 +82,14 @@ reva/
 - Always go code-first; do not create Figma variables manually
 
 **Transformation pipeline:** Style Dictionary transforms source tokens into:
+
 - W3C Design Token Community Group (DTCG) JSON format (`dist/json-dtcg/`)
 - CSS custom properties (`dist/css/`)
 - TypeScript constants with full type safety (`dist/ts/`)
 - JSON for React Native consumption (`dist/json-mobile/`)
 
 **Directory structure:**
+
 ```
 packages/design-tokens/
 ├── src/
@@ -114,6 +118,7 @@ packages/design-tokens/
 ```
 
 **Key decisions:**
+
 - Tokens Studio is the authoring tool; Style Dictionary is the build tool. They are complementary.
 - Foundation tokens define the colour palette per brand. Semantic tokens map those into roles. Theme switching happens by swapping which foundation tokens the semantic layer references.
 - The `dist/` folder is gitignored. Token builds are part of the Turborepo pipeline; downstream packages depend on the build output.
@@ -126,6 +131,7 @@ packages/design-tokens/
 **Purpose:** Panda CSS preset that bridges design tokens into Panda's theme system. Defines the base Reva theme, conditions for light/dark mode, and the multi-theme infrastructure for white-labelling.
 
 **Core responsibilities:**
+
 - Maps `@reva/tokens` output (CSS variables or TS constants) into Panda CSS `tokens` and `semanticTokens`
 - Defines conditions: `light` (`[data-color-mode=light] &`), `dark` (`[data-color-mode=dark] &`)
 - Defines the base Reva theme (default)
@@ -149,12 +155,20 @@ export const revaPreset = definePreset({
     dark: '[data-color-mode=dark] &',
   },
   theme: {
-    tokens,           // imported from @reva/tokens/panda/tokens
-    semanticTokens,   // imported from @reva/tokens/panda/semantic-tokens
-    recipes: { /* all CVA recipes */ },
-    slotRecipes: { /* all slot recipes */ },
-    keyframes: { /* animation keyframes */ },
-    textStyles: { /* typography presets */ },
+    tokens, // imported from @reva/tokens/panda/tokens
+    semanticTokens, // imported from @reva/tokens/panda/semantic-tokens
+    recipes: {
+      /* all CVA recipes */
+    },
+    slotRecipes: {
+      /* all slot recipes */
+    },
+    keyframes: {
+      /* animation keyframes */
+    },
+    textStyles: {
+      /* typography presets */
+    },
   },
 })
 ```
@@ -164,6 +178,7 @@ export const revaPreset = definePreset({
 Reva hosts the platform on behalf of advisory firms. Each firm gets a custom domain (e.g. `portal.advisoryfirm.co.uk`) that routes to a tenant-specific environment (e.g. `client123.revaos.com`). The firm's end users never see Reva branding. The server identifies the tenant and loads the correct theme before first paint.
 
 Apps use Panda's generated `styled-system/themes` utilities:
+
 ```typescript
 import { getTheme, injectTheme } from 'styled-system/themes'
 
@@ -173,6 +188,7 @@ injectTheme(document.documentElement, theme)
 ```
 
 For SSR (Next.js apps), inject theme CSS in `<head>` during server rendering:
+
 ```typescript
 // app/layout.tsx (simplified)
 const themeName = resolveClientTheme(request) // from domain/subdomain/config
@@ -190,6 +206,7 @@ const theme = themeName && (await getTheme(themeName))
 Colour mode (light/dark) is orthogonal to the brand theme; set via `data-color-mode` attribute. Every theme supports both modes automatically.
 
 **Directory structure:**
+
 ```
 packages/panda-preset/
 ├── src/
@@ -226,6 +243,7 @@ packages/panda-preset/
 3. **Consumer component** (optional, in `@reva/ui`): Simplified API on top of the styled wrapper for common use cases.
 
 **Key rules:**
+
 - Always import anatomy from `@ark-ui/react/anatomy`, never from the main entrypoint
 - Use `anatomyKeys()` for slot names; never hardcode them
 - Semantic colour tokens only for all colour values in recipes (never colour foundation tokens, never raw colour values). Non-colour foundation tokens (spacing, radii, borders, etc.) may be used directly.
@@ -236,6 +254,7 @@ packages/panda-preset/
 - Ark UI manages all ARIA, keyboard navigation, and focus management; do not duplicate
 
 **File structure per component:**
+
 ```
 packages/ui/src/
 ├── components/
@@ -255,12 +274,13 @@ packages/ui/src/
 ```
 
 **Panda config for this package:**
+
 ```typescript
 import { defineConfig } from '@pandacss/dev'
 import { revaPreset } from '@reva/panda-preset'
 
 export default defineConfig({
-  presets: [revaPreset],  // no @pandacss/preset-base; revaPreset owns all tokens
+  presets: [revaPreset], // no @pandacss/preset-base; revaPreset owns all tokens
   include: ['./src/**/*.{ts,tsx}'],
   outdir: 'styled-system',
   jsxFramework: 'react',
@@ -274,6 +294,7 @@ export default defineConfig({
 **Purpose:** Single source of truth for code quality tooling across all packages and apps.
 
 **Exports:**
+
 - ESLint flat config with the following plugins:
   - `@typescript-eslint/eslint-plugin` + `typescript-eslint/parser` (TypeScript-aware linting, strict mode, no-any)
   - `@pandacss/eslint-plugin` (enforces token usage, catches raw CSS values in recipes, validates Panda patterns)
@@ -306,12 +327,14 @@ All other packages and apps extend these configs rather than defining their own.
 **Purpose:** Documentation site built with Fumadocs + Next.js.
 
 **Content:**
+
 - Component documentation pages (props, variants, usage examples, live previews)
 - Token reference pages (colour palettes, spacing scale, typography, etc.)
 - Design guidelines and patterns
 - Theme customisation guide
 
 **Structure:**
+
 ```
 apps/docs/
 ├── app/
@@ -355,6 +378,7 @@ apps/docs/
 **Purpose:** The two main web applications. `advisor-portal` is the advisor-facing portal; `client-portal` is the end-client facing portal (the one that gets white-labelled per advisory firm).
 
 Scaffold both as Vite + React + TypeScript apps initialised as Panda CSS projects (ref: https://panda-css.com/docs/installation/vite). Each app:
+
 - Uses `@reva/panda-preset` as its Panda CSS preset (no default preset)
 - Depends on `@reva/ui` for components
 - Extends `@reva/config` for ESLint, Prettier, and TypeScript configuration
@@ -370,35 +394,36 @@ Scaffold both as Vite + React + TypeScript apps initialised as Panda CSS project
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "styled-system/**", ".next/**", ".fumadocs/**"]
+      "outputs": ["dist/**", "styled-system/**", ".next/**", ".fumadocs/**"],
     },
     "dev": {
       "dependsOn": ["^build"],
       "persistent": true,
-      "cache": false
+      "cache": false,
     },
     "lint": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
     },
     "test": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
     },
     "typecheck": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
     },
     "tokens:build": {
       "dependsOn": [],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**"],
     },
     "codegen": {
       "dependsOn": ["^build"],
-      "outputs": ["styled-system/**"]
-    }
-  }
+      "outputs": ["styled-system/**"],
+    },
+  },
 }
 ```
 
 **Build order (enforced by `dependsOn: ["^build"]`):**
+
 1. `@reva/tokens` builds first (Style Dictionary transforms)
 2. `@reva/panda-preset` builds next (depends on token output)
 3. `@reva/ui` builds next (Panda codegen using preset, then component compilation)
@@ -409,20 +434,25 @@ Scaffold both as Vite + React + TypeScript apps initialised as Panda CSS project
 ## 5. Infrastructure
 
 ### CI/CD (GitHub Actions)
+
 - **On PR:** lint, typecheck, build all packages, run Playwright tests
 - **On merge to main:** build + deploy docs to Vercel, deploy website to Vercel
 
 ### Package builds
+
 - **tsdown** for building all TypeScript packages (`@reva/tokens`, `@reva/panda-preset`, `@reva/ui`, `@reva/config`). Handles dual CJS/ESM output, `.d.ts` generation, and tree-shaking.
 
 ### Versioning and releases
+
 - **Changesets** (`@changesets/cli`) for version management and changelog generation across the monorepo. Each PR that changes a package includes a changeset describing the change. On merge, Changesets handles version bumps, changelog updates, and npm publishing (when ready).
 
 ### Deployment
+
 - Vercel for `@reva/docs` and `@reva/website`
 - Vercel or custom infrastructure for client apps
 
 ### Testing
+
 - **Playwright** for end-to-end and component testing
 - Test files co-located with components (e.g. `button.test.tsx`)
 - Playwright config at repository root
@@ -436,17 +466,21 @@ Scaffold both as Vite + React + TypeScript apps initialised as Panda CSS project
 The following MCP servers are installed in this project. **Always use these instead of web search** when looking up API details, usage patterns, or implementation guidance.
 
 **Core framework servers (use for all API and implementation questions):**
+
 - **Panda CSS MCP** (https://panda-css.com/docs/ai/mcp-server): Token definitions, recipe APIs, conditions, theme configuration, utilities. Always consult this for any Panda CSS question.
 - **Ark UI MCP** (https://ark-ui.com/docs/ai/mcp-server): Component APIs, anatomy definitions, accessibility features, keyboard navigation, state management. This is the backbone of every component; always consult it first when implementing a new component.
 
 **Design tool servers:**
+
 - **Figma MCP** (official): For **read operations** only. Fetching design context, reading variables, getting screenshots, understanding file structure. Tools: `Figma:get_design_context`, `Figma:get_variable_defs`, `Figma:get_metadata`, `Figma:get_screenshot`.
 - **Figma Console MCP**: For **write operations** only. Creating components with variants, editing variables, setting text, modifying fills/strokes, creating styles. Tools: `figma-console:figma_execute`, `figma-console:figma_create_child`, `figma-console:figma_set_text`, `figma-console:figma_set_fills`, `figma-console:figma_instantiate_component`, etc.
 
 **Reference and inspiration servers:**
+
 - **Chakra UI MCP** (https://chakra-ui.com/docs/get-started/ai/mcp-server): Use for **inspiration** when building components. Chakra UI is a strong reference because it is powered by Ark UI under the hood and follows the same API conventions (same core team behind Chakra, Ark UI, Panda CSS, Zag.js, and Park UI). However, Chakra uses Emotion for styling, not Panda CSS, so adapt styling patterns accordingly. Also consult their AI-friendly docs at https://chakra-ui.com/docs/get-started/ai/llms for component context, usage, and implementation guidance.
 
 **Workspace servers:**
+
 - **Notion MCP**: For reading project notes, brand documentation, specs, and briefs shared by the designer.
 - **GitHub MCP** (if installed): For repository management, issues, and pull requests.
 
@@ -461,6 +495,7 @@ When building a component, consult sources in this order:
 5. **Installed project skill ("ui-component-patterns")**: Definitive rules for our specific patterns (`styled()` for single-element, `createStyleContext` for compound, slot recipes, token usage rules, etc.).
 
 ### Important Rules
+
 - **Never web search for Panda CSS, Ark UI, or Chakra UI questions** when MCP servers are available. Use the MCP servers first.
 - When an MCP server does not have the answer, consult the framework's official documentation directly.
 - Chakra UI is for **inspiration**, not direct copying. Always translate patterns to our Panda CSS + Ark UI stack.
@@ -473,13 +508,17 @@ When building a component, consult sources in this order:
 When creating a new component, follow this complete workflow:
 
 ### Step 1: Read tokens
+
 Read all related design tokens from `@reva/tokens` that the component will need (colours, spacing, typography, radii, shadows, interactive states).
 
 ### Step 2: Create in Figma
+
 Using the Figma MCP servers (see section 6 for which server handles reads vs writes), create the component in the Figma library with all variants matching the recipe variants (size, variant, state combinations).
 
 ### Step 3: Implement the recipe
+
 In `@reva/panda-preset`, create the slot recipe (or CVA for single-element components):
+
 - Import anatomy from `@ark-ui/react/anatomy`
 - Use `anatomyKeys()` for slots
 - Use semantic tokens for all colour values (never reference colour foundation tokens directly). Non-colour foundation tokens (spacing, radii, borders, etc.) may be used directly.
@@ -487,7 +526,9 @@ In `@reva/panda-preset`, create the slot recipe (or CVA for single-element compo
 - Set sensible `defaultVariants`
 
 ### Step 4: Implement the React component
+
 In `@reva/ui`:
+
 - Single-element: use `styled(ark.<element>, recipe)` from `styled-system/jsx`
 - Compound: use `createStyleContext` to wire slot recipe classes to Ark UI parts
 - Export as namespace (e.g. `Accordion.Root`, `Accordion.Item`)
@@ -495,7 +536,9 @@ In `@reva/ui`:
 - Add `forwardRef` to leaf parts
 
 ### Step 5: Write the docs page
+
 In `@reva/docs`, create an MDX page under `content/docs/components/`:
+
 - Component description and use cases
 - Props table (derived from TypeScript types)
 - Variant examples
@@ -503,7 +546,9 @@ In `@reva/docs`, create an MDX page under `content/docs/components/`:
 - Do's and don'ts
 
 ### Step 6: Test
+
 Write a Playwright component test covering:
+
 - Default rendering
 - All variant combinations
 - Interactive states (open/close, hover, focus, disabled)
@@ -514,12 +559,14 @@ Write a Playwright component test covering:
 ## 8. Coding Standards
 
 ### TypeScript
+
 - Strict mode everywhere
 - No `any` types; use `unknown` with type guards when necessary
 - Derive types from recipes and Ark UI props; avoid manual type duplication
 - Path aliases configured in `tsconfig.json` per package
 
 ### Styling
+
 - Zero raw CSS values in recipes (no `'#1a1a1a'`, no `'14px'`, no `'8px'`)
 - Colour foundation tokens never referenced in recipes or app code; always use the semantic colour layer
 - Non-colour foundation tokens (spacing, radii, borders, etc.) may be referenced directly in recipes
@@ -528,6 +575,7 @@ Write a Playwright component test covering:
 - Panda CSS conditions for all interactive states (never custom CSS selectors for data attributes Panda already supports)
 
 ### Component patterns
+
 - Anatomy-first: always derive slots from Ark UI anatomy
 - Compound component pattern with namespace exports
 - `styled()` for single-element, `createStyleContext` for compound; no prop drilling of classNames
@@ -536,6 +584,7 @@ Write a Playwright component test covering:
 - `cva` for single-element components; `defineSlotRecipe` for multi-part
 
 ### File naming
+
 - kebab-case for directories and files
 - PascalCase for component exports
 - camelCase for functions, variables, recipe names
@@ -547,15 +596,17 @@ Write a Playwright component test covering:
 Execute these phases **one at a time**. After completing each phase, stop and report what was done, what succeeded, and any issues encountered. Wait for my explicit approval before starting the next phase. Do not proceed to Phase N+1 until I confirm Phase N is good.
 
 ### Phase 1: Repository scaffolding
+
 1. Initialise the Turborepo monorepo with Bun
 2. Create the workspace structure (`apps/`, `packages/`)
 3. Set up `@reva/config` with shared ESLint, Prettier, and base TypeScript configs
 4. Configure `turbo.json` with the task pipeline
 5. Set up root `package.json` with workspace scripts
-7. Install and initialise Changesets (`@changesets/cli`) for versioning
-8. Install tsdown as a shared dev dependency for package builds
+6. Install and initialise Changesets (`@changesets/cli`) for versioning
+7. Install tsdown as a shared dev dependency for package builds
 
 ### Phase 2: Design tokens
+
 1. Scaffold `@reva/tokens` package
 2. Create minimal placeholder foundation tokens in Tokens Studio format (a small neutral grey scale, one brand colour scale, basic spacing, one type scale, radii, one shadow). Mark all values with `// PLACEHOLDER` comments
 3. Create minimal placeholder semantic token mappings with light/dark mode support (enough to style a Button component: fg, bg, border, brand colours)
@@ -564,6 +615,7 @@ Execute these phases **one at a time**. After completing each phase, stop and re
 6. The full token naming convention and palettes will be provided in a follow-up specification
 
 ### Phase 3: Panda CSS preset
+
 1. Scaffold `@reva/panda-preset` package
 2. Map token output into Panda `tokens` and `semanticTokens`
 3. Define conditions (light/dark)
@@ -573,6 +625,7 @@ Execute these phases **one at a time**. After completing each phase, stop and re
 7. Export the preset
 
 ### Phase 4: Component library
+
 1. Scaffold `@reva/ui` package
 2. Set up `panda.config.ts` extending `@reva/panda-preset`
 3. Create `createStyleContext` utility
@@ -581,6 +634,7 @@ Execute these phases **one at a time**. After completing each phase, stop and re
 6. Verify the component renders correctly in a test app
 
 ### Phase 5: Documentation site
+
 1. Scaffold `@reva/docs` with Fumadocs + Next.js
 2. Configure `source.config.ts` and content source
 3. Create the first component doc page (Button)
@@ -588,6 +642,7 @@ Execute these phases **one at a time**. After completing each phase, stop and re
 5. Verify the docs site builds and renders
 
 ### Phase 6: Apps
+
 1. Scaffold `@reva/advisor-portal` as a Vite + React + TS app, initialised as a Panda CSS project (ref: https://panda-css.com/docs/installation/vite) with `@reva/panda-preset` as the preset and `@reva/ui` as a dependency
 2. Scaffold `@reva/client-portal` as a Vite + React + TS app with the same Panda CSS + preset + `@reva/ui` setup
 3. Both apps extend `@reva/config` for ESLint, Prettier, and TypeScript configuration
@@ -595,13 +650,16 @@ Execute these phases **one at a time**. After completing each phase, stop and re
 5. Note: `@reva/website-static` is not scaffolded; the existing static site will be copied into `apps/website-static/` manually. `@reva/website` (Next.js) will be built later.
 
 ### Phase 7: CI/CD
+
 1. Create GitHub Actions workflow for PR checks (lint, typecheck, build, test)
 2. Create Changesets GitHub Action for automated version PRs and release publishing
 3. Create Vercel deployment configuration for docs and website
 4. Set up Playwright configuration at repo root
 
 ### Phase 8: Author CLAUDE.md
+
 Once all previous phases are complete and verified, distil this bootstrap prompt into a concise `CLAUDE.md` file at the repository root. This file serves as the persistent reference for all future development work in the project. It should be prescriptive and compact, not explanatory. Include:
+
 1. Project structure overview (packages, apps, their purposes)
 2. Token usage rules (colour tokens always via semantic layer; non-colour foundation tokens allowed directly; Panda-aligned plural namespace)
 3. Component creation checklist (condensed version of the workflow in section 7)
@@ -621,6 +679,7 @@ Two Claude Code skills are installed in `.claude/skills/`. These are project-spe
 Covers component implementation with Ark UI + Panda CSS. Auto-invoked when creating, editing, or reviewing any component, recipe, or styled wrapper.
 
 Key rules enforced by this skill:
+
 - Anatomy-first approach: import from `@ark-ui/react/anatomy`, use `.keys()` for slots
 - `styled(ark.<element>, recipe)` for single-element components (north star, Park UI pattern)
 - `createStyleContext` for distributing slot recipe classes to compound component parts
@@ -638,6 +697,7 @@ Key rules enforced by this skill:
 Covers design token JSON authoring in the Tokens Studio W3C DTCG format. Auto-invoked when creating, editing, or reviewing any `.json` token source file.
 
 Key rules enforced by this skill:
+
 - Always use `$`-prefixed keys (`$value`, `$type`, `$description`), never legacy unprefixed format
 - `$type` can be declared at group level and is inherited by children
 - Dimensions require units (`"16px"`, not `16`); only `number` type accepts unitless values

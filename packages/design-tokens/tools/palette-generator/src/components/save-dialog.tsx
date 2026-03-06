@@ -1,27 +1,27 @@
-import { useState, useEffect, useCallback } from "react"
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog"
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { SpinnerGap } from "@phosphor-icons/react"
-import type { Preset } from "@/lib/types"
+} from '@/components/ui/select'
+import type { Preset } from '@/lib/types'
+import { SpinnerGap } from '@phosphor-icons/react'
+import { useCallback, useEffect, useState } from 'react'
 
-const NEW_PALETTE_VALUE = "__new__"
-const EXCLUDED = new Set(["black", "white"])
+const NEW_PALETTE_VALUE = '__new__'
+const EXCLUDED = new Set(['black', 'white'])
 
 interface SaveDialogProps {
   open: boolean
@@ -42,16 +42,16 @@ export function SaveDialog({
   isSaving,
   onSave,
 }: SaveDialogProps) {
-  const defaultSelect = activePreset ?? lastPreset ?? presets[0]?.name ?? ""
+  const defaultSelect = activePreset ?? lastPreset ?? presets[0]?.name ?? ''
   const [selectValue, setSelectValue] = useState(defaultSelect)
-  const [newName, setNewName] = useState("")
+  const [newName, setNewName] = useState('')
   const [error, setError] = useState<string | null>(null)
 
   // Reset state when dialog opens
   useEffect(() => {
     if (open) {
-      setSelectValue(activePreset ?? lastPreset ?? presets[0]?.name ?? "")
-      setNewName("")
+      setSelectValue(activePreset ?? lastPreset ?? presets[0]?.name ?? '')
+      setNewName('')
       setError(null)
     }
   }, [open, activePreset, lastPreset, presets])
@@ -60,14 +60,13 @@ export function SaveDialog({
 
   const validate = useCallback(
     (name: string): string | null => {
-      if (!name.trim()) return "Name is required"
-      if (!/^[a-z]+$/.test(name)) return "Lowercase letters only, no spaces"
+      if (!name.trim()) return 'Name is required'
+      if (!/^[a-z]+$/.test(name)) return 'Lowercase letters only, no spaces'
       if (EXCLUDED.has(name)) return `"${name}" is reserved`
-      if (presets.some((p) => p.name === name))
-        return `"${name}" already exists`
+      if (presets.some((p) => p.name === name)) return `"${name}" already exists`
       return null
     },
-    [presets]
+    [presets],
   )
 
   const handleNewNameChange = (value: string) => {
@@ -77,14 +76,14 @@ export function SaveDialog({
       setSelectValue(NEW_PALETTE_VALUE)
     } else {
       // Revert to the default when input is cleared
-      setSelectValue(activePreset ?? lastPreset ?? presets[0]?.name ?? "")
+      setSelectValue(activePreset ?? lastPreset ?? presets[0]?.name ?? '')
     }
   }
 
   const handleSelectChange = (value: string) => {
     setSelectValue(value)
     if (value !== NEW_PALETTE_VALUE) {
-      setNewName("")
+      setNewName('')
       setError(null)
     }
   }
@@ -109,9 +108,7 @@ export function SaveDialog({
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>Save palette as</DialogTitle>
-          <DialogDescription>
-            Override an existing palette or create a new one.
-          </DialogDescription>
+          <DialogDescription>Override an existing palette or create a new one.</DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-3 py-2">
@@ -129,9 +126,7 @@ export function SaveDialog({
                     {p.displayName}
                   </SelectItem>
                 ))}
-                <SelectItem value={NEW_PALETTE_VALUE}>
-                  New palette…
-                </SelectItem>
+                <SelectItem value={NEW_PALETTE_VALUE}>New palette…</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -146,12 +141,10 @@ export function SaveDialog({
               value={newName}
               onChange={(e) => handleNewNameChange(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && canSave) handleSave()
+                if (e.key === 'Enter' && canSave) handleSave()
               }}
             />
-            {error && (
-              <p className="text-[10px] text-destructive">{error}</p>
-            )}
+            {error && <p className="text-[10px] text-destructive">{error}</p>}
           </div>
         </div>
 
@@ -164,14 +157,8 @@ export function SaveDialog({
           >
             Cancel
           </Button>
-          <Button
-            size="sm"
-            onClick={handleSave}
-            disabled={!canSave || isSaving}
-          >
-            {isSaving && (
-              <SpinnerGap className="size-3.5 animate-spin" />
-            )}
+          <Button size="sm" onClick={handleSave} disabled={!canSave || isSaving}>
+            {isSaving && <SpinnerGap className="size-3.5 animate-spin" />}
             Save
           </Button>
         </DialogFooter>

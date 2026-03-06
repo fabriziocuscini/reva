@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react"
-import { Button } from "@/components/ui/button"
-import { copyToClipboard } from "@/lib/clipboard"
-import { ALPHA_STEPS, ALPHA_SUFFIXES } from "@/lib/constants"
-import type { PaletteStep } from "@/lib/types"
+import { Button } from '@/components/ui/button'
+import { copyToClipboard } from '@/lib/clipboard'
+import { ALPHA_STEPS, ALPHA_SUFFIXES } from '@/lib/constants'
+import type { PaletteStep } from '@/lib/types'
+import { useMemo, useState } from 'react'
 
 interface CopyBlockProps {
   palette: PaletteStep[]
@@ -14,20 +14,17 @@ export function CopyBlock({ palette, paletteName, midpointHex }: CopyBlockProps)
   const [copied, setCopied] = useState(false)
 
   const text = useMemo(() => {
-    const indent = "      "
-    const base = midpointHex.replace("#", "").toLowerCase()
+    const indent = '      '
+    const base = midpointHex.replace('#', '').toLowerCase()
 
     const steps = palette
-      .map(
-        (item) =>
-          `${indent}"${item.step}": {\n${indent}  "$value": "${item.hex}"\n${indent}}`
-      )
-      .join(",\n")
+      .map((item) => `${indent}"${item.step}": {\n${indent}  "$value": "${item.hex}"\n${indent}}`)
+      .join(',\n')
 
     const alphas = ALPHA_STEPS.map(
       (step) =>
-        `${indent}  "a${step}": {\n${indent}    "$value": "#${base}${ALPHA_SUFFIXES[step]}"\n${indent}  }`
-    ).join(",\n")
+        `${indent}  "a${step}": {\n${indent}    "$value": "#${base}${ALPHA_SUFFIXES[step]}"\n${indent}  }`,
+    ).join(',\n')
 
     return `    "${paletteName}": {\n${steps},\n${indent}"alpha": {\n${alphas}\n${indent}}\n    }`
   }, [palette, paletteName, midpointHex])
@@ -49,7 +46,7 @@ export function CopyBlock({ palette, paletteName, midpointHex }: CopyBlockProps)
         onClick={handleCopy}
         className="absolute top-2 right-2 text-xs bg-neutral-800 text-neutral-200 hover:bg-neutral-700"
       >
-        {copied ? "Copied" : "Copy"}
+        {copied ? 'Copied' : 'Copy'}
       </Button>
     </div>
   )

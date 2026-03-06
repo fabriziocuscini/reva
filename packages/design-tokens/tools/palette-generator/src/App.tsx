@@ -1,42 +1,36 @@
-import { useEffect, useState, useCallback, useRef } from "react"
+import { AlphaStrip } from '@/components/alpha-strip'
+import { ChromaPanel } from '@/components/chroma-panel'
+import { ColorPickerInput } from '@/components/color-picker-input'
+import { ComparePanel } from '@/components/compare-panel'
+import { CopyBlock } from '@/components/copy-block'
+import { HuePanel } from '@/components/hue-panel'
+import { LightnessPanel } from '@/components/lightness-panel'
+import { PaletteStrip } from '@/components/palette-strip'
+import { PresetBar } from '@/components/preset-bar'
+import { SaveDialog } from '@/components/save-dialog'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Switch } from '@/components/ui/switch'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { ValuesTable } from '@/components/values-table'
+import { usePalette } from '@/hooks/use-palette'
+import { useTheme } from '@/hooks/use-theme'
+import type { PalettePreset } from '@/lib/api'
+import { fetchPalettes } from '@/lib/api'
+import { DEFAULT_PARAMS, DISTRIBUTION_PARAM } from '@/lib/constants'
+import type { Preset } from '@/lib/types'
 import {
-  Sun,
-  Moon,
   ArrowCounterClockwise,
-  FloppyDisk,
-  SpinnerGap,
   Check,
-} from "@phosphor-icons/react"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Slider } from "@/components/ui/slider"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { PresetBar } from "@/components/preset-bar"
-import { ColorPickerInput } from "@/components/color-picker-input"
-import { PaletteStrip } from "@/components/palette-strip"
-import { AlphaStrip } from "@/components/alpha-strip"
-import { LightnessPanel } from "@/components/lightness-panel"
-import { ChromaPanel } from "@/components/chroma-panel"
-import { HuePanel } from "@/components/hue-panel"
-import { ValuesTable } from "@/components/values-table"
-import { CopyBlock } from "@/components/copy-block"
-import { SaveDialog } from "@/components/save-dialog"
-import { ComparePanel } from "@/components/compare-panel"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { DISTRIBUTION_PARAM } from "@/lib/constants"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { usePalette } from "@/hooks/use-palette"
-import { useTheme } from "@/hooks/use-theme"
-import { fetchPalettes } from "@/lib/api"
-import type { PalettePreset } from "@/lib/api"
-import type { Preset } from "@/lib/types"
-import { DEFAULT_PARAMS } from "@/lib/constants"
+  FloppyDisk,
+  Moon,
+  SpinnerGap,
+  Sun,
+} from '@phosphor-icons/react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 /** Convert API response to the Preset shape used by usePalette */
 function toPresets(apiPresets: PalettePreset[]): Preset[] {
@@ -56,9 +50,7 @@ export default function App() {
   useEffect(() => {
     fetchPalettes()
       .then((data) => setPresets(toPresets(data)))
-      .catch((err) =>
-        setLoadError(err instanceof Error ? err.message : "Failed to load palettes")
-      )
+      .catch((err) => setLoadError(err instanceof Error ? err.message : 'Failed to load palettes'))
   }, [])
 
   if (loadError) {
@@ -117,7 +109,7 @@ function PaletteEditor({
   const [savedFlash, setSavedFlash] = useState(false)
   const [showAlpha, setShowAlpha] = useState(false)
   const [compareStep, setCompareStep] = useState<number | null>(null)
-  const [benchmarkHex, setBenchmarkHex] = useState("#000000")
+  const [benchmarkHex, setBenchmarkHex] = useState('#000000')
   const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const showSavedFlash = useCallback(() => {
@@ -142,8 +134,7 @@ function PaletteEditor({
         setSaveDialogOpen(false)
         // If this was a new palette, add it to presets and select it
         if (!presets.some((p) => p.name === name)) {
-          const titleCase =
-            name.charAt(0).toUpperCase() + name.slice(1)
+          const titleCase = name.charAt(0).toUpperCase() + name.slice(1)
           const newPreset: Preset = {
             name,
             displayName: titleCase,
@@ -159,14 +150,12 @@ function PaletteEditor({
         // error shown in dialog
       }
     },
-    [save, presets, midpointHex, params, onPresetsChange, selectPreset, showSavedFlash]
+    [save, presets, midpointHex, params, onPresetsChange, selectPreset, showSavedFlash],
   )
 
   // Compare panel — derive live hex for the selected step
   const compareHex =
-    compareStep !== null
-      ? palette.find((s) => s.step === compareStep)?.hex ?? null
-      : null
+    compareStep !== null ? (palette.find((s) => s.step === compareStep)?.hex ?? null) : null
 
   const handleSwatchClick = useCallback(
     (step: number) => {
@@ -178,7 +167,7 @@ function PaletteEditor({
       }
       setCompareStep(step)
     },
-    [palette, compareStep]
+    [palette, compareStep],
   )
 
   // Wrap selectPreset so switching presets auto-closes compare panel
@@ -187,7 +176,7 @@ function PaletteEditor({
       setCompareStep(null)
       selectPreset(name)
     },
-    [selectPreset]
+    [selectPreset],
   )
 
   // Keyboard shortcuts: ⌘Z undo, ⌘⇧Z redo, D toggle dark mode, ⌘S save
@@ -195,9 +184,9 @@ function PaletteEditor({
     const handler = (e: KeyboardEvent) => {
       // Ignore when typing in inputs
       const tag = (e.target as HTMLElement).tagName
-      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
 
-      if (e.key === "d" || e.key === "D") {
+      if (e.key === 'd' || e.key === 'D') {
         if (!e.metaKey && !e.ctrlKey && !e.altKey) {
           e.preventDefault()
           toggle()
@@ -205,7 +194,7 @@ function PaletteEditor({
         return
       }
 
-      if ((e.metaKey || e.ctrlKey) && e.key === "z") {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'z') {
         e.preventDefault()
         if (e.shiftKey) {
           redo()
@@ -215,7 +204,7 @@ function PaletteEditor({
         return
       }
 
-      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
         e.preventDefault()
         if (activePreset) {
           if (hasUnsavedChanges && !isSaving) handleSave()
@@ -225,7 +214,7 @@ function PaletteEditor({
         return
       }
 
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         e.preventDefault()
         if (compareStep !== null) {
           setCompareStep(null)
@@ -235,9 +224,19 @@ function PaletteEditor({
       }
     }
 
-    document.addEventListener("keydown", handler)
-    return () => document.removeEventListener("keydown", handler)
-  }, [undo, redo, toggle, activePreset, hasUnsavedChanges, isSaving, handleSave, resetParams, compareStep])
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [
+    undo,
+    redo,
+    toggle,
+    activePreset,
+    hasUnsavedChanges,
+    isSaving,
+    handleSave,
+    resetParams,
+    compareStep,
+  ])
 
   const isCustomHex = activePreset === null
 
@@ -250,17 +249,11 @@ function PaletteEditor({
             <div>
               <h1 className="text-lg font-bold">OKLCH Palette Generator</h1>
               <p className="text-xs text-muted-foreground">
-                Parametric palette generation with anchored midpoint,
-                independent endpoint tapering, per-channel easing, and gamut
-                mapping.
+                Parametric palette generation with anchored midpoint, independent endpoint tapering,
+                per-channel easing, and gamut mapping.
               </p>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggle}
-              className="shrink-0"
-            >
+            <Button variant="ghost" size="icon" onClick={toggle} className="shrink-0">
               {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
             </Button>
           </div>
@@ -274,17 +267,10 @@ function PaletteEditor({
             />
             <div className="ml-auto flex items-center gap-3 shrink-0">
               <div className="flex items-center gap-1.5">
-                <Label
-                  htmlFor="show-alpha"
-                  className="text-[10px] text-muted-foreground"
-                >
+                <Label htmlFor="show-alpha" className="text-[10px] text-muted-foreground">
                   Show alpha
                 </Label>
-                <Switch
-                  id="show-alpha"
-                  checked={showAlpha}
-                  onCheckedChange={setShowAlpha}
-                />
+                <Switch id="show-alpha" checked={showAlpha} onCheckedChange={setShowAlpha} />
               </div>
               <ColorPickerInput value={midpointHex} onChange={setCustomHex} />
             </div>
@@ -346,9 +332,7 @@ function PaletteEditor({
                               )}
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent>
-                            {savedFlash ? "Saved!" : "Save palette"}
-                          </TooltipContent>
+                          <TooltipContent>{savedFlash ? 'Saved!' : 'Save palette'}</TooltipContent>
                         </Tooltip>
                       )}
                       <div
@@ -383,9 +367,9 @@ function PaletteEditor({
                     </TabsContent>
                     <TabsContent value="gradient" className="mt-0">
                       <div
-                        className={`h-10 md:h-12 lg:h-16 ${showAlpha ? "rounded-b-lg" : "rounded-lg"}`}
+                        className={`h-10 md:h-12 lg:h-16 ${showAlpha ? 'rounded-b-lg' : 'rounded-lg'}`}
                         style={{
-                          background: `linear-gradient(to right, ${palette.map((p) => p.hex).join(", ")})`,
+                          background: `linear-gradient(to right, ${palette.map((p) => p.hex).join(', ')})`,
                         }}
                       />
                     </TabsContent>
@@ -431,7 +415,7 @@ function PaletteEditor({
               {/* Copy block */}
               <CopyBlock
                 palette={palette}
-                paletteName={activePreset ?? lastPreset ?? "custom"}
+                paletteName={activePreset ?? lastPreset ?? 'custom'}
                 midpointHex={midpointHex}
               />
             </div>

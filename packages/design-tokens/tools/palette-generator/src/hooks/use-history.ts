@@ -1,5 +1,5 @@
-import { useRef, useCallback } from "react"
-import type { PaletteParams } from "@/lib/types"
+import type { PaletteParams } from '@/lib/types'
+import { useCallback, useRef } from 'react'
 
 const MAX_HISTORY = 100
 const DEBOUNCE_MS = 500
@@ -48,7 +48,7 @@ export function useHistory() {
       // Any new change clears redo stack
       future.current = []
     },
-    [flush]
+    [flush],
   )
 
   /**
@@ -69,26 +69,23 @@ export function useHistory() {
       }
       return { ...prev }
     },
-    [flush]
+    [flush],
   )
 
   /**
    * Redo: restore the most recent future snapshot.
    * Returns the params to restore, or null if nothing to redo.
    */
-  const redo = useCallback(
-    (current: PaletteParams): PaletteParams | null => {
-      const next = future.current.pop()
-      if (!next) return null
+  const redo = useCallback((current: PaletteParams): PaletteParams | null => {
+    const next = future.current.pop()
+    if (!next) return null
 
-      if (!paramsEqual(current, next)) {
-        past.current.push({ ...current })
-        if (past.current.length > MAX_HISTORY) past.current.shift()
-      }
-      return { ...next }
-    },
-    []
-  )
+    if (!paramsEqual(current, next)) {
+      past.current.push({ ...current })
+      if (past.current.length > MAX_HISTORY) past.current.shift()
+    }
+    return { ...next }
+  }, [])
 
   /** Clear all history (e.g. when switching presets). */
   const clear = useCallback(() => {
@@ -101,10 +98,7 @@ export function useHistory() {
     future.current = []
   }, [])
 
-  const canUndo = useCallback(
-    () => past.current.length > 0 || pendingSnapshot.current !== null,
-    []
-  )
+  const canUndo = useCallback(() => past.current.length > 0 || pendingSnapshot.current !== null, [])
   const canRedo = useCallback(() => future.current.length > 0, [])
 
   return { record, undo, redo, clear, canUndo, canRedo }

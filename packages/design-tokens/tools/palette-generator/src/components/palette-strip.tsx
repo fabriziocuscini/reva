@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { copyToClipboard } from "@/lib/clipboard"
-import { MAIN_STEPS } from "@/lib/constants"
-import { cn } from "@/lib/utils"
-import type { PaletteStep } from "@/lib/types"
+import { copyToClipboard } from '@/lib/clipboard'
+import { MAIN_STEPS } from '@/lib/constants'
+import type { PaletteStep } from '@/lib/types'
+import { cn } from '@/lib/utils'
+import { useState } from 'react'
 
 interface PaletteStripProps {
   palette: PaletteStep[]
@@ -15,7 +15,14 @@ interface PaletteStripProps {
   onSwatchClick?: (step: number) => void
 }
 
-export function PaletteStrip({ palette, showLabels = true, labelsOnly = false, roundedTop = true, compareStep, onSwatchClick }: PaletteStripProps) {
+export function PaletteStrip({
+  palette,
+  showLabels = true,
+  labelsOnly = false,
+  roundedTop = true,
+  compareStep,
+  onSwatchClick,
+}: PaletteStripProps) {
   const [copiedStep, setCopiedStep] = useState<number | null>(null)
 
   if (labelsOnly) {
@@ -27,13 +34,13 @@ export function PaletteStrip({ palette, showLabels = true, labelsOnly = false, r
             <span
               key={item.step}
               className={`flex-1 text-center text-[9px] font-mono mt-1 ${
-                isMain ? "" : "hidden sm:inline "
+                isMain ? '' : 'hidden sm:inline '
               }${
                 item.isMidpoint
-                  ? "font-bold text-foreground"
+                  ? 'font-bold text-foreground'
                   : MAIN_STEPS.has(item.step)
-                    ? "font-medium text-muted-foreground"
-                    : "text-muted-foreground/40"
+                    ? 'font-medium text-muted-foreground'
+                    : 'text-muted-foreground/40'
               }`}
             >
               {item.step}
@@ -46,7 +53,7 @@ export function PaletteStrip({ palette, showLabels = true, labelsOnly = false, r
 
   return (
     <div>
-      <div className={`flex overflow-hidden ${roundedTop ? "rounded-lg" : "rounded-b-lg"}`}>
+      <div className={`flex overflow-hidden ${roundedTop ? 'rounded-lg' : 'rounded-b-lg'}`}>
         {palette.map((item) => (
           <button
             key={item.step}
@@ -61,8 +68,8 @@ export function PaletteStrip({ palette, showLabels = true, labelsOnly = false, r
               }
             }}
             className={cn(
-              "flex-1 h-10 md:h-12 lg:h-16 relative cursor-pointer border-0 p-0",
-              compareStep === item.step && "ring-2 ring-inset ring-foreground/50"
+              'flex-1 h-10 md:h-12 lg:h-16 relative cursor-pointer border-0 p-0',
+              compareStep === item.step && 'ring-2 ring-inset ring-foreground/50',
             )}
             style={{ backgroundColor: item.hex }}
             title={onSwatchClick ? `Compare ${item.hex}` : `Click to copy ${item.hex}`}
@@ -82,10 +89,10 @@ export function PaletteStrip({ palette, showLabels = true, labelsOnly = false, r
               key={item.step}
               className={`flex-1 text-center text-[9px] font-mono mt-1 ${
                 item.isMidpoint
-                  ? "font-bold text-foreground"
+                  ? 'font-bold text-foreground'
                   : MAIN_STEPS.has(item.step)
-                    ? "font-medium text-muted-foreground"
-                    : "text-muted-foreground/40"
+                    ? 'font-medium text-muted-foreground'
+                    : 'text-muted-foreground/40'
               }`}
             >
               {item.step}

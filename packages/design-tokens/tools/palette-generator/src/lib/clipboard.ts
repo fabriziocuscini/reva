@@ -11,12 +11,12 @@ export async function copyToClipboard(text: string): Promise<void> {
 }
 
 function fallbackCopy(text: string): void {
-  const ta = document.createElement("textarea")
+  const ta = document.createElement('textarea')
   ta.value = text
-  ta.style.position = "fixed"
-  ta.style.left = "-9999px"
+  ta.style.position = 'fixed'
+  ta.style.left = '-9999px'
   document.body.appendChild(ta)
   ta.select()
-  document.execCommand("copy")
+  document.execCommand('copy')
   document.body.removeChild(ta)
 }

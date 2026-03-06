@@ -1,9 +1,9 @@
 import { register } from '@tokens-studio/sd-transforms'
-import { readdir, mkdir, readFile, writeFile } from 'fs/promises'
+import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import { resolve } from 'path'
 import StyleDictionary from 'style-dictionary'
 import { buildDtcgOutput } from './dtcg-format'
-import { buildPandaTokens, buildPandaSemanticTokens } from './panda-format'
+import { buildPandaSemanticTokens, buildPandaTokens } from './panda-format'
 
 // Register Tokens Studio transforms + preprocessor on the SD class
 register(StyleDictionary, {
@@ -216,22 +216,12 @@ async function build() {
   )
   const pandaTokens = buildPandaTokens(foundationSources, lightResolved)
 
-  const lightSemantic = JSON.parse(
-    await readFile(resolve(colorModeDir, 'light.json'), 'utf-8'),
-  )
-  const darkSemantic = JSON.parse(
-    await readFile(resolve(colorModeDir, 'dark.json'), 'utf-8'),
-  )
-  const pandaSemanticTokens = buildPandaSemanticTokens(
-    lightSemantic,
-    darkSemantic,
-  )
+  const lightSemantic = JSON.parse(await readFile(resolve(colorModeDir, 'light.json'), 'utf-8'))
+  const darkSemantic = JSON.parse(await readFile(resolve(colorModeDir, 'dark.json'), 'utf-8'))
+  const pandaSemanticTokens = buildPandaSemanticTokens(lightSemantic, darkSemantic)
 
   await mkdir(resolve(distDir, 'panda'), { recursive: true })
-  await writeFile(
-    resolve(distDir, 'panda/tokens.json'),
-    JSON.stringify(pandaTokens, null, 2),
-  )
+  await writeFile(resolve(distDir, 'panda/tokens.json'), JSON.stringify(pandaTokens, null, 2))
   await writeFile(
     resolve(distDir, 'panda/semantic-tokens.json'),
     JSON.stringify(pandaSemanticTokens, null, 2),

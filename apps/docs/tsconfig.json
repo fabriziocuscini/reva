@@ -9,6 +9,17 @@
     },
     "plugins": [{ "name": "next" }]
   },
-  "include": ["src", "app", "components", "content", "examples", "lib", "styled-system", "*.ts", "*.mjs", ".source"],
+  "include": [
+    "src",
+    "app",
+    "components",
+    "content",
+    "examples",
+    "lib",
+    "styled-system",
+    "*.ts",
+    "*.mjs",
+    ".source"
+  ],
   "exclude": ["node_modules", "dist", ".next", ".turbo"]
 }

@@ -1,15 +1,11 @@
-import { ArrowCounterClockwise } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { ParamSlider } from "@/components/param-slider"
-import { CurveChart } from "@/components/curve-chart"
-import { HUE_PARAMS } from "@/lib/constants"
-import type { PaletteParams, PaletteStep } from "@/lib/types"
+import { CurveChart } from '@/components/curve-chart'
+import { ParamSlider } from '@/components/param-slider'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { HUE_PARAMS } from '@/lib/constants'
+import type { PaletteParams, PaletteStep } from '@/lib/types'
+import { ArrowCounterClockwise } from '@phosphor-icons/react'
 
 interface HuePanelProps {
   params: PaletteParams
@@ -19,13 +15,7 @@ interface HuePanelProps {
   onReset: () => void
 }
 
-export function HuePanel({
-  params,
-  palette,
-  midpointHex,
-  onUpdateParam,
-  onReset,
-}: HuePanelProps) {
+export function HuePanel({ params, palette, midpointHex, onUpdateParam, onReset }: HuePanelProps) {
   return (
     <Card>
       <CardContent>
@@ -53,12 +43,7 @@ export function HuePanel({
               />
             ))}
           </div>
-          <CurveChart
-            palette={palette}
-            dataKey="H"
-            color={midpointHex}
-            className="h-48 w-full"
-          />
+          <CurveChart palette={palette} dataKey="H" color={midpointHex} className="h-48 w-full" />
         </div>
       </CardContent>
     </Card>

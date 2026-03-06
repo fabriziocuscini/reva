@@ -1,8 +1,8 @@
-import { useMemo } from "react"
-import { XIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { ColorPickerInput } from "@/components/color-picker-input"
-import { useDraggable } from "@/hooks/use-draggable"
+import { ColorPickerInput } from '@/components/color-picker-input'
+import { Button } from '@/components/ui/button'
+import { useDraggable } from '@/hooks/use-draggable'
+import { XIcon } from '@phosphor-icons/react'
+import { useMemo } from 'react'
 
 interface ComparePanelProps {
   /** Palette step being compared (e.g. 500) */
@@ -29,7 +29,7 @@ export function ComparePanel({
       x: Math.round((window.innerWidth - 288) / 2),
       y: 180,
     }),
-    []
+    [],
   )
 
   const { panelRef, style: panelStyle, handleProps } = useDraggable(initialPos)
@@ -41,10 +41,7 @@ export function ComparePanel({
       className="z-50 w-72 rounded-lg bg-card text-card-foreground ring-1 ring-foreground/10 shadow-lg"
     >
       {/* Header — drag handle */}
-      <div
-        {...handleProps}
-        className="flex items-center justify-between px-3 py-2"
-      >
+      <div {...handleProps} className="flex items-center justify-between px-3 py-2">
         <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground select-none">
           Compare · {step}
         </span>
@@ -63,14 +60,8 @@ export function ComparePanel({
       {/* Side-by-side colour comparison */}
       <div className="px-3">
         <div className="flex overflow-hidden rounded-md">
-          <div
-            className="flex-1 aspect-[4/3]"
-            style={{ backgroundColor: paletteHex }}
-          />
-          <div
-            className="flex-1 aspect-[4/3]"
-            style={{ backgroundColor: benchmarkHex }}
-          />
+          <div className="flex-1 aspect-[4/3]" style={{ backgroundColor: paletteHex }} />
+          <div className="flex-1 aspect-[4/3]" style={{ backgroundColor: benchmarkHex }} />
         </div>
       </div>
 
@@ -81,9 +72,7 @@ export function ComparePanel({
             className="size-4 rounded-sm border border-border"
             style={{ backgroundColor: paletteHex }}
           />
-          <span className="text-xs font-mono text-muted-foreground uppercase">
-            {paletteHex}
-          </span>
+          <span className="text-xs font-mono text-muted-foreground uppercase">{paletteHex}</span>
         </div>
         <ColorPickerInput value={benchmarkHex} onChange={onBenchmarkChange} />
       </div>

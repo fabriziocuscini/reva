@@ -17,21 +17,21 @@ This monorepo contains the full Reva design system and product platform:
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Monorepo | Turborepo |
-| Package manager | Bun |
-| Components | Ark UI + Panda CSS |
-| Language | TypeScript (strict) |
-| Design tokens | Tokens Studio + Style Dictionary v4 |
-| Package builds | tsdown |
-| Web framework | React, Next.js, Vite |
-| Mobile | React Native + Expo (future) |
-| Documentation | Fumadocs |
-| Testing | Playwright |
-| CI/CD | GitHub Actions |
-| Deployment | Vercel |
-| Versioning | Changesets |
+| Layer           | Technology                          |
+| --------------- | ----------------------------------- |
+| Monorepo        | Turborepo                           |
+| Package manager | Bun                                 |
+| Components      | Ark UI + Panda CSS                  |
+| Language        | TypeScript (strict)                 |
+| Design tokens   | Tokens Studio + Style Dictionary v4 |
+| Package builds  | tsdown                              |
+| Web framework   | React, Next.js, Vite                |
+| Mobile          | React Native + Expo (future)        |
+| Documentation   | Fumadocs                            |
+| Testing         | Playwright                          |
+| CI/CD           | GitHub Actions                      |
+| Deployment      | Vercel                              |
+| Versioning      | Changesets                          |
 
 ## Getting Started
 

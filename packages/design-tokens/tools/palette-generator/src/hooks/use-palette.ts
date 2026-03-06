@@ -1,19 +1,17 @@
-import { useState, useRef, useMemo, useCallback } from "react"
-import { generatePalette } from "@/lib/generate-palette"
-import { isValidHex } from "@/lib/color"
-import { DEFAULT_PARAMS } from "@/lib/constants"
-import { useHistory } from "@/hooks/use-history"
-import { savePalette as apiSavePalette } from "@/lib/api"
-import type { PaletteParams, PaletteStep, Preset } from "@/lib/types"
+import { useHistory } from '@/hooks/use-history'
+import { savePalette as apiSavePalette } from '@/lib/api'
+import { isValidHex } from '@/lib/color'
+import { DEFAULT_PARAMS } from '@/lib/constants'
+import { generatePalette } from '@/lib/generate-palette'
+import type { PaletteParams, PaletteStep, Preset } from '@/lib/types'
+import { useCallback, useMemo, useRef, useState } from 'react'
 
 export function usePalette(presets: Preset[]) {
   const first = presets[0]
-  const [midpointHex, setMidpointHex] = useState(first?.hex ?? "#E2A336")
-  const [activePreset, setActivePreset] = useState<string | null>(
-    first?.name ?? null
-  )
+  const [midpointHex, setMidpointHex] = useState(first?.hex ?? '#E2A336')
+  const [activePreset, setActivePreset] = useState<string | null>(first?.name ?? null)
   const [params, setParams] = useState<PaletteParams>(
-    first?.params ? { ...first.params } : { ...DEFAULT_PARAMS }
+    first?.params ? { ...first.params } : { ...DEFAULT_PARAMS },
   )
   const [isSaving, setIsSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
@@ -61,7 +59,7 @@ export function usePalette(presets: Preset[]) {
     ? (presets.find((p) => p.name === activePreset)?.params ?? DEFAULT_PARAMS)
     : DEFAULT_PARAMS
   const isModified = (Object.keys(DEFAULT_PARAMS) as (keyof PaletteParams)[]).some(
-    (k) => params[k] !== baseParams[k]
+    (k) => params[k] !== baseParams[k],
   )
 
   // Check if the current palette differs from what's saved on disk
@@ -80,7 +78,7 @@ export function usePalette(presets: Preset[]) {
       history.record(paramsRef.current)
       setParams((prev) => ({ ...prev, [key]: value }))
     },
-    [history]
+    [history],
   )
 
   const updateDistribution = useCallback(
@@ -94,7 +92,7 @@ export function usePalette(presets: Preset[]) {
         dist_ease: value,
       }))
     },
-    [history]
+    [history],
   )
 
   const selectPreset = useCallback(
@@ -116,7 +114,7 @@ export function usePalette(presets: Preset[]) {
       const cached = paramsCache.current.get(name)
       setParams(cached ? { ...cached } : { ...preset.params })
     },
-    [history, presets]
+    [history, presets],
   )
 
   const setCustomHex = useCallback((hex: string) => {
@@ -199,13 +197,13 @@ export function usePalette(presets: Preset[]) {
         // Clear history — saved state is the new baseline
         history.clear()
       } catch (err) {
-        setSaveError(err instanceof Error ? err.message : "Save failed")
+        setSaveError(err instanceof Error ? err.message : 'Save failed')
         throw err
       } finally {
         setIsSaving(false)
       }
     },
-    [palette, history]
+    [palette, history],
   )
 
   return {

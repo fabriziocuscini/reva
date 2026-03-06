@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from "react"
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface DraggableReturn {
   /** Spread onto the drag-handle element */
@@ -62,18 +62,15 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
   }, [initialPos.x, initialPos.y])
 
   /* ---- pointer handlers (spread onto handle element) ---- */
-  const onPointerDown = useCallback(
-    (e: React.PointerEvent) => {
-      ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
-      dragStart.current = {
-        mx: e.clientX,
-        my: e.clientY,
-        ox: offsetRef.current.x,
-        oy: offsetRef.current.y,
-      }
-    },
-    []
-  )
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+    dragStart.current = {
+      mx: e.clientX,
+      my: e.clientY,
+      ox: offsetRef.current.x,
+      oy: offsetRef.current.y,
+    }
+  }, [])
 
   const onPointerMove = useCallback(
     (e: React.PointerEvent) => {
@@ -88,7 +85,7 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
       cancelAnimationFrame(rafId.current)
       rafId.current = requestAnimationFrame(() => setTick((t) => t + 1))
     },
-    [clamp]
+    [clamp],
   )
 
   const onPointerUp = useCallback((e: React.PointerEvent) => {
@@ -102,23 +99,23 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
       clamp()
       setTick((t) => t + 1)
     }
-    window.addEventListener("resize", onResize)
-    return () => window.removeEventListener("resize", onResize)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
   }, [clamp])
 
   /* ---- computed styles ---- */
   const panelStyle: React.CSSProperties = {
-    position: "fixed",
+    position: 'fixed',
     left: initialPos.x,
     top: initialPos.y,
     transform: `translate(${offsetRef.current.x}px, ${offsetRef.current.y}px)`,
-    willChange: "transform",
+    willChange: 'transform',
   }
 
   const handleStyle: React.CSSProperties = {
-    cursor: dragStart.current ? "grabbing" : "grab",
-    touchAction: "none",
-    userSelect: "none",
+    cursor: dragStart.current ? 'grabbing' : 'grab',
+    touchAction: 'none',
+    userSelect: 'none',
   }
 
   return {

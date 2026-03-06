@@ -41,6 +41,7 @@ reva/
 ```
 
 ### Future additions (do not scaffold yet)
+
 - `apps/website/` — Next.js marketing site eventually replacing `reva-website`, consuming `@reva/tokens` and `@reva/ui`
 - `apps/client-app/` — React Native + Expo mobile app consuming `@reva/tokens`
 - `apps/sandbox/` — Internal component testing and experimentation

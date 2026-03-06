@@ -10,7 +10,7 @@
  *   bun run scripts/generate-palette.ts
  */
 
-import chroma from "chroma-js";
+import chroma from 'chroma-js'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -18,36 +18,36 @@ import chroma from "chroma-js";
 
 interface PaletteConfig {
   /** Human-readable name, used as the token group key (e.g. "amber") */
-  name: string;
+  name: string
   /**
    * The anchor colour defined in OKLCH: [lightness 0–1, chroma 0–0.4, hue 0–360].
    * Placed at `anchorStep` (default 500).
    */
-  anchor: [lightness: number, chroma: number, hue: number];
+  anchor: [lightness: number, chroma: number, hue: number]
   /**
    * Which step the anchor colour occupies. Default: 500.
    * When non-500, the lightness ramp and chroma curve are shifted so that the
    * anchor's values land on this step.
    */
-  anchorStep?: number;
+  anchorStep?: number
   /**
    * Optional overrides for the lightness ramp.
    * Keys are step numbers (50–950), values are lightness in 0–1 range.
    * Any steps not overridden use the default ramp.
    */
-  lightnessOverrides?: Partial<Record<number, number>>;
+  lightnessOverrides?: Partial<Record<number, number>>
   /**
    * Optional overrides for the chroma multiplier curve.
    * Keys are step numbers (50–950), values are multipliers (0–1) applied to
    * the anchor chroma. Any steps not overridden use the default curve.
    */
-  chromaOverrides?: Partial<Record<number, number>>;
+  chromaOverrides?: Partial<Record<number, number>>
 }
 
 interface PaletteStep {
-  step: number;
-  hex: string;
-  oklch: { l: number; c: number; h: number };
+  step: number
+  hex: string
+  oklch: { l: number; c: number; h: number }
 }
 
 // ---------------------------------------------------------------------------
@@ -59,10 +59,10 @@ interface PaletteStep {
  * We generate all of them for mathematical precision, then filter to the
  * 11 export steps.
  */
-const ALL_STEPS = Array.from({ length: 19 }, (_, i) => 50 + i * 50);
+const ALL_STEPS = Array.from({ length: 19 }, (_, i) => 50 + i * 50)
 
 /** The 11 steps we export as foundation tokens. */
-const EXPORT_STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+const EXPORT_STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 
 /**
  * Default lightness ramp (OKLCH L, 0–1).
@@ -75,7 +75,7 @@ const DEFAULT_LIGHTNESS: Record<number, number> = {
   150: 0.92,
   200: 0.88,
   250: 0.84,
-  300: 0.80,
+  300: 0.8,
   350: 0.76,
   400: 0.74,
   450: 0.72,
@@ -85,11 +85,11 @@ const DEFAULT_LIGHTNESS: Record<number, number> = {
   650: 0.48,
   700: 0.42,
   750: 0.36,
-  800: 0.30,
+  800: 0.3,
   850: 0.25,
   900: 0.21,
   950: 0.17,
-};
+}
 
 /**
  * Default chroma multiplier curve (0–1, applied to midpoint chroma).
@@ -98,7 +98,7 @@ const DEFAULT_LIGHTNESS: Record<number, number> = {
  * shades feel muted, while the mid-range is vivid.
  */
 const DEFAULT_CHROMA_CURVE: Record<number, number> = {
-  50: 0.08,  // barely-there tint at near-white
+  50: 0.08, // barely-there tint at near-white
   100: 0.18, // was 0.14
   150: 0.26, // was 0.22
   200: 0.36, // was 0.32
@@ -116,54 +116,54 @@ const DEFAULT_CHROMA_CURVE: Record<number, number> = {
   800: 0.46, // was 0.42
   850: 0.36, // was 0.32
   900: 0.28, // was 0.24
-  950: 0.20, // was 0.16
-};
+  950: 0.2, // was 0.16
+}
 
 // ---------------------------------------------------------------------------
 // Generator
 // ---------------------------------------------------------------------------
 
 function generatePalette(config: PaletteConfig): PaletteStep[] {
-  const [anchorL, anchorC, anchorH] = config.anchor;
-  const anchorStep = config.anchorStep ?? 500;
+  const [anchorL, anchorC, anchorH] = config.anchor
+  const anchorStep = config.anchorStep ?? 500
 
   const lightnessRamp = {
     ...DEFAULT_LIGHTNESS,
     [anchorStep]: anchorL, // always honour the anchor lightness at its step
     ...config.lightnessOverrides,
-  };
+  }
 
   // For non-500 anchors, shift the chroma curve so the peak (1.0) is at
   // the anchor step instead of 500. We do this by looking up the default
   // curve value at the anchor step and scaling all values so that step = 1.0.
-  let chromaCurve = { ...DEFAULT_CHROMA_CURVE, ...config.chromaOverrides };
+  let chromaCurve = { ...DEFAULT_CHROMA_CURVE, ...config.chromaOverrides }
   if (anchorStep !== 500) {
-    const anchorDefault = DEFAULT_CHROMA_CURVE[anchorStep] ?? 1.0;
+    const anchorDefault = DEFAULT_CHROMA_CURVE[anchorStep] ?? 1.0
     // Scale factor: make the anchor step's multiplier = 1.0
-    const scale = 1.0 / anchorDefault;
-    const shifted: Record<number, number> = {};
+    const scale = 1.0 / anchorDefault
+    const shifted: Record<number, number> = {}
     for (const step of ALL_STEPS) {
-      const original = chromaCurve[step] ?? 1.0;
+      const original = chromaCurve[step] ?? 1.0
       // Scale and clamp to [0, 1]
-      shifted[step] = Math.min(1.0, original * scale);
+      shifted[step] = Math.min(1.0, original * scale)
     }
-    chromaCurve = { ...shifted, ...config.chromaOverrides };
+    chromaCurve = { ...shifted, ...config.chromaOverrides }
   }
 
   const allSteps: PaletteStep[] = ALL_STEPS.map((step) => {
-    const l = lightnessRamp[step] ?? anchorL;
-    const c = anchorC * (chromaCurve[step] ?? 1.0);
-    const h = anchorH;
+    const l = lightnessRamp[step] ?? anchorL
+    const c = anchorC * (chromaCurve[step] ?? 1.0)
+    const h = anchorH
 
     // Build colour in OKLCH via chroma.js
     // chroma.oklch(l, c, h) — l is 0–1, c is 0–0.4, h is 0–360
-    const colour = chroma.oklch(l, c, h);
+    const colour = chroma.oklch(l, c, h)
 
     // Clamp to sRGB gamut — chroma.js handles this via .hex()
-    const hex = colour.hex("rgb");
+    const hex = colour.hex('rgb')
 
     // Read back the actual OKLCH values after gamut mapping
-    const [finalL, finalC, finalH] = colour.oklch();
+    const [finalL, finalC, finalH] = colour.oklch()
 
     return {
       step,
@@ -173,15 +173,15 @@ function generatePalette(config: PaletteConfig): PaletteStep[] {
         c: round(finalC, 4),
         h: round(finalH ?? anchorH, 2), // hue can be NaN for achromatic
       },
-    };
-  });
+    }
+  })
 
-  return allSteps;
+  return allSteps
 }
 
 function round(n: number, decimals: number): number {
-  const factor = 10 ** decimals;
-  return Math.round(n * factor) / factor;
+  const factor = 10 ** decimals
+  return Math.round(n * factor) / factor
 }
 
 // ---------------------------------------------------------------------------
@@ -189,27 +189,27 @@ function round(n: number, decimals: number): number {
 // ---------------------------------------------------------------------------
 
 function printPalette(name: string, steps: PaletteStep[]): void {
-  console.log(`\n╔══════════════════════════════════════════════════════════╗`);
-  console.log(`║  ${name.toUpperCase()} PALETTE`);
-  console.log(`╠══════════════════════════════════════════════════════════╣`);
-  console.log(`║  Step │ Hex       │ L       │ C       │ H       │ Export`);
-  console.log(`╠══════════════════════════════════════════════════════════╣`);
+  console.log(`\n╔══════════════════════════════════════════════════════════╗`)
+  console.log(`║  ${name.toUpperCase()} PALETTE`)
+  console.log(`╠══════════════════════════════════════════════════════════╣`)
+  console.log(`║  Step │ Hex       │ L       │ C       │ H       │ Export`)
+  console.log(`╠══════════════════════════════════════════════════════════╣`)
 
   for (const s of steps) {
-    const exported = EXPORT_STEPS.includes(s.step) ? "  ✓" : "";
-    const lStr = s.oklch.l.toFixed(4).padStart(7);
-    const cStr = s.oklch.c.toFixed(4).padStart(7);
-    const hStr = s.oklch.h.toFixed(2).padStart(7);
+    const exported = EXPORT_STEPS.includes(s.step) ? '  ✓' : ''
+    const lStr = s.oklch.l.toFixed(4).padStart(7)
+    const cStr = s.oklch.c.toFixed(4).padStart(7)
+    const hStr = s.oklch.h.toFixed(2).padStart(7)
     console.log(
-      `║  ${String(s.step).padStart(4)} │ ${s.hex.padEnd(9)} │ ${lStr} │ ${cStr} │ ${hStr} │${exported}`
-    );
+      `║  ${String(s.step).padStart(4)} │ ${s.hex.padEnd(9)} │ ${lStr} │ ${cStr} │ ${hStr} │${exported}`,
+    )
   }
 
-  console.log(`╚══════════════════════════════════════════════════════════╝`);
+  console.log(`╚══════════════════════════════════════════════════════════╝`)
 }
 
 function toExportSteps(steps: PaletteStep[]): PaletteStep[] {
-  return steps.filter((s) => EXPORT_STEPS.includes(s.step));
+  return steps.filter((s) => EXPORT_STEPS.includes(s.step))
 }
 
 /**
@@ -217,11 +217,11 @@ function toExportSteps(steps: PaletteStep[]): PaletteStep[] {
  * Output shape: { "50": { "$value": "#hex" }, ... }
  */
 function toDTCG(steps: PaletteStep[]): Record<string, { $value: string }> {
-  const result: Record<string, { $value: string }> = {};
+  const result: Record<string, { $value: string }> = {}
   for (const s of toExportSteps(steps)) {
-    result[String(s.step)] = { $value: s.hex };
+    result[String(s.step)] = { $value: s.hex }
   }
-  return result;
+  return result
 }
 
 // ---------------------------------------------------------------------------
@@ -230,12 +230,12 @@ function toDTCG(steps: PaletteStep[]): Record<string, { $value: string }> {
 
 const PALETTES: PaletteConfig[] = [
   {
-    name: "amber",
+    name: 'amber',
     anchor: [0.5707, 0.1291, 63.932], // Reva Amber #AB6400
     anchorStep: 600,
     lightnessOverrides: {
       100: 0.96, // tiny lift for a softer light end
-      200: 0.90,
+      200: 0.9,
       300: 0.82,
       400: 0.76,
       800: 0.33, // lighten dark end so it doesn't collapse to near-black
@@ -249,27 +249,27 @@ const PALETTES: PaletteConfig[] = [
     },
   },
   {
-    name: "gold",
+    name: 'gold',
     anchor: [0.7577, 0.1403, 76.713], // Reva Gold #E2A336
     // anchorStep defaults to 500
   },
   {
-    name: "olive",
+    name: 'olive',
     anchor: [0.5882, 0.0807, 97.194], // Reva Olive #8A7D42
     anchorStep: 600,
     lightnessOverrides: {
-      50: 0.981,   // Porcelain #FAF9F2
+      50: 0.981, // Porcelain #FAF9F2
       100: 0.9449, // Soft Linen #F0EDE0
       200: 0.8772, // Coolors warm eggshell #DED7BA
     },
     chromaOverrides: {
-      50: 0.1155,  // Porcelain — very low chroma
+      50: 0.1155, // Porcelain — very low chroma
       100: 0.2179, // Soft Linen — subtle warmth
       200: 0.4891, // Coolors 200 — richer warmth
     },
   },
   {
-    name: "mulberry",
+    name: 'mulberry',
     anchor: [0.7044, 0.1004, 10.364], // Reva Mulberry #D68591
     // anchorStep defaults to 500
     lightnessOverrides: {
@@ -283,34 +283,34 @@ const PALETTES: PaletteConfig[] = [
   },
 
   {
-    name: "gray",
-    anchor: [0.5555, 0.0000, 0], // TW Gray 500 — pure achromatic
+    name: 'gray',
+    anchor: [0.5555, 0.0, 0], // TW Gray 500 — pure achromatic
     anchorStep: 600,
   },
   {
-    name: "stone",
+    name: 'stone',
     anchor: [0.5534, 0.0116, 58.091], // TW Stone 500 — warm neutral
     anchorStep: 600,
   },
   {
-    name: "zinc",
+    name: 'zinc',
     anchor: [0.5517, 0.0138, 285.988], // TW Zinc 500 — cool neutral
     anchorStep: 600,
   },
-];
+]
 
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
 for (const palette of PALETTES) {
-  const steps = generatePalette(palette);
+  const steps = generatePalette(palette)
 
   // Full table with all 19 steps
-  printPalette(palette.name, steps);
+  printPalette(palette.name, steps)
 
   // Export-only steps as DTCG JSON
-  const dtcg = toDTCG(steps);
-  console.log(`\nDTCG export (${palette.name}):`);
-  console.log(JSON.stringify(dtcg, null, 2));
+  const dtcg = toDTCG(steps)
+  console.log(`\nDTCG export (${palette.name}):`)
+  console.log(JSON.stringify(dtcg, null, 2))
 }

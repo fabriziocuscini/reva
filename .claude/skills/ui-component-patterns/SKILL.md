@@ -21,7 +21,7 @@ Recipes and styled components are split across two packages:
 | ---------------------------------- | ------------------------------------- | -------------------------------------------------------------- |
 | Slot recipes, CVA recipes          | `packages/panda-preset/src/recipes/`  | Part of the Panda CSS preset, shared across all consuming apps |
 | Styled wrappers, namespace exports | `packages/ui/src/components/`         | Wire recipes to Ark UI via `styled()` or `createStyleContext`  |
-| `styled()`                         | `styled-system/jsx` (Panda-generated) | Single-element: `styled(ark.<element>, recipe)`                 |
+| `styled()`                         | `styled-system/jsx` (Panda-generated) | Single-element: `styled(ark.<element>, recipe)`                |
 | `createStyleContext` utility       | `packages/ui/src/utils/`              | Compound components: distributes slot recipe classes           |
 | Design tokens (source)             | `packages/design-tokens/src/`         | Tokens Studio JSON format, code is source of truth             |
 
@@ -63,42 +63,42 @@ Always check via the **Ark UI MCP server** for the complete and up-to-date slot 
 
 ```typescript
 // packages/panda-preset/src/recipes/accordion.ts
-import { accordionAnatomy } from "@ark-ui/react/anatomy";
-import { defineSlotRecipe } from "@pandacss/dev";
+import { accordionAnatomy } from '@ark-ui/react/anatomy'
+import { defineSlotRecipe } from '@pandacss/dev'
 
 export const accordion = defineSlotRecipe({
-  className: "accordion",
+  className: 'accordion',
   slots: accordionAnatomy.keys(), // always derive from anatomy, never hardcode
   base: {
-    root: { width: "full" },
-    item: { borderBottomWidth: "1px", borderColor: "border.default" },
+    root: { width: 'full' },
+    item: { borderBottomWidth: '1px', borderColor: 'border.default' },
     itemTrigger: {
-      display: "flex",
-      width: "full",
-      alignItems: "center",
-      justifyContent: "space-between",
-      cursor: "pointer",
-      py: "4",
-      textStyle: "sm",
-      fontWeight: "medium",
+      display: 'flex',
+      width: 'full',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      cursor: 'pointer',
+      py: '4',
+      textStyle: 'sm',
+      fontWeight: 'medium',
     },
     itemContent: {
-      overflow: "hidden",
-      _open: { animation: "slideDown" },
-      _closed: { animation: "slideUp" },
+      overflow: 'hidden',
+      _open: { animation: 'slideDown' },
+      _closed: { animation: 'slideUp' },
     },
   },
   variants: {
     variant: {
       subtle: {
-        item: { borderColor: "border.subtle" },
+        item: { borderColor: 'border.subtle' },
       },
     },
   },
   defaultVariants: {
-    variant: "subtle",
+    variant: 'subtle',
   },
-});
+})
 ```
 
 ---
@@ -206,27 +206,24 @@ Apply it to build a styled compound component:
 
 ```typescript
 // packages/ui/src/components/accordion/index.tsx
-import { Accordion } from "@ark-ui/react/accordion";
-import { createStyleContext } from "../../utils/create-style-context";
-import { accordion } from "styled-system/recipes";
+import { Accordion } from '@ark-ui/react/accordion'
+import { createStyleContext } from '../../utils/create-style-context'
+import { accordion } from 'styled-system/recipes'
 
-const { withProvider, withContext } = createStyleContext(accordion);
+const { withProvider, withContext } = createStyleContext(accordion)
 
-const AccordionRoot = withProvider(Accordion.Root, "root");
-const AccordionItem = withContext(Accordion.Item, "item");
-const AccordionTrigger = withContext(Accordion.ItemTrigger, "itemTrigger");
-const AccordionContent = withContext(Accordion.ItemContent, "itemContent");
-const AccordionIndicator = withContext(
-  Accordion.ItemIndicator,
-  "itemIndicator",
-);
+const AccordionRoot = withProvider(Accordion.Root, 'root')
+const AccordionItem = withContext(Accordion.Item, 'item')
+const AccordionTrigger = withContext(Accordion.ItemTrigger, 'itemTrigger')
+const AccordionContent = withContext(Accordion.ItemContent, 'itemContent')
+const AccordionIndicator = withContext(Accordion.ItemIndicator, 'itemIndicator')
 
 // Re-export as namespace for ergonomic consumer usage
-export { AccordionRoot as Root };
-export { AccordionItem as Item };
-export { AccordionTrigger as Trigger };
-export { AccordionContent as Content };
-export { AccordionIndicator as Indicator };
+export { AccordionRoot as Root }
+export { AccordionItem as Item }
+export { AccordionTrigger as Trigger }
+export { AccordionContent as Content }
+export { AccordionIndicator as Indicator }
 ```
 
 ---
@@ -324,14 +321,16 @@ Use `defineRecipe` or `cva` in `@reva/panda-preset`:
 
 ```typescript
 // packages/panda-preset/src/recipes/button.ts
-import { defineRecipe } from "@pandacss/dev";
+import { defineRecipe } from '@pandacss/dev'
 
 export const button = defineRecipe({
-  className: "button",
-  base: { /* ... */ },
+  className: 'button',
+  base: {
+    /* ... */
+  },
   variants: { variant: { solid: {}, outline: {} }, size: { sm: {}, md: {} } },
-  defaultVariants: { variant: "solid", size: "md" },
-});
+  defaultVariants: { variant: 'solid', size: 'md' },
+})
 ```
 
 ### Component (in @reva/ui)
@@ -372,17 +371,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 Export variant types from recipes for use in component props.
 
 ```typescript
-import type { ComponentProps } from "react";
-import type { RecipeVariantProps } from "styled-system/types";
-import { accordion } from "styled-system/recipes";
-import { Accordion as ArkAccordion } from "@ark-ui/react/accordion";
+import type { ComponentProps } from 'react'
+import type { RecipeVariantProps } from 'styled-system/types'
+import { accordion } from 'styled-system/recipes'
+import { Accordion as ArkAccordion } from '@ark-ui/react/accordion'
 
 // Derive variant props from the recipe
-export type AccordionVariants = RecipeVariantProps<typeof accordion>;
+export type AccordionVariants = RecipeVariantProps<typeof accordion>
 
 // Merge with Ark UI's own props
-export type AccordionRootProps = AccordionVariants &
-  ComponentProps<typeof ArkAccordion.Root>;
+export type AccordionRootProps = AccordionVariants & ComponentProps<typeof ArkAccordion.Root>
 ```
 
 Use `forwardRef` on all leaf parts that render DOM elements, so consumers can attach refs.
@@ -400,15 +398,15 @@ Use `forwardRef` on all leaf parts that render DOM elements, so consumers can at
 
 ```typescript
 // In any consuming app's panda.config.ts
-import { defineConfig } from "@pandacss/dev";
-import { revaPreset } from "@reva/panda-preset";
+import { defineConfig } from '@pandacss/dev'
+import { revaPreset } from '@reva/panda-preset'
 
 export default defineConfig({
   presets: [revaPreset], // no @pandacss/preset-base
-  include: ["./src/**/*.{ts,tsx}"],
-  outdir: "styled-system",
-  jsxFramework: "react",
-});
+  include: ['./src/**/*.{ts,tsx}'],
+  outdir: 'styled-system',
+  jsxFramework: 'react',
+})
 ```
 
 Reference: https://panda-css.com/docs/guides/minimal-setup
@@ -426,10 +424,10 @@ The preset supports multiple themes for white-labelling via Panda's native `them
 - Theme CSS loaded at runtime via `styled-system/themes`:
 
 ```typescript
-import { getTheme, injectTheme } from "styled-system/themes";
+import { getTheme, injectTheme } from 'styled-system/themes'
 
-const theme = await getTheme(clientThemeName);
-injectTheme(document.documentElement, theme);
+const theme = await getTheme(clientThemeName)
+injectTheme(document.documentElement, theme)
 ```
 
 ---

@@ -18,13 +18,11 @@ import { button, type ButtonVariantProps } from 'styled-system/recipes'
 
 const BaseButton = styled(ark.button, button)
 
-export interface ButtonProps
-  extends React.ComponentProps<typeof BaseButton>,
-    ButtonVariantProps {}
+export interface ButtonProps extends React.ComponentProps<typeof BaseButton>, ButtonVariantProps {}
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref) => <BaseButton ref={ref} {...props} />
-)
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
+  <BaseButton ref={ref} {...props} />
+))
 ```
 
 **Why:** `styled(element, recipe)` produces a typed component that receives recipe variant props directly. No manual `cx`, no type assertions for `ark.button`, and variant/className merging is handled by Panda.
@@ -54,7 +52,7 @@ For compound components (Accordion, Dialog, Menu, etc.) with multiple anatomy pa
 When you apply this pattern:
 
 1. **Update the `ui-component-patterns` skill** (`.claude/skills/ui-component-patterns/SKILL.md`) so it documents this as the north star. Replace or augment the "Single-Element Components" and "Style Context Pattern" sections to prioritise `styled()`. Ensure the skill clearly states that `styled(element, recipe)` is the preferred pattern for single-element components, and `createStyleContext` remains for multi-part slot recipes.
-2. **Update CLAUDE.md** if the component architecture section still describes the old approach (e.g. manual `cx` or type assertions). Add a bullet under "Key Architectural Decisions" that states: *Styled primitives via Panda `styled()` — use `styled(ark.<element>, recipe)` for single-element components; `createStyleContext` for compound slot recipes.*
+2. **Update CLAUDE.md** if the component architecture section still describes the old approach (e.g. manual `cx` or type assertions). Add a bullet under "Key Architectural Decisions" that states: _Styled primitives via Panda `styled()` — use `styled(ark.<element>, recipe)` for single-element components; `createStyleContext` for compound slot recipes._
 3. **Update any other docs** (e.g. `bootstrap-prompt.md`, README, RULE files) that describe component implementation so they reference this pattern consistently.
 4. **Add forbidden patterns** to the skill: manual `cx(recipe(...), className)` for single-element components, and `ark.<element>` type assertions when `styled()` would avoid them.
 

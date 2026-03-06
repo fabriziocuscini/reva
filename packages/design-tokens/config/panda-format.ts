@@ -14,12 +14,7 @@ const METADATA_KEYS = new Set(['$description', '$type', '$extensions'])
  * Checks if a DTCG source value is a token leaf (has $value).
  */
 function isDtcgLeaf(value: JsonValue): boolean {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    !Array.isArray(value) &&
-    '$value' in value
-  )
+  return typeof value === 'object' && value !== null && !Array.isArray(value) && '$value' in value
 }
 
 /**
@@ -27,10 +22,7 @@ function isDtcgLeaf(value: JsonValue): boolean {
  * For simple types this is the `$value` itself. For composites (like shadow)
  * we use the resolved value from the SD DTCG output instead.
  */
-function resolveDtcgValue(
-  value: JsonValue,
-  resolvedValue?: JsonValue,
-): JsonValue {
+function resolveDtcgValue(value: JsonValue, resolvedValue?: JsonValue): JsonValue {
   const raw = (value as JsonObject)['$value']
   // If $value is an object or array (composite type like shadow), prefer
   // the resolved string from SD output
@@ -48,10 +40,7 @@ function resolveDtcgValue(
  * Recursively transforms DTCG source JSON into Panda's `{ value: ... }` structure.
  * Uses the resolved DTCG output to get final values for composite tokens (shadows).
  */
-function transformSourceToPanda(
-  source: JsonObject,
-  resolved?: JsonObject,
-): JsonObject {
+function transformSourceToPanda(source: JsonObject, resolved?: JsonObject): JsonObject {
   const result: JsonObject = {}
 
   for (const [key, value] of Object.entries(source)) {
@@ -60,11 +49,7 @@ function transformSourceToPanda(
     if (isDtcgLeaf(value)) {
       const resolvedVal = resolved?.[key]
       result[key] = { value: resolveDtcgValue(value, resolvedVal) }
-    } else if (
-      typeof value === 'object' &&
-      value !== null &&
-      !Array.isArray(value)
-    ) {
+    } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
       const resolvedChild =
         typeof resolved?.[key] === 'object' && resolved[key] !== null
           ? (resolved[key] as JsonObject)
@@ -84,19 +69,12 @@ function transformSourceToPanda(
  * Uses the resolved SD output only for composite values (e.g., shadows)
  * where the $value is a structured object that SD transforms into a string.
  */
-export function buildPandaTokens(
-  sourceFiles: JsonObject[],
-  resolvedDtcg: JsonObject,
-): JsonObject {
+export function buildPandaTokens(sourceFiles: JsonObject[], resolvedDtcg: JsonObject): JsonObject {
   const result: JsonObject = {}
   for (const source of sourceFiles) {
     for (const [key, value] of Object.entries(source)) {
       if (METADATA_KEYS.has(key)) continue
-      if (
-        typeof value === 'object' &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
         const resolvedChild =
           typeof resolvedDtcg[key] === 'object' && resolvedDtcg[key] !== null
             ? (resolvedDtcg[key] as JsonObject)
@@ -116,17 +94,11 @@ export function buildPandaTokens(
  * Input (dark):  `{ "colors": { "fg": { "default": { "$value": "{colors.neutral.50}" } } } }`
  * Output:        `{ "colors": { "fg": { "default": { "value": { "_light": "{colors.neutral.950}", "_dark": "{colors.neutral.50}" } } } } }`
  */
-export function buildPandaSemanticTokens(
-  lightJson: JsonObject,
-  darkJson: JsonObject,
-): JsonObject {
+export function buildPandaSemanticTokens(lightJson: JsonObject, darkJson: JsonObject): JsonObject {
   return mergeSemanticTrees(lightJson, darkJson)
 }
 
-function mergeSemanticTrees(
-  light: JsonObject,
-  dark: JsonObject,
-): JsonObject {
+function mergeSemanticTrees(light: JsonObject, dark: JsonObject): JsonObject {
   const result: JsonObject = {}
 
   for (const [key, lightValue] of Object.entries(light)) {
@@ -161,9 +133,7 @@ function mergeSemanticTrees(
       // Recurse into groups
       result[key] = mergeSemanticTrees(
         lightValue as JsonObject,
-        (typeof darkValue === 'object' && darkValue !== null
-          ? darkValue
-          : {}) as JsonObject,
+        (typeof darkValue === 'object' && darkValue !== null ? darkValue : {}) as JsonObject,
       )
     }
   }

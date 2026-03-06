@@ -1,4 +1,3 @@
-import { useState } from "react"
 import {
   Table,
   TableBody,
@@ -6,10 +5,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { copyToClipboard } from "@/lib/clipboard"
-import { MAIN_STEPS } from "@/lib/constants"
-import type { PaletteStep } from "@/lib/types"
+} from '@/components/ui/table'
+import { copyToClipboard } from '@/lib/clipboard'
+import { MAIN_STEPS } from '@/lib/constants'
+import type { PaletteStep } from '@/lib/types'
+import { useState } from 'react'
 
 interface ValuesTableProps {
   palette: PaletteStep[]
@@ -35,9 +35,7 @@ function CopyableHex({ hex }: { hex: string }) {
         className="size-2.5 rounded-sm shrink-0 border border-border"
         style={{ backgroundColor: hex }}
       />
-      <span className="transition-colors duration-150">
-        {copied ? "Copied!" : hex}
-      </span>
+      <span className="transition-colors duration-150">{copied ? 'Copied!' : hex}</span>
     </button>
   )
 }
@@ -82,11 +80,7 @@ export function ValuesTable({ palette }: ValuesTableProps) {
             <TableRow
               key={item.step}
               className={`font-mono text-xs ${
-                item.isMidpoint
-                  ? "bg-accent font-bold"
-                  : !isMain
-                    ? "text-muted-foreground/50"
-                    : ""
+                item.isMidpoint ? 'bg-accent font-bold' : !isMain ? 'text-muted-foreground/50' : ''
               }`}
             >
               <TableCell>{item.step}</TableCell>
@@ -96,15 +90,9 @@ export function ValuesTable({ palette }: ValuesTableProps) {
               <TableCell>{item.L.toFixed(3)}</TableCell>
               <TableCell>{item.C.toFixed(3)}</TableCell>
               <TableCell>{item.H.toFixed(1)}</TableCell>
-              <TableCell className="text-muted-foreground">
-                {item.hsl.h.toFixed(0)}&deg;
-              </TableCell>
-              <TableCell className="text-muted-foreground">
-                {item.hsl.s.toFixed(0)}%
-              </TableCell>
-              <TableCell className="text-muted-foreground">
-                {item.hsl.l.toFixed(0)}%
-              </TableCell>
+              <TableCell className="text-muted-foreground">{item.hsl.h.toFixed(0)}&deg;</TableCell>
+              <TableCell className="text-muted-foreground">{item.hsl.s.toFixed(0)}%</TableCell>
+              <TableCell className="text-muted-foreground">{item.hsl.l.toFixed(0)}%</TableCell>
             </TableRow>
           )
         })}
