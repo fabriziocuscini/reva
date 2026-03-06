@@ -146,7 +146,7 @@
       },
       "alpha": {
         "transparent": {
-          "$value": "{colors.black.transparent}",
+          "$value": "{colors.gold.alpha.transparent}",
           "$description": "Brand alpha: fully transparent"
         },
         "a1": {
@@ -240,7 +240,7 @@
       },
       "alpha": {
         "transparent": {
-          "$value": "{colors.black.transparent}",
+          "$value": "{colors.amber.alpha.transparent}",
           "$description": "Accent alpha: fully transparent"
         },
         "a1": {
@@ -428,7 +428,7 @@
       },
       "alpha": {
         "transparent": {
-          "$value": "{colors.black.transparent}",
+          "$value": "{colors.mulberry.alpha.transparent}",
           "$description": "Error alpha: fully transparent"
         },
         "a1": {
@@ -522,7 +522,7 @@
       },
       "alpha": {
         "transparent": {
-          "$value": "{colors.black.transparent}",
+          "$value": "{colors.copper.alpha.transparent}",
           "$description": "Warning alpha: fully transparent"
         },
         "a1": {
@@ -616,7 +616,7 @@
       },
       "alpha": {
         "transparent": {
-          "$value": "{colors.black.transparent}",
+          "$value": "{colors.fern.alpha.transparent}",
           "$description": "Success alpha: fully transparent"
         },
         "a1": {
@@ -710,7 +710,7 @@
       },
       "alpha": {
         "transparent": {
-          "$value": "{colors.black.transparent}",
+          "$value": "{colors.cobalt.alpha.transparent}",
           "$description": "Info alpha: fully transparent"
         },
         "a1": {

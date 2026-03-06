@@ -60,6 +60,10 @@
         "$value": "#0A0100"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#d78d3f00",
+          "$description": "Amber, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#d78d3f0d"
         },
@@ -178,6 +182,10 @@
         "$value": "#070D06"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#61ab5400",
+          "$description": "Fern, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#61ab540d"
         },
@@ -296,6 +304,10 @@
         "$value": "#100A03"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#e2a33600",
+          "$description": "Gold, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#e2a3360d"
         },
@@ -414,6 +426,10 @@
         "$value": "#0B0B0B"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#8a825c00",
+          "$description": "Olive, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#8a825c0d"
         },
@@ -532,6 +548,10 @@
         "$value": "#120904"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#d2763b00",
+          "$description": "Copper, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#d2763b0d"
         },
@@ -650,6 +670,10 @@
         "$value": "#060C12"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#4286bd00",
+          "$description": "Cobalt, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#4286bd0d"
         },
@@ -768,6 +792,10 @@
         "$value": "#140708"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#bf485300",
+          "$description": "Mulberry, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#bf48530d"
         },
@@ -886,6 +914,10 @@
         "$value": "#0B0B0B"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#73737300",
+          "$description": "Gray, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#7373730d"
         },
@@ -1004,6 +1036,10 @@
         "$value": "#0C0B0A"
       },
       "alpha": {
+        "transparent": {
+          "$value": "#78716c00",
+          "$description": "Stone, fully transparent (0%)"
+        },
         "a5": {
           "$value": "#78716c0d"
         },
