@@ -4,7 +4,7 @@ export const globalCss = defineGlobalStyles({
   'html, body': {
     color: 'fg.default',
     backgroundColor: 'bg.surface',
-    fontFamily: 'sans',
+    fontFamily: 'text',
     fontSize: 'md',
     lineHeight: 'normal',
     WebkitFontSmoothing: 'antialiased',
