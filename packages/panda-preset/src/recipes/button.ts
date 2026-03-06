@@ -24,15 +24,15 @@ export const button = defineRecipe({
     },
     _focus: {
       outline: '2px solid',
-      outlineColor: 'brand.bg.solid',
+      outlineColor: 'accent.bg.solid',
       outlineOffset: '2px',
     },
   },
   variants: {
     variant: {
       solid: {
-        bg: 'brand.bg.solid',
-        color: 'brand.fg.onSolid',
+        bg: 'accent.bg.solid',
+        color: 'accent.fg.onSolid',
         _hover: {
           opacity: 0.9,
         },
