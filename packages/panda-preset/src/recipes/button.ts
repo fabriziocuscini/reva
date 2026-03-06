@@ -8,7 +8,7 @@ export const button = defineRecipe({
     alignItems: 'center',
     justifyContent: 'center',
     gap: '2',
-    fontFamily: 'sans',
+    fontFamily: 'text',
     fontWeight: 'medium',
     borderRadius: 'md',
     cursor: 'pointer',
@@ -58,7 +58,7 @@ export const button = defineRecipe({
       sm: {
         h: '8',
         px: '3',
-        fontSize: 'sm',
+        fontSize: 'xs',
       },
       md: {
         h: '10',

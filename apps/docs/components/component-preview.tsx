@@ -19,7 +19,7 @@ export function ComponentPreview({ children, code }: ComponentPreviewProps) {
             padding: '2rem',
             border: '1px solid var(--fd-border)',
             borderRadius: '0.5rem',
-            background: 'var(--fd-background)',
+            background: 'white',
           }}
         >
           {children}
