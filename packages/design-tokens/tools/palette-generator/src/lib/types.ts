@@ -29,8 +29,10 @@ export interface PaletteParams {
 
 export interface Preset {
   name: string
+  displayName: string
   hex: string
   params: PaletteParams
+  steps?: Record<string, string>
 }
 
 export interface ParamConfig {

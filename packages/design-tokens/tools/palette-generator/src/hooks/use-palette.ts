@@ -1,16 +1,39 @@
 import { useState, useRef, useMemo, useCallback } from "react"
 import { generatePalette } from "@/lib/generate-palette"
 import { isValidHex } from "@/lib/color"
-import { DEFAULT_PARAMS, PRESETS } from "@/lib/constants"
+import { DEFAULT_PARAMS } from "@/lib/constants"
 import { useHistory } from "@/hooks/use-history"
-import type { PaletteParams, PaletteStep } from "@/lib/types"
+import { savePalette as apiSavePalette } from "@/lib/api"
+import type { PaletteParams, PaletteStep, Preset } from "@/lib/types"
 
-export function usePalette() {
-  const [midpointHex, setMidpointHex] = useState("#E2A336")
-  const [activePreset, setActivePreset] = useState<string | null>("Gold")
-  const [params, setParams] = useState<PaletteParams>({ ...DEFAULT_PARAMS })
+export function usePalette(presets: Preset[]) {
+  const first = presets[0]
+  const [midpointHex, setMidpointHex] = useState(first?.hex ?? "#E2A336")
+  const [activePreset, setActivePreset] = useState<string | null>(
+    first?.name ?? null
+  )
+  const [params, setParams] = useState<PaletteParams>(
+    first?.params ? { ...first.params } : { ...DEFAULT_PARAMS }
+  )
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const paramsCache = useRef(new Map<string, PaletteParams>())
+  const savedStepsRef = useRef(new Map<string, Record<string, string>>())
   const history = useHistory()
+
+  // Populate savedStepsRef from presets on first render
+  const initializedRef = useRef(false)
+  if (!initializedRef.current) {
+    for (const p of presets) {
+      if (p.steps) {
+        savedStepsRef.current.set(p.name, p.steps)
+      }
+    }
+    initializedRef.current = true
+  }
+
+  // Last-selected preset name — persists even after switching to custom hex
+  const lastPresetRef = useRef<string | null>(first?.name ?? null)
 
   // Refs for synchronous access in callbacks (synced every render)
   const activePresetRef = useRef(activePreset)
@@ -35,11 +58,22 @@ export function usePalette() {
     params.H_ease !== params.dist_ease
 
   const baseParams = activePreset
-    ? (PRESETS.find((p) => p.name === activePreset)?.params ?? DEFAULT_PARAMS)
+    ? (presets.find((p) => p.name === activePreset)?.params ?? DEFAULT_PARAMS)
     : DEFAULT_PARAMS
   const isModified = (Object.keys(DEFAULT_PARAMS) as (keyof PaletteParams)[]).some(
     (k) => params[k] !== baseParams[k]
   )
+
+  // Check if the current palette differs from what's saved on disk
+  const hasUnsavedChanges = useMemo(() => {
+    if (!activePreset || palette.length === 0) return false
+    const saved = savedStepsRef.current.get(activePreset)
+    if (!saved) return true
+    return palette.some((s) => {
+      const savedHex = saved[String(s.step)]
+      return savedHex !== undefined && savedHex.toLowerCase() !== s.hex.toLowerCase()
+    })
+  }, [activePreset, palette])
 
   const updateParam = useCallback(
     (key: keyof PaletteParams, value: number) => {
@@ -65,7 +99,7 @@ export function usePalette() {
 
   const selectPreset = useCallback(
     (name: string) => {
-      const preset = PRESETS.find((p) => p.name === name)
+      const preset = presets.find((p) => p.name === name)
       if (!preset) return
 
       // Save current preset's params before switching
@@ -77,11 +111,12 @@ export function usePalette() {
       history.clear()
 
       setActivePreset(name)
+      lastPresetRef.current = name
       setMidpointHex(preset.hex)
       const cached = paramsCache.current.get(name)
       setParams(cached ? { ...cached } : { ...preset.params })
     },
-    [history]
+    [history, presets]
   )
 
   const setCustomHex = useCallback((hex: string) => {
@@ -96,14 +131,14 @@ export function usePalette() {
   const resetParams = useCallback(() => {
     history.record(paramsRef.current)
     const preset = activePresetRef.current
-      ? PRESETS.find((p) => p.name === activePresetRef.current)
+      ? presets.find((p) => p.name === activePresetRef.current)
       : null
     const base = preset?.params ?? DEFAULT_PARAMS
     setParams({ ...base })
     if (activePresetRef.current) {
       paramsCache.current.delete(activePresetRef.current)
     }
-  }, [history])
+  }, [history, presets])
 
   const resetLightness = useCallback(() => {
     history.record(paramsRef.current)
@@ -145,14 +180,46 @@ export function usePalette() {
     if (restored) setParams(restored)
   }, [history])
 
+  /** Save the current palette to disk (existing preset or new name). */
+  const save = useCallback(
+    async (name?: string) => {
+      const targetName = name ?? activePresetRef.current
+      if (!targetName || palette.length === 0) return
+
+      setIsSaving(true)
+      setSaveError(null)
+      try {
+        await apiSavePalette(targetName, palette, paramsRef.current)
+        // Update the saved reference so hasUnsavedChanges resets
+        const stepsMap: Record<string, string> = {}
+        for (const s of palette) {
+          stepsMap[String(s.step)] = s.hex
+        }
+        savedStepsRef.current.set(targetName, stepsMap)
+        // Clear history — saved state is the new baseline
+        history.clear()
+      } catch (err) {
+        setSaveError(err instanceof Error ? err.message : "Save failed")
+        throw err
+      } finally {
+        setIsSaving(false)
+      }
+    },
+    [palette, history]
+  )
+
   return {
     midpointHex,
     activePreset,
+    lastPreset: lastPresetRef.current,
     params,
     palette,
     validHex,
     isDiverged,
     isModified,
+    hasUnsavedChanges,
+    isSaving,
+    saveError,
     updateParam,
     updateDistribution,
     selectPreset,
@@ -163,5 +230,6 @@ export function usePalette() {
     resetHue,
     undo,
     redo,
+    save,
   }
 }

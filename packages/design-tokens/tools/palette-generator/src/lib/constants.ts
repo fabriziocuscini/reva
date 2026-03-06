@@ -1,4 +1,4 @@
-import type { PaletteParams, Preset, ParamConfig } from "./types"
+import type { PaletteParams, ParamConfig } from "./types"
 
 export const STEPS = [
   50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750,
@@ -6,6 +6,17 @@ export const STEPS = [
 ] as const
 
 export const MAIN_STEPS = new Set([100, 200, 300, 400, 500, 600, 700, 800, 900])
+
+export const ALPHA_STEPS = [
+  5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
+] as const
+
+export const ALPHA_SUFFIXES: Record<number, string> = {
+  5: "0d", 10: "1a", 15: "26", 20: "33", 25: "40",
+  30: "4d", 35: "59", 40: "66", 45: "73", 50: "80",
+  55: "8c", 60: "99", 65: "a6", 70: "b3", 75: "bf",
+  80: "cc", 85: "d9", 90: "e6", 95: "f2",
+}
 
 export const DEFAULT_PARAMS: PaletteParams = {
   L_max: 0.985,
@@ -20,15 +31,6 @@ export const DEFAULT_PARAMS: PaletteParams = {
   dist_ease: 1.0,
 }
 
-export const PRESETS: Preset[] = [
-  { name: "Gold", hex: "#E2A336", params: { ...DEFAULT_PARAMS } },
-  { name: "Amber", hex: "#D78D3F", params: { ...DEFAULT_PARAMS } },
-  { name: "Olive", hex: "#ADA065", params: { ...DEFAULT_PARAMS } },
-  { name: "Mulberry", hex: "#BF4853", params: { ...DEFAULT_PARAMS } },
-  { name: "Fern", hex: "#61AB54", params: { ...DEFAULT_PARAMS } },
-  { name: "Copper", hex: "#D2763B", params: { ...DEFAULT_PARAMS } },
-  { name: "Cobalt", hex: "#4286BD", params: { ...DEFAULT_PARAMS } },
-]
 
 export const LIGHTNESS_PARAMS: ParamConfig[] = [
   {

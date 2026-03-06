@@ -1,15 +1,21 @@
 import { useState } from "react"
 import { copyToClipboard } from "@/lib/clipboard"
 import { MAIN_STEPS } from "@/lib/constants"
+import { cn } from "@/lib/utils"
 import type { PaletteStep } from "@/lib/types"
 
 interface PaletteStripProps {
   palette: PaletteStep[]
   showLabels?: boolean
   labelsOnly?: boolean
+  roundedTop?: boolean
+  /** Step number currently being compared (highlighted with ring) */
+  compareStep?: number | null
+  /** Called on swatch click instead of copy-to-clipboard when provided */
+  onSwatchClick?: (step: number) => void
 }
 
-export function PaletteStrip({ palette, showLabels = true, labelsOnly = false }: PaletteStripProps) {
+export function PaletteStrip({ palette, showLabels = true, labelsOnly = false, roundedTop = true, compareStep, onSwatchClick }: PaletteStripProps) {
   const [copiedStep, setCopiedStep] = useState<number | null>(null)
 
   if (labelsOnly) {
@@ -40,19 +46,26 @@ export function PaletteStrip({ palette, showLabels = true, labelsOnly = false }:
 
   return (
     <div>
-      <div className="flex rounded-lg overflow-hidden">
+      <div className={`flex overflow-hidden ${roundedTop ? "rounded-lg" : "rounded-b-lg"}`}>
         {palette.map((item) => (
           <button
             key={item.step}
             type="button"
             onClick={() => {
-              copyToClipboard(item.hex)
-              setCopiedStep(item.step)
-              setTimeout(() => setCopiedStep(null), 900)
+              if (onSwatchClick) {
+                onSwatchClick(item.step)
+              } else {
+                copyToClipboard(item.hex)
+                setCopiedStep(item.step)
+                setTimeout(() => setCopiedStep(null), 900)
+              }
             }}
-            className="flex-1 h-10 md:h-12 lg:h-16 relative cursor-pointer border-0 p-0"
+            className={cn(
+              "flex-1 h-10 md:h-12 lg:h-16 relative cursor-pointer border-0 p-0",
+              compareStep === item.step && "ring-2 ring-inset ring-foreground/50"
+            )}
             style={{ backgroundColor: item.hex }}
-            title={`Click to copy ${item.hex}`}
+            title={onSwatchClick ? `Compare ${item.hex}` : `Click to copy ${item.hex}`}
           >
             {copiedStep === item.step && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/55 text-white text-[9px] font-bold font-mono tracking-wider">

@@ -1,0 +1,98 @@
+{
+  "amber": {
+    "L_max": 0.99,
+    "L_min": 0.1,
+    "L_ease": 1,
+    "C_taper_light": 8,
+    "C_taper_dark": 40,
+    "C_ease": 1.2,
+    "H_shift_light": 0,
+    "H_shift_dark": -20,
+    "H_ease": 1.2,
+    "dist_ease": 1
+  },
+  "olive": {
+    "L_max": 0.985,
+    "L_min": 0.15,
+    "L_ease": 0.8,
+    "C_taper_light": 20,
+    "C_taper_dark": 2,
+    "C_ease": 0.8,
+    "H_shift_light": 0,
+    "H_shift_dark": -6,
+    "H_ease": 0.8,
+    "dist_ease": 0.8
+  },
+  "cobalt": {
+    "L_max": 0.985,
+    "L_min": 0.15,
+    "L_ease": 1,
+    "C_taper_light": 8,
+    "C_taper_dark": 15,
+    "C_ease": 1,
+    "H_shift_light": 0,
+    "H_shift_dark": 0,
+    "H_ease": 1,
+    "dist_ease": 1
+  },
+  "copper": {
+    "L_max": 0.985,
+    "L_min": 0.15,
+    "L_ease": 1,
+    "C_taper_light": 8,
+    "C_taper_dark": 15,
+    "C_ease": 1,
+    "H_shift_light": 0,
+    "H_shift_dark": 0,
+    "H_ease": 1,
+    "dist_ease": 1
+  },
+  "fern": {
+    "L_max": 0.985,
+    "L_min": 0.15,
+    "L_ease": 1,
+    "C_taper_light": 8,
+    "C_taper_dark": 15,
+    "C_ease": 1,
+    "H_shift_light": 0,
+    "H_shift_dark": 0,
+    "H_ease": 1,
+    "dist_ease": 1
+  },
+  "gold": {
+    "L_max": 0.985,
+    "L_min": 0.15,
+    "L_ease": 1,
+    "C_taper_light": 8,
+    "C_taper_dark": 15,
+    "C_ease": 1,
+    "H_shift_light": 0,
+    "H_shift_dark": 0,
+    "H_ease": 1,
+    "dist_ease": 1
+  },
+  "mulberry": {
+    "L_max": 0.985,
+    "L_min": 0.15,
+    "L_ease": 1,
+    "C_taper_light": 8,
+    "C_taper_dark": 15,
+    "C_ease": 1,
+    "H_shift_light": 0,
+    "H_shift_dark": 0,
+    "H_ease": 1,
+    "dist_ease": 1
+  },
+  "stone": {
+    "L_max": 0.985,
+    "L_min": 0.15,
+    "L_ease": 1,
+    "C_taper_light": 8,
+    "C_taper_dark": 15,
+    "C_ease": 1,
+    "H_shift_light": 0,
+    "H_shift_dark": 0,
+    "H_ease": 1,
+    "dist_ease": 1
+  }
+}

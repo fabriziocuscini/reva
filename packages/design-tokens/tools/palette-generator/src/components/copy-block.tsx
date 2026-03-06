@@ -1,18 +1,36 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { copyToClipboard } from "@/lib/clipboard"
+import { ALPHA_STEPS, ALPHA_SUFFIXES } from "@/lib/constants"
 import type { PaletteStep } from "@/lib/types"
 
 interface CopyBlockProps {
   palette: PaletteStep[]
+  paletteName: string
+  midpointHex: string
 }
 
-export function CopyBlock({ palette }: CopyBlockProps) {
+export function CopyBlock({ palette, paletteName, midpointHex }: CopyBlockProps) {
   const [copied, setCopied] = useState(false)
 
-  const text = palette
-    .map((item) => `  ${item.step}: "${item.hex}"`)
-    .join("\n")
+  const text = useMemo(() => {
+    const indent = "      "
+    const base = midpointHex.replace("#", "").toLowerCase()
+
+    const steps = palette
+      .map(
+        (item) =>
+          `${indent}"${item.step}": {\n${indent}  "$value": "${item.hex}"\n${indent}}`
+      )
+      .join(",\n")
+
+    const alphas = ALPHA_STEPS.map(
+      (step) =>
+        `${indent}  "a${step}": {\n${indent}    "$value": "#${base}${ALPHA_SUFFIXES[step]}"\n${indent}  }`
+    ).join(",\n")
+
+    return `    "${paletteName}": {\n${steps},\n${indent}"alpha": {\n${alphas}\n${indent}}\n    }`
+  }, [palette, paletteName, midpointHex])
 
   const handleCopy = () => {
     copyToClipboard(text)
