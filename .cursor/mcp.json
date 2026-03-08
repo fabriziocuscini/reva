@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "panda": {
+      "command": "node",
+      "args": ["packages/ui/node_modules/.bin/panda", "mcp", "--cwd", "packages/ui"]
+    }
+  }
+}

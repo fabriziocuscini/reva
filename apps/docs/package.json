@@ -19,7 +19,7 @@
     "zod": "^4"
   },
   "devDependencies": {
-    "@pandacss/dev": "^0",
+    "@pandacss/dev": "^1",
     "@reva/panda-preset": "workspace:*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^22",

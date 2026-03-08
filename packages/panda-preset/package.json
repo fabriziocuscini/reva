@@ -25,8 +25,8 @@
     "@reva/tokens": "workspace:*"
   },
   "devDependencies": {
-    "@pandacss/dev": "^0",
-    "@pandacss/types": "^0",
+    "@pandacss/dev": "^1",
+    "@pandacss/types": "^1",
     "tsdown": "^0.20.3",
     "typescript": "^5"
   }
