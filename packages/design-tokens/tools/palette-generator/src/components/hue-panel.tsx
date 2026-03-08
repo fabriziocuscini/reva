@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { HUE_PARAMS } from '@/lib/constants'
 import type { PaletteParams, PaletteStep } from '@/lib/types'
-import { ArrowCounterClockwise } from '@phosphor-icons/react'
+import { RotateCcw } from 'lucide-react'
 
 interface HuePanelProps {
   params: PaletteParams
@@ -28,7 +28,7 @@ export function HuePanel({ params, palette, midpointHex, onUpdateParam, onReset 
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon" onClick={onReset} className="size-6">
-                    <ArrowCounterClockwise className="size-3.5" />
+                    <RotateCcw className="size-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Reset hue parameters</TooltipContent>

@@ -22,14 +22,7 @@ import type { PalettePreset } from '@/lib/api'
 import { fetchPalettes } from '@/lib/api'
 import { DEFAULT_PARAMS, DISTRIBUTION_PARAM } from '@/lib/constants'
 import type { Preset } from '@/lib/types'
-import {
-  ArrowCounterClockwise,
-  Check,
-  FloppyDisk,
-  Moon,
-  SpinnerGap,
-  Sun,
-} from '@phosphor-icons/react'
+import { Check, LoaderCircle, Moon, RotateCcw, Save, Sun } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 /** Convert API response to the Preset shape used by usePalette */
@@ -296,7 +289,7 @@ function PaletteEditor({
                               onClick={resetParams}
                               className="size-6"
                             >
-                              <ArrowCounterClockwise className="size-3.5" />
+                              <RotateCcw className="size-3.5" />
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>Reset all parameters</TooltipContent>
@@ -310,7 +303,7 @@ function PaletteEditor({
                           onClick={() => setSaveDialogOpen(true)}
                           className="gap-1.5"
                         >
-                          <FloppyDisk className="size-3.5" />
+                          <Save className="size-3.5" />
                           Save as…
                         </Button>
                       ) : (
@@ -324,11 +317,11 @@ function PaletteEditor({
                               className="size-6"
                             >
                               {isSaving ? (
-                                <SpinnerGap className="size-3.5 animate-spin" />
+                                <LoaderCircle className="size-3.5 animate-spin" />
                               ) : savedFlash ? (
                                 <Check className="size-3.5" />
                               ) : (
-                                <FloppyDisk className="size-3.5" />
+                                <Save className="size-3.5" />
                               )}
                             </Button>
                           </TooltipTrigger>

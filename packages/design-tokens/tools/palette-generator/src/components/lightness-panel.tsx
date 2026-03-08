@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { LIGHTNESS_PARAMS } from '@/lib/constants'
 import type { PaletteParams, PaletteStep } from '@/lib/types'
-import { ArrowCounterClockwise } from '@phosphor-icons/react'
+import { RotateCcw } from 'lucide-react'
 
 interface LightnessPanelProps {
   params: PaletteParams
@@ -34,7 +34,7 @@ export function LightnessPanel({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon" onClick={onReset} className="size-6">
-                    <ArrowCounterClockwise className="size-3.5" />
+                    <RotateCcw className="size-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Reset lightness parameters</TooltipContent>

@@ -1,7 +1,7 @@
 import { ColorPickerInput } from '@/components/color-picker-input'
 import { Button } from '@/components/ui/button'
 import { useDraggable } from '@/hooks/use-draggable'
-import { XIcon } from '@phosphor-icons/react'
+import { X } from 'lucide-react'
 import { useMemo } from 'react'
 
 interface ComparePanelProps {
@@ -52,7 +52,7 @@ export function ComparePanel({
           onPointerDown={(e) => e.stopPropagation()}
           className="shrink-0"
         >
-          <XIcon />
+          <X />
           <span className="sr-only">Close</span>
         </Button>
       </div>

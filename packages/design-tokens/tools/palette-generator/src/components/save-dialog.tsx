@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import type { Preset } from '@/lib/types'
-import { SpinnerGap } from '@phosphor-icons/react'
+import { LoaderCircle } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 const NEW_PALETTE_VALUE = '__new__'
@@ -158,7 +158,7 @@ export function SaveDialog({
             Cancel
           </Button>
           <Button size="sm" onClick={handleSave} disabled={!canSave || isSaving}>
-            {isSaving && <SpinnerGap className="size-3.5 animate-spin" />}
+            {isSaving && <LoaderCircle className="size-3.5 animate-spin" />}
             Save
           </Button>
         </DialogFooter>
