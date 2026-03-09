@@ -1,7 +1,7 @@
 import { AlphaStrip } from '@/components/alpha-strip'
 import { ChromaPanel } from '@/components/chroma-panel'
 import { ColorPickerInput } from '@/components/color-picker-input'
-import { ComparePanel } from '@/components/compare-panel'
+import { ComparePanel, type DockSide } from '@/components/compare-panel'
 import { CopyBlock } from '@/components/copy-block'
 import { HuePanel } from '@/components/hue-panel'
 import { LightnessPanel } from '@/components/lightness-panel'
@@ -22,6 +22,7 @@ import type { PalettePreset } from '@/lib/api'
 import { fetchPalettes } from '@/lib/api'
 import { DEFAULT_PARAMS, DISTRIBUTION_PARAM } from '@/lib/constants'
 import type { Preset } from '@/lib/types'
+import { cn } from '@/lib/utils'
 import { Check, LoaderCircle, Moon, RotateCcw, Save, Sun } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
@@ -101,9 +102,30 @@ function PaletteEditor({
   const [saveDialogOpen, setSaveDialogOpen] = useState(false)
   const [savedFlash, setSavedFlash] = useState(false)
   const [showAlpha, setShowAlpha] = useState(false)
+  const [comparePanelOpen, setComparePanelOpen] = useState(false)
   const [compareSteps, setCompareSteps] = useState<Set<number>>(new Set())
   const [benchmarkHexes, setBenchmarkHexes] = useState<Map<number, string>>(new Map())
+  const [dockSide, setDockSide] = useState<DockSide>(null)
+  const [dragOverZone, setDragOverZone] = useState<'left' | 'right' | null>(null)
   const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const PANEL_WIDTH = 288 // w-72 = 18rem = 288px
+  const DROP_ZONE_WIDTH = PANEL_WIDTH
+
+  const handlePanelDragMove = useCallback((pos: { clientX: number }) => {
+    if (pos.clientX < DROP_ZONE_WIDTH) {
+      setDragOverZone('left')
+    } else if (pos.clientX > window.innerWidth - DROP_ZONE_WIDTH) {
+      setDragOverZone('right')
+    } else {
+      setDragOverZone(null)
+    }
+  }, [])
+
+  const handleDockChange = useCallback((side: DockSide) => {
+    setDockSide(side)
+    setDragOverZone(null)
+  }, [])
 
   const showSavedFlash = useCallback(() => {
     setSavedFlash(true)
@@ -179,6 +201,7 @@ function PaletteEditor({
             setBenchmarkHexes((m) => new Map(m).set(step, item.hex))
           }
           next.add(step)
+          setComparePanelOpen(true)
         }
         return next
       })
@@ -249,9 +272,12 @@ function PaletteEditor({
 
       if (e.key === 'Escape') {
         e.preventDefault()
-        if (compareSteps.size > 0) {
+        if (comparePanelOpen) {
+          setComparePanelOpen(false)
           setCompareSteps(new Set())
           setBenchmarkHexes(new Map())
+          setDockSide(null)
+          setDragOverZone(null)
         } else {
           resetParams()
         }
@@ -269,193 +295,255 @@ function PaletteEditor({
     isSaving,
     handleSave,
     resetParams,
-    compareSteps,
+    comparePanelOpen,
   ])
 
   const isCustomHex = activePreset === null
 
+  const panelPaletteName = activePreset ?? lastPreset ?? 'custom'
+
+  const paletteHexMap = useMemo(() => new Map(palette.map((s) => [s.step, s.hex])), [palette])
+
+  const comparePanelNode = comparePanelOpen ? (
+    <ComparePanel
+      entries={compareEntries}
+      paletteName={panelPaletteName}
+      paletteHexMap={paletteHexMap}
+      docked={dockSide}
+      onDockChange={handleDockChange}
+      onDragMove={handlePanelDragMove}
+      onAddStep={handleCompareToggle}
+      onBenchmarkChange={handleBenchmarkChange}
+      onRemoveStep={handleRemoveCompareStep}
+      onClose={() => {
+        setComparePanelOpen(false)
+        setCompareSteps(new Set())
+        setBenchmarkHexes(new Map())
+        setDockSide(null)
+        setDragOverZone(null)
+      }}
+    />
+  ) : null
+
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-background">
-        <div className="max-w-[1200px] mx-auto px-6 py-5 pb-10">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-5">
-            <div>
-              <h1 className="text-lg font-bold">OKLCH Palette Generator</h1>
-              <p className="text-xs text-muted-foreground">
-                Parametric palette generation with anchored midpoint, independent endpoint tapering,
-                per-channel easing, and gamut mapping.
-              </p>
-            </div>
-            <Button variant="ghost" size="icon" onClick={toggle} className="shrink-0">
-              {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
-            </Button>
-          </div>
+      <div className="flex min-h-screen">
+        {/* Docked left */}
+        {comparePanelOpen && dockSide === 'left' && comparePanelNode}
 
-          {/* Preset row */}
-          <div className="mb-4 flex items-center gap-3">
-            <PresetBar
-              presets={presets}
-              activePreset={activePreset}
-              onSelectPreset={handleSelectPreset}
-            />
-            <div className="ml-auto flex items-center gap-3 shrink-0">
-              <div className="flex items-center gap-1.5">
-                <Label htmlFor="show-alpha" className="text-[10px] text-muted-foreground">
-                  Show alpha
-                </Label>
-                <Switch id="show-alpha" checked={showAlpha} onCheckedChange={setShowAlpha} />
+        <div className="flex-1 min-w-0 bg-background">
+          <div className="max-w-[1440px] mx-auto px-6 py-5 pb-10">
+            {/* Header */}
+            <div className="flex items-start justify-between mb-5">
+              <div>
+                <h1 className="text-lg font-bold">OKLCH Palette Generator</h1>
+                <p className="text-xs text-muted-foreground">
+                  Parametric palette generation with anchored midpoint, independent endpoint
+                  tapering, per-channel easing, and gamut mapping.
+                </p>
               </div>
-              <ColorPickerInput value={midpointHex} onChange={setCustomHex} />
+              <Button variant="ghost" size="icon" onClick={toggle} className="shrink-0">
+                {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+              </Button>
             </div>
-          </div>
 
-          {/* Main output — single column */}
-          {validHex && palette.length > 0 && (
-            <div className="flex flex-col gap-4 min-w-0">
-              {/* Palette strip */}
-              <Card>
-                <Tabs defaultValue="palette" className="gap-2">
-                  <CardHeader className="flex items-center justify-between">
-                    <CardTitle className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                      Generated palette
-                    </CardTitle>
-                    <div className="flex items-center gap-3">
-                      {isModified && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={resetParams}
-                              className="size-6"
-                            >
-                              <RotateCcw className="size-3.5" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>Reset all parameters</TooltipContent>
-                        </Tooltip>
-                      )}
-                      {/* Save / Save As — scoped to active palette */}
-                      {isCustomHex ? (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setSaveDialogOpen(true)}
-                          className="gap-1.5"
+            {/* Preset row + tabs scope */}
+            <Tabs defaultValue="palette">
+              <div className="mb-4 flex items-center gap-3">
+                <PresetBar
+                  presets={presets}
+                  activePreset={activePreset}
+                  onSelectPreset={handleSelectPreset}
+                />
+                <div className="ml-auto flex items-center gap-3 shrink-0">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="show-alpha" className="text-[10px] text-muted-foreground">
+                      Show alpha
+                    </Label>
+                    <Switch id="show-alpha" checked={showAlpha} onCheckedChange={setShowAlpha} />
+                  </div>
+                  <TabsList>
+                    <TabsTrigger value="palette">Palette</TabsTrigger>
+                    <TabsTrigger value="gradient">Gradient</TabsTrigger>
+                  </TabsList>
+                  <ColorPickerInput value={midpointHex} onChange={setCustomHex} />
+                </div>
+              </div>
+
+              {/* Main output — single column */}
+              {validHex && palette.length > 0 && (
+                <div className="flex flex-col gap-4 min-w-0">
+                  {/* Palette strip */}
+                  <Card>
+                    <CardHeader className="flex items-center justify-between">
+                      <CardTitle className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                        Generated palette
+                      </CardTitle>
+                      <div className="flex items-center gap-3">
+                        {isModified && (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={resetParams}
+                                className="size-6"
+                              >
+                                <RotateCcw className="size-3.5" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Reset all parameters</TooltipContent>
+                          </Tooltip>
+                        )}
+                        {/* Save / Save As — scoped to active palette */}
+                        {isCustomHex ? (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSaveDialogOpen(true)}
+                            className="gap-1.5"
+                          >
+                            <Save className="size-3.5" />
+                            Save as…
+                          </Button>
+                        ) : (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={handleSave}
+                                disabled={!hasUnsavedChanges || isSaving}
+                                className="size-6"
+                              >
+                                {isSaving ? (
+                                  <LoaderCircle className="size-3.5 animate-spin" />
+                                ) : savedFlash ? (
+                                  <Check className="size-3.5" />
+                                ) : (
+                                  <Save className="size-3.5" />
+                                )}
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              {savedFlash ? 'Saved!' : 'Save palette'}
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
+                        <div
+                          className="w-32 transition-opacity duration-150"
+                          style={{ opacity: isDiverged ? 0.5 : 1 }}
+                          onDoubleClick={() => updateDistribution(DISTRIBUTION_PARAM.default)}
                         >
-                          <Save className="size-3.5" />
-                          Save as…
-                        </Button>
-                      ) : (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={handleSave}
-                              disabled={!hasUnsavedChanges || isSaving}
-                              className="size-6"
-                            >
-                              {isSaving ? (
-                                <LoaderCircle className="size-3.5 animate-spin" />
-                              ) : savedFlash ? (
-                                <Check className="size-3.5" />
-                              ) : (
-                                <Save className="size-3.5" />
-                              )}
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>{savedFlash ? 'Saved!' : 'Save palette'}</TooltipContent>
-                        </Tooltip>
-                      )}
-                      <div
-                        className="w-32 transition-opacity duration-150"
-                        style={{ opacity: isDiverged ? 0.5 : 1 }}
-                        onDoubleClick={() => updateDistribution(DISTRIBUTION_PARAM.default)}
-                      >
-                        <Slider
-                          value={[params.dist_ease]}
-                          onValueChange={([v]) => updateDistribution(v)}
-                          min={DISTRIBUTION_PARAM.min}
-                          max={DISTRIBUTION_PARAM.max}
-                          step={DISTRIBUTION_PARAM.step}
-                        />
+                          <Slider
+                            value={[params.dist_ease]}
+                            onValueChange={([v]) => updateDistribution(v)}
+                            min={DISTRIBUTION_PARAM.min}
+                            max={DISTRIBUTION_PARAM.max}
+                            step={DISTRIBUTION_PARAM.step}
+                          />
+                        </div>
                       </div>
-                      <TabsList>
-                        <TabsTrigger value="palette">Palette</TabsTrigger>
-                        <TabsTrigger value="gradient">Gradient</TabsTrigger>
-                      </TabsList>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    {showAlpha && <AlphaStrip midpointHex={midpointHex} />}
-                    <TabsContent value="palette" className="mt-0">
-                      <PaletteStrip
-                        palette={palette}
-                        showLabels={false}
-                        roundedTop={!showAlpha}
-                        compareSteps={compareSteps}
-                        onCompareToggle={handleCompareToggle}
-                      />
-                    </TabsContent>
-                    <TabsContent value="gradient" className="mt-0">
-                      <div
-                        className={`h-10 md:h-12 lg:h-16 ${showAlpha ? 'rounded-b-lg' : 'rounded-lg'}`}
-                        style={{
-                          background: `linear-gradient(to right, ${palette.map((p) => p.hex).join(', ')})`,
-                        }}
-                      />
-                    </TabsContent>
-                    <PaletteStrip palette={palette} labelsOnly />
-                  </CardContent>
-                </Tabs>
-              </Card>
+                    </CardHeader>
+                    <CardContent>
+                      {showAlpha && <AlphaStrip midpointHex={midpointHex} />}
+                      <TabsContent value="palette" className="mt-0">
+                        <PaletteStrip
+                          palette={palette}
+                          showLabels={false}
+                          roundedTop={!showAlpha}
+                          compareSteps={compareSteps}
+                          onCompareToggle={handleCompareToggle}
+                        />
+                      </TabsContent>
+                      <TabsContent value="gradient" className="mt-0">
+                        <div
+                          className={`h-10 md:h-12 lg:h-16 ${showAlpha ? 'rounded-b-lg' : 'rounded-lg'}`}
+                          style={{
+                            background: `linear-gradient(to right, ${palette.map((p) => p.hex).join(', ')})`,
+                          }}
+                        />
+                      </TabsContent>
+                      <PaletteStrip palette={palette} labelsOnly />
+                    </CardContent>
+                  </Card>
 
-              {/* Lightness panel — sliders + chart */}
-              <LightnessPanel
-                params={params}
-                palette={palette}
-                midpointHex={midpointHex}
-                onUpdateParam={updateParam}
-                onReset={resetLightness}
-              />
+                  {/* Lightness panel — sliders + chart */}
+                  <LightnessPanel
+                    params={params}
+                    palette={palette}
+                    midpointHex={midpointHex}
+                    onUpdateParam={updateParam}
+                    onReset={resetLightness}
+                  />
 
-              {/* Chroma panel — sliders + chart */}
-              <ChromaPanel
-                params={params}
-                palette={palette}
-                midpointHex={midpointHex}
-                onUpdateParam={updateParam}
-                onReset={resetChroma}
-              />
+                  {/* Chroma panel — sliders + chart */}
+                  <ChromaPanel
+                    params={params}
+                    palette={palette}
+                    midpointHex={midpointHex}
+                    onUpdateParam={updateParam}
+                    onReset={resetChroma}
+                  />
 
-              {/* Hue panel — sliders + chart */}
-              <HuePanel
-                params={params}
-                palette={palette}
-                midpointHex={midpointHex}
-                onUpdateParam={updateParam}
-                onReset={resetHue}
-              />
+                  {/* Hue panel — sliders + chart */}
+                  <HuePanel
+                    params={params}
+                    palette={palette}
+                    midpointHex={midpointHex}
+                    onUpdateParam={updateParam}
+                    onReset={resetHue}
+                  />
 
-              {/* Values table */}
-              <Card>
-                <CardContent>
-                  <ValuesTable palette={palette} />
-                </CardContent>
-              </Card>
+                  {/* Values table */}
+                  <Card>
+                    <CardContent>
+                      <ValuesTable palette={palette} />
+                    </CardContent>
+                  </Card>
 
-              {/* Copy block */}
-              <CopyBlock
-                palette={palette}
-                paletteName={activePreset ?? lastPreset ?? 'custom'}
-                midpointHex={midpointHex}
-              />
-            </div>
-          )}
+                  {/* Copy block */}
+                  <CopyBlock
+                    palette={palette}
+                    paletteName={activePreset ?? lastPreset ?? 'custom'}
+                    midpointHex={midpointHex}
+                  />
+                </div>
+              )}
+            </Tabs>
+          </div>
         </div>
+
+        {/* Docked right */}
+        {comparePanelOpen && dockSide === 'right' && comparePanelNode}
       </div>
+
+      {/* Floating panel (not docked) */}
+      {comparePanelOpen && dockSide === null && comparePanelNode}
+
+      {/* Drop zone overlays — visible only while dragging the panel */}
+      {dragOverZone !== null && (
+        <>
+          <div
+            className={cn(
+              'fixed inset-y-0 left-0 z-40 pointer-events-none transition-opacity duration-150',
+              dragOverZone === 'left' ? 'opacity-100' : 'opacity-0',
+            )}
+            style={{ width: DROP_ZONE_WIDTH }}
+          >
+            <div className="h-full m-2 rounded-md bg-foreground/5" />
+          </div>
+          <div
+            className={cn(
+              'fixed inset-y-0 right-0 z-40 pointer-events-none transition-opacity duration-150',
+              dragOverZone === 'right' ? 'opacity-100' : 'opacity-0',
+            )}
+            style={{ width: DROP_ZONE_WIDTH }}
+          >
+            <div className="h-full m-2 rounded-md bg-foreground/5" />
+          </div>
+        </>
+      )}
 
       {/* Save As dialog */}
       <SaveDialog
@@ -467,19 +555,6 @@ function PaletteEditor({
         isSaving={isSaving}
         onSave={handleSaveAs}
       />
-
-      {/* Compare panel — floating, draggable */}
-      {compareEntries.length > 0 && (
-        <ComparePanel
-          entries={compareEntries}
-          onBenchmarkChange={handleBenchmarkChange}
-          onRemoveStep={handleRemoveCompareStep}
-          onClose={() => {
-            setCompareSteps(new Set())
-            setBenchmarkHexes(new Map())
-          }}
-        />
-      )}
     </TooltipProvider>
   )
 }

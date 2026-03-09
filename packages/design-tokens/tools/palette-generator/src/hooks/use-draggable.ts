@@ -1,25 +1,30 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+interface DraggableOptions {
+  initialPos: { x: number; y: number }
+  enabled?: boolean
+  onDragMove?: (pos: { clientX: number; clientY: number }) => void
+  onDragEnd?: (pos: { clientX: number; clientY: number }) => void
+}
+
 interface DraggableReturn {
-  /** Spread onto the drag-handle element */
   handleProps: {
     onPointerDown: (e: React.PointerEvent) => void
     onPointerMove: (e: React.PointerEvent) => void
     onPointerUp: (e: React.PointerEvent) => void
     style: React.CSSProperties
   }
-  /** Attach to the panel root for measuring bounds */
   panelRef: React.RefObject<HTMLDivElement | null>
-  /** Style to spread onto the panel root (position + transform) */
   style: React.CSSProperties
+  isDragging: boolean
 }
 
-/**
- * Lightweight drag hook using pointer capture.
- *
- * @param initialPos – fixed position for the panel (`left`, `top`)
- */
-export function useDraggable(initialPos: { x: number; y: number }): DraggableReturn {
+export function useDraggable({
+  initialPos,
+  enabled = true,
+  onDragMove,
+  onDragEnd,
+}: DraggableOptions): DraggableReturn {
   const panelRef = useRef<HTMLDivElement>(null)
   const offsetRef = useRef({ x: 0, y: 0 })
   const dragStart = useRef<{
@@ -30,8 +35,11 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
   } | null>(null)
   const rafId = useRef(0)
   const [, setTick] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
 
-  /* ---- clamp so at least 80px stays visible ---- */
+  const callbackRefs = useRef({ onDragMove, onDragEnd })
+  callbackRefs.current = { onDragMove, onDragEnd }
+
   const clamp = useCallback(() => {
     const el = panelRef.current
     if (!el) return
@@ -41,19 +49,15 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
     const minVisible = 80
 
     let { x, y } = offsetRef.current
-    // right edge must be at least minVisible inside viewport
     if (initialPos.x + x + rect.width < minVisible) {
       x = minVisible - rect.width - initialPos.x
     }
-    // left edge
     if (initialPos.x + x > vw - minVisible) {
       x = vw - minVisible - initialPos.x
     }
-    // bottom edge
     if (initialPos.y + y + rect.height < minVisible) {
       y = minVisible - rect.height - initialPos.y
     }
-    // top edge
     if (initialPos.y + y > vh - minVisible) {
       y = vh - minVisible - initialPos.y
     }
@@ -61,7 +65,6 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
     offsetRef.current = { x, y }
   }, [initialPos.x, initialPos.y])
 
-  /* ---- pointer handlers (spread onto handle element) ---- */
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
     dragStart.current = {
@@ -70,6 +73,7 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
       ox: offsetRef.current.x,
       oy: offsetRef.current.y,
     }
+    setIsDragging(true)
   }, [])
 
   const onPointerMove = useCallback(
@@ -84,16 +88,27 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
       clamp()
       cancelAnimationFrame(rafId.current)
       rafId.current = requestAnimationFrame(() => setTick((t) => t + 1))
+      callbackRefs.current.onDragMove?.({ clientX: e.clientX, clientY: e.clientY })
     },
     [clamp],
   )
 
   const onPointerUp = useCallback((e: React.PointerEvent) => {
     ;(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId)
+    const wasDragging = dragStart.current !== null
     dragStart.current = null
+    setIsDragging(false)
+    if (wasDragging) {
+      callbackRefs.current.onDragEnd?.({ clientX: e.clientX, clientY: e.clientY })
+    }
   }, [])
 
-  /* ---- re-clamp on window resize ---- */
+  useEffect(() => {
+    if (!enabled) {
+      offsetRef.current = { x: 0, y: 0 }
+    }
+  }, [enabled])
+
   useEffect(() => {
     const onResize = () => {
       clamp()
@@ -103,14 +118,15 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
     return () => window.removeEventListener('resize', onResize)
   }, [clamp])
 
-  /* ---- computed styles ---- */
-  const panelStyle: React.CSSProperties = {
-    position: 'fixed',
-    left: initialPos.x,
-    top: initialPos.y,
-    transform: `translate(${offsetRef.current.x}px, ${offsetRef.current.y}px)`,
-    willChange: 'transform',
-  }
+  const panelStyle: React.CSSProperties = enabled
+    ? {
+        position: 'fixed',
+        left: initialPos.x,
+        top: initialPos.y,
+        transform: `translate(${offsetRef.current.x}px, ${offsetRef.current.y}px)`,
+        willChange: 'transform',
+      }
+    : {}
 
   const handleStyle: React.CSSProperties = {
     cursor: dragStart.current ? 'grabbing' : 'grab',
@@ -121,6 +137,7 @@ export function useDraggable(initialPos: { x: number; y: number }): DraggableRet
   return {
     panelRef,
     style: panelStyle,
+    isDragging,
     handleProps: {
       onPointerDown,
       onPointerMove,

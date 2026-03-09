@@ -2,7 +2,7 @@ import { copyToClipboard } from '@/lib/clipboard'
 import { MAIN_STEPS } from '@/lib/constants'
 import type { PaletteStep } from '@/lib/types'
 import { cn } from '@/lib/utils'
-import { Check, Columns2 } from 'lucide-react'
+import { Check, Minus, Plus } from 'lucide-react'
 import { useState } from 'react'
 
 const EMPTY_SET = new Set<number>()
@@ -64,10 +64,7 @@ export function PaletteStrip({
               setCopiedStep(item.step)
               setTimeout(() => setCopiedStep(null), 1000)
             }}
-            className={cn(
-              'group/swatch flex-1 h-10 md:h-12 lg:h-16 relative cursor-pointer border-0 p-0',
-              compareSteps.has(item.step) && 'ring-2 ring-inset ring-foreground/50',
-            )}
+            className="group/swatch flex-1 h-10 md:h-12 lg:h-16 relative cursor-pointer border-0 p-0"
             style={{ backgroundColor: item.hex }}
             title={`Click to copy ${item.hex}`}
           >
@@ -87,20 +84,25 @@ export function PaletteStrip({
               <div
                 className={cn(
                   'absolute top-0.5 right-0.5 flex items-center justify-center rounded size-6',
-                  'opacity-0 group-hover/swatch:opacity-100 transition-opacity',
-                  'text-white/70 hover:bg-black/40 hover:text-white',
-                  compareSteps.has(item.step) && 'opacity-100 text-white',
+                  'transition-opacity bg-black/10 text-white/60 hover:bg-black/20 hover:text-white/90',
+                  compareSteps.has(item.step)
+                    ? 'opacity-100'
+                    : 'opacity-0 group-hover/swatch:opacity-100',
                 )}
                 role="button"
                 tabIndex={-1}
-                title={compareSteps.has(item.step) ? 'Remove from compare' : 'Compare'}
+                title={compareSteps.has(item.step) ? 'Remove from compare' : 'Add to compare'}
                 onClick={(e) => {
                   e.stopPropagation()
                   onCompareToggle(item.step)
                 }}
                 onPointerDown={(e) => e.stopPropagation()}
               >
-                <Columns2 className="size-4" strokeWidth={2} />
+                {compareSteps.has(item.step) ? (
+                  <Minus className="size-4" strokeWidth={2} />
+                ) : (
+                  <Plus className="size-4" strokeWidth={2} />
+                )}
               </div>
             )}
           </button>
