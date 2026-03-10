@@ -1,10 +1,11 @@
 import { ColorPickerInput } from '@/components/color-picker-input'
 import { Button } from '@/components/ui/button'
+import tailwindColors from '@/data/tailwind-colors.json'
 import { useDraggable } from '@/hooks/use-draggable'
 import { copyToClipboard } from '@/lib/clipboard'
 import { STEPS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
-import { ArrowDown, ArrowUp, Check, Minus, Plus, X } from 'lucide-react'
+import { ArrowDown, ArrowUp, Check, ChevronRight, Minus, Plus, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 export interface CompareEntry {
@@ -14,6 +15,10 @@ export interface CompareEntry {
 }
 
 export type DockSide = 'left' | 'right' | null
+
+type TailwindPalettes = Record<string, Record<string, string>>
+const twPalettes = tailwindColors as TailwindPalettes
+const twPaletteNames = Object.keys(twPalettes)
 
 interface ComparePanelProps {
   entries: CompareEntry[]
@@ -26,6 +31,7 @@ interface ComparePanelProps {
   onAddStep: (step: number) => void
   onBenchmarkChange: (step: number, hex: string) => void
   onRemoveStep: (step: number) => void
+  onLoadTailwindPalette: (palette: Record<string, string>, displayName: string) => void
   onClose: () => void
 }
 
@@ -45,6 +51,7 @@ export function ComparePanel({
   onAddStep,
   onBenchmarkChange,
   onRemoveStep,
+  onLoadTailwindPalette,
   onClose,
 }: ComparePanelProps) {
   const initialPos = useMemo(
@@ -83,8 +90,11 @@ export function ComparePanel({
 
   const [copiedStep, setCopiedStep] = useState<number | null>(null)
   const [addOpen, setAddOpen] = useState(false)
+  const [twSubOpen, setTwSubOpen] = useState(false)
   const [sortAsc, setSortAsc] = useState(false)
   const addMenuRef = useRef<HTMLDivElement>(null)
+  const twTriggerRef = useRef<HTMLButtonElement>(null)
+  const twSubRef = useRef<HTMLDivElement>(null)
 
   const sortedEntries = useMemo(
     () => [...entries].sort((a, b) => (sortAsc ? a.step - b.step : b.step - a.step)),
@@ -94,15 +104,27 @@ export function ComparePanel({
   const entrySteps = useMemo(() => new Set(entries.map((e) => e.step)), [entries])
   const availableSteps = useMemo(() => STEPS.filter((s) => !entrySteps.has(s)), [entrySteps])
 
+  // Close the add menu when clicking outside
   useEffect(() => {
     if (!addOpen) return
     function handleClickOutside(e: MouseEvent) {
-      if (addMenuRef.current && !addMenuRef.current.contains(e.target as Node)) {
+      const target = e.target as Node
+      if (
+        addMenuRef.current &&
+        !addMenuRef.current.contains(target) &&
+        !(twSubRef.current && twSubRef.current.contains(target))
+      ) {
         setAddOpen(false)
+        setTwSubOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [addOpen])
+
+  // Close Tailwind sub-menu when parent closes
+  useEffect(() => {
+    if (!addOpen) setTwSubOpen(false)
   }, [addOpen])
 
   function handleCopyHex(step: number, hex: string) {
@@ -110,6 +132,20 @@ export function ComparePanel({
     setCopiedStep(step)
     setTimeout(() => setCopiedStep(null), 900)
   }
+
+  // Position the Tailwind sub-menu to the left of the trigger
+  const [twSubStyle, setTwSubStyle] = useState<React.CSSProperties>({})
+  useEffect(() => {
+    if (!twSubOpen || !twTriggerRef.current || !addMenuRef.current) return
+    const triggerRect = twTriggerRef.current.getBoundingClientRect()
+    const menuRect = addMenuRef.current.getBoundingClientRect()
+    setTwSubStyle({
+      position: 'fixed',
+      top: triggerRect.top,
+      left: menuRect.left - 4, // 4px gap
+      transform: 'translateX(-100%)',
+    })
+  }, [twSubOpen])
 
   return (
     <div
@@ -142,58 +178,71 @@ export function ComparePanel({
               <span className="sr-only">{sortAsc ? 'Sort descending' : 'Sort ascending'}</span>
             </Button>
           )}
-          {availableSteps.length > 0 && (
-            <div className="relative" ref={addMenuRef}>
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                onClick={() => setAddOpen((v) => !v)}
+          {/* Add step menu (always visible so user can load TW palettes even when all steps are added) */}
+          <div className="relative" ref={addMenuRef}>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => setAddOpen((v) => !v)}
+              onPointerDown={(e) => e.stopPropagation()}
+            >
+              <Plus />
+              <span className="sr-only">Add step</span>
+            </Button>
+            {addOpen && (
+              <div
+                className="absolute right-0 top-full mt-1 z-50 max-h-60 w-44 overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
                 onPointerDown={(e) => e.stopPropagation()}
               >
-                <Plus />
-                <span className="sr-only">Add step</span>
-              </Button>
-              {addOpen && (
-                <div
-                  className="absolute right-0 top-full mt-1 z-50 max-h-60 w-36 overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
-                  onPointerDown={(e) => e.stopPropagation()}
-                >
-                  {availableSteps.map((s) => (
+                {availableSteps.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => {
+                      onAddStep(s)
+                      setAddOpen(false)
+                    }}
+                  >
+                    <span
+                      className="size-3 rounded-full shrink-0 border border-border"
+                      style={{ backgroundColor: paletteHexMap.get(s) }}
+                    />
+                    {toPascalCase(paletteName)} {s}
+                  </button>
+                ))}
+                {availableSteps.length > 1 && (
+                  <>
+                    <div className="my-1 h-px bg-border/50" />
                     <button
-                      key={s}
                       type="button"
-                      className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed hover:bg-accent hover:text-accent-foreground"
+                      className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed font-medium hover:bg-accent hover:text-accent-foreground"
                       onClick={() => {
-                        onAddStep(s)
+                        availableSteps.forEach((s) => onAddStep(s))
                         setAddOpen(false)
                       }}
                     >
-                      <span
-                        className="size-3 rounded-full shrink-0 border border-border"
-                        style={{ backgroundColor: paletteHexMap.get(s) }}
-                      />
-                      {toPascalCase(paletteName)} {s}
+                      Add all swatches
                     </button>
-                  ))}
-                  {availableSteps.length > 1 && (
-                    <>
-                      <div className="my-1 h-px bg-border/50" />
-                      <button
-                        type="button"
-                        className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed font-medium hover:bg-accent hover:text-accent-foreground"
-                        onClick={() => {
-                          availableSteps.forEach((s) => onAddStep(s))
-                          setAddOpen(false)
-                        }}
-                      >
-                        Add all swatches
-                      </button>
-                    </>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
+                  </>
+                )}
+
+                {/* Tailwind Colors sub-menu trigger */}
+                <div className="my-1 h-px bg-border/50" />
+                <button
+                  ref={twTriggerRef}
+                  type="button"
+                  className="flex w-full items-center justify-between rounded-md px-2 py-1 text-xs/relaxed font-medium hover:bg-accent hover:text-accent-foreground"
+                  onMouseEnter={() => setTwSubOpen(true)}
+                  onClick={() => setTwSubOpen((v) => !v)}
+                >
+                  Tailwind Colors
+                  <ChevronRight className="size-3 text-muted-foreground" />
+                </button>
+              </div>
+            )}
+          </div>
+
           <Button
             variant="ghost"
             size="icon-sm"
@@ -206,6 +255,40 @@ export function ComparePanel({
           </Button>
         </div>
       </div>
+
+      {/* Tailwind sub-menu (rendered via portal-like fixed position) */}
+      {twSubOpen && (
+        <div
+          ref={twSubRef}
+          style={twSubStyle}
+          className="z-[60] max-h-60 w-40 overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
+          onMouseLeave={() => setTwSubOpen(false)}
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          {twPaletteNames.map((name) => {
+            const steps = twPalettes[name]
+            const midHex = steps['500'] ?? Object.values(steps)[5]
+            return (
+              <button
+                key={name}
+                type="button"
+                className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed hover:bg-accent hover:text-accent-foreground"
+                onClick={() => {
+                  onLoadTailwindPalette(steps, toPascalCase(name))
+                  setTwSubOpen(false)
+                  setAddOpen(false)
+                }}
+              >
+                <span
+                  className="size-3 rounded-full shrink-0 border border-border"
+                  style={{ backgroundColor: midHex }}
+                />
+                {toPascalCase(name)}
+              </button>
+            )
+          })}
+        </div>
+      )}
 
       {/* Scrollable body */}
       <div className="flex-1 overflow-y-auto min-h-0">

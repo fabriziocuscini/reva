@@ -226,6 +226,25 @@ function PaletteEditor({
     })
   }, [])
 
+  const handleLoadTailwindPalette = useCallback(
+    (twSteps: Record<string, string>, _displayName: string) => {
+      const newSteps = new Set<number>(compareSteps)
+      const newBenchmarks = new Map(benchmarkHexes)
+
+      for (const [stepStr, hex] of Object.entries(twSteps)) {
+        const step = Number(stepStr)
+        if (!palette.some((s) => s.step === step)) continue
+        newSteps.add(step)
+        newBenchmarks.set(step, hex)
+      }
+
+      setCompareSteps(newSteps)
+      setBenchmarkHexes(newBenchmarks)
+      setComparePanelOpen(true)
+    },
+    [compareSteps, benchmarkHexes, palette],
+  )
+
   const handleSelectPreset = useCallback(
     (name: string) => {
       setCompareSteps(new Set())
@@ -315,6 +334,7 @@ function PaletteEditor({
       onAddStep={handleCompareToggle}
       onBenchmarkChange={handleBenchmarkChange}
       onRemoveStep={handleRemoveCompareStep}
+      onLoadTailwindPalette={handleLoadTailwindPalette}
       onClose={() => {
         setComparePanelOpen(false)
         setCompareSteps(new Set())
