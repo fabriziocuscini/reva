@@ -300,7 +300,7 @@ function PaletteEditor({
 
   const isCustomHex = activePreset === null
 
-  const panelPaletteName = activePreset ?? lastPreset ?? 'custom'
+  const panelPaletteName = activePreset ?? 'custom'
 
   const paletteHexMap = useMemo(() => new Map(palette.map((s) => [s.step, s.hex])), [palette])
 
@@ -505,7 +505,7 @@ function PaletteEditor({
                   {/* Copy block */}
                   <CopyBlock
                     palette={palette}
-                    paletteName={activePreset ?? lastPreset ?? 'custom'}
+                    paletteName={activePreset ?? 'custom'}
                     midpointHex={midpointHex}
                   />
                 </div>
