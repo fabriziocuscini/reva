@@ -1,6 +1,8 @@
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { isValidHex } from '@/lib/color'
+import { isValidHex, normalizeHex } from '@/lib/color'
+import type { ClipboardEvent, FocusEvent, MouseEvent } from 'react'
+import { useCallback } from 'react'
 import { HexColorPicker } from 'react-colorful'
 
 interface ColorPickerInputProps {
@@ -10,6 +12,34 @@ interface ColorPickerInputProps {
 
 export function ColorPickerInput({ value, onChange }: ColorPickerInputProps) {
   const valid = isValidHex(value)
+
+  const handleBlur = useCallback(
+    (e: FocusEvent<HTMLInputElement>) => {
+      const normalized = normalizeHex(e.currentTarget.value)
+      if (normalized !== value) onChange(normalized)
+    },
+    [onChange, value],
+  )
+
+  const handleDoubleClick = useCallback((e: MouseEvent<HTMLInputElement>) => {
+    e.currentTarget.select()
+  }, [])
+
+  const handlePaste = useCallback(
+    (e: ClipboardEvent<HTMLInputElement>) => {
+      const pasted = e.clipboardData.getData('text/plain')
+      const input = e.currentTarget
+      const before = input.value.slice(0, input.selectionStart ?? 0)
+      const after = input.value.slice(input.selectionEnd ?? input.value.length)
+      const merged = before + pasted + after
+      const normalized = normalizeHex(merged)
+      if (normalized !== merged) {
+        e.preventDefault()
+        onChange(normalized)
+      }
+    },
+    [onChange],
+  )
 
   return (
     <Popover>
@@ -30,6 +60,9 @@ export function ColorPickerInput({ value, onChange }: ColorPickerInputProps) {
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          onDoubleClick={handleDoubleClick}
+          onBlur={handleBlur}
+          onPaste={handlePaste}
           className="font-mono text-xs uppercase"
           aria-invalid={!valid || undefined}
         />

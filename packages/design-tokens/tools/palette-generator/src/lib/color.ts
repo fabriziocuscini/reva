@@ -30,3 +30,21 @@ export function hexToHslDisplay(hex: string): HslDisplay {
 export function isValidHex(value: string): boolean {
   return /^#[0-9a-fA-F]{6}$/.test(value)
 }
+
+/**
+ * Best-effort normalisation: strip extraneous `#` prefixes and ensure
+ * the result is `#` + 6 hex digits. Returns the input unchanged when
+ * it can't be salvaged into a valid hex colour.
+ */
+export function normalizeHex(raw: string): string {
+  const stripped = raw.replace(/^#+/, '')
+  if (/^[0-9a-fA-F]{6}$/.test(stripped)) return `#${stripped.toUpperCase()}`
+  if (/^[0-9a-fA-F]{3}$/.test(stripped)) {
+    const expanded = stripped
+      .split('')
+      .map((c) => c + c)
+      .join('')
+    return `#${expanded.toUpperCase()}`
+  }
+  return raw
+}

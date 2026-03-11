@@ -4,6 +4,8 @@ export const STEPS = [
   50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950,
 ] as const
 
+export const TAILWIND_STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
+
 export const MAIN_STEPS = new Set([100, 200, 300, 400, 500, 600, 700, 800, 900])
 
 export const ALPHA_STEPS = [

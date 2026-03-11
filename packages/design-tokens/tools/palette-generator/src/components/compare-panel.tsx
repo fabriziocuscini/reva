@@ -3,9 +3,19 @@ import { Button } from '@/components/ui/button'
 import tailwindColors from '@/data/tailwind-colors.json'
 import { useDraggable } from '@/hooks/use-draggable'
 import { copyToClipboard } from '@/lib/clipboard'
-import { STEPS } from '@/lib/constants'
+import { STEPS, TAILWIND_STEPS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
-import { ArrowDown, ArrowUp, Check, ChevronRight, Minus, Plus, X } from 'lucide-react'
+import {
+  ArrowDown,
+  ArrowUp,
+  Check,
+  ChevronRight,
+  Minus,
+  MoreHorizontal,
+  Plus,
+  Trash2,
+  X,
+} from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 export interface CompareEntry {
@@ -32,6 +42,7 @@ interface ComparePanelProps {
   onBenchmarkChange: (step: number, hex: string) => void
   onRemoveStep: (step: number) => void
   onLoadTailwindPalette: (palette: Record<string, string>, displayName: string) => void
+  onClearEntries: () => void
   onClose: () => void
 }
 
@@ -52,6 +63,7 @@ export function ComparePanel({
   onBenchmarkChange,
   onRemoveStep,
   onLoadTailwindPalette,
+  onClearEntries,
   onClose,
 }: ComparePanelProps) {
   const initialPos = useMemo(
@@ -75,9 +87,7 @@ export function ComparePanel({
     onDragMove: isFloating ? onDragMove : undefined,
     onDragEnd: isFloating
       ? (pos) => {
-          if (pos.clientX < DROP_ZONE_WIDTH) {
-            onDockChange('left')
-          } else if (pos.clientX > window.innerWidth - DROP_ZONE_WIDTH) {
+          if (pos.clientX > window.innerWidth - DROP_ZONE_WIDTH) {
             onDockChange('right')
           } else {
             onDockChange(null)
@@ -90,11 +100,11 @@ export function ComparePanel({
 
   const [copiedStep, setCopiedStep] = useState<number | null>(null)
   const [addOpen, setAddOpen] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
   const [twSubOpen, setTwSubOpen] = useState(false)
   const [sortAsc, setSortAsc] = useState(false)
   const addMenuRef = useRef<HTMLDivElement>(null)
-  const twTriggerRef = useRef<HTMLButtonElement>(null)
-  const twSubRef = useRef<HTMLDivElement>(null)
+  const moreMenuRef = useRef<HTMLDivElement>(null)
 
   const sortedEntries = useMemo(
     () => [...entries].sort((a, b) => (sortAsc ? a.step - b.step : b.step - a.step)),
@@ -103,49 +113,47 @@ export function ComparePanel({
 
   const entrySteps = useMemo(() => new Set(entries.map((e) => e.step)), [entries])
   const availableSteps = useMemo(() => STEPS.filter((s) => !entrySteps.has(s)), [entrySteps])
+  const availableTailwindSteps = useMemo(
+    () => TAILWIND_STEPS.filter((s) => !entrySteps.has(s)),
+    [entrySteps],
+  )
 
   // Close the add menu when clicking outside
   useEffect(() => {
     if (!addOpen) return
     function handleClickOutside(e: MouseEvent) {
       const target = e.target as Node
-      if (
-        addMenuRef.current &&
-        !addMenuRef.current.contains(target) &&
-        !(twSubRef.current && twSubRef.current.contains(target))
-      ) {
+      if (addMenuRef.current && !addMenuRef.current.contains(target)) {
         setAddOpen(false)
-        setTwSubOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [addOpen])
 
-  // Close Tailwind sub-menu when parent closes
+  // Close the more menu when clicking outside
   useEffect(() => {
-    if (!addOpen) setTwSubOpen(false)
-  }, [addOpen])
+    if (!moreOpen) return
+    function handleClickOutside(e: MouseEvent) {
+      const target = e.target as Node
+      if (moreMenuRef.current && !moreMenuRef.current.contains(target)) {
+        setMoreOpen(false)
+        setTwSubOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [moreOpen])
+
+  useEffect(() => {
+    if (!moreOpen) setTwSubOpen(false)
+  }, [moreOpen])
 
   function handleCopyHex(step: number, hex: string) {
     copyToClipboard(hex)
     setCopiedStep(step)
     setTimeout(() => setCopiedStep(null), 900)
   }
-
-  // Position the Tailwind sub-menu to the left of the trigger
-  const [twSubStyle, setTwSubStyle] = useState<React.CSSProperties>({})
-  useEffect(() => {
-    if (!twSubOpen || !twTriggerRef.current || !addMenuRef.current) return
-    const triggerRect = twTriggerRef.current.getBoundingClientRect()
-    const menuRect = addMenuRef.current.getBoundingClientRect()
-    setTwSubStyle({
-      position: 'fixed',
-      top: triggerRect.top,
-      left: menuRect.left - 4, // 4px gap
-      transform: 'translateX(-100%)',
-    })
-  }, [twSubOpen])
 
   return (
     <div
@@ -155,9 +163,7 @@ export function ComparePanel({
         'flex flex-col bg-card text-card-foreground',
         isFloating
           ? 'z-50 w-72 max-h-[80vh] rounded-lg ring-1 ring-foreground/10 shadow-xl backdrop-blur-md bg-card/60'
-          : 'w-72 shrink-0 h-screen sticky top-0 border-border',
-        !isFloating && docked === 'left' && 'border-r',
-        !isFloating && docked === 'right' && 'border-l',
+          : 'w-72 shrink-0 h-screen sticky top-0 border-l border-border',
       )}
     >
       {/* Header — drag handle */}
@@ -178,67 +184,156 @@ export function ComparePanel({
               <span className="sr-only">{sortAsc ? 'Sort descending' : 'Sort ascending'}</span>
             </Button>
           )}
-          {/* Add step menu (always visible so user can load TW palettes even when all steps are added) */}
-          <div className="relative" ref={addMenuRef}>
+          {/* Add step menu */}
+          {availableSteps.length > 0 && (
+            <div className="relative" ref={addMenuRef}>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                onClick={() => {
+                  setAddOpen((v) => !v)
+                  setMoreOpen(false)
+                }}
+                onPointerDown={(e) => e.stopPropagation()}
+              >
+                <Plus />
+                <span className="sr-only">Add step</span>
+              </Button>
+              {addOpen && (
+                <div
+                  className="absolute right-0 top-full mt-1 z-50 max-h-60 w-44 overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
+                  onPointerDown={(e) => e.stopPropagation()}
+                >
+                  {availableSteps.map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed hover:bg-accent hover:text-accent-foreground"
+                      onClick={() => {
+                        onAddStep(s)
+                        setAddOpen(false)
+                      }}
+                    >
+                      <span
+                        className="size-3 rounded-full shrink-0 border border-border"
+                        style={{ backgroundColor: paletteHexMap.get(s) }}
+                      />
+                      {toPascalCase(paletteName)} {s}
+                    </button>
+                  ))}
+                  {(availableTailwindSteps.length > 0 || availableSteps.length > 1) && (
+                    <>
+                      <div className="my-1 h-px bg-border/50" />
+                      {availableTailwindSteps.length > 0 && (
+                        <button
+                          type="button"
+                          className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed font-medium hover:bg-accent hover:text-accent-foreground"
+                          onClick={() => {
+                            availableTailwindSteps.forEach((s) => onAddStep(s))
+                            setAddOpen(false)
+                          }}
+                        >
+                          Add palette
+                        </button>
+                      )}
+                      {availableSteps.length > 1 && (
+                        <button
+                          type="button"
+                          className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed font-medium hover:bg-accent hover:text-accent-foreground"
+                          onClick={() => {
+                            availableSteps.forEach((s) => onAddStep(s))
+                            setAddOpen(false)
+                          }}
+                        >
+                          Add extended palette
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* More menu */}
+          <div className="relative" ref={moreMenuRef}>
             <Button
               variant="ghost"
               size="icon-sm"
-              onClick={() => setAddOpen((v) => !v)}
+              onClick={() => {
+                setMoreOpen((v) => !v)
+                setAddOpen(false)
+              }}
               onPointerDown={(e) => e.stopPropagation()}
             >
-              <Plus />
-              <span className="sr-only">Add step</span>
+              <MoreHorizontal />
+              <span className="sr-only">More actions</span>
             </Button>
-            {addOpen && (
+            {moreOpen && (
               <div
-                className="absolute right-0 top-full mt-1 z-50 max-h-60 w-44 overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
+                className="absolute right-0 top-full mt-1 z-50 w-44 rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
                 onPointerDown={(e) => e.stopPropagation()}
               >
-                {availableSteps.map((s) => (
+                {/* Tailwind Colors with CSS-positioned sub-menu */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => setTwSubOpen(true)}
+                  onMouseLeave={() => setTwSubOpen(false)}
+                >
                   <button
-                    key={s}
                     type="button"
-                    className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed hover:bg-accent hover:text-accent-foreground"
-                    onClick={() => {
-                      onAddStep(s)
-                      setAddOpen(false)
-                    }}
+                    className="flex w-full items-center justify-between rounded-md px-2 py-1 text-xs/relaxed hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => setTwSubOpen((v) => !v)}
                   >
-                    <span
-                      className="size-3 rounded-full shrink-0 border border-border"
-                      style={{ backgroundColor: paletteHexMap.get(s) }}
-                    />
-                    {toPascalCase(paletteName)} {s}
+                    Tailwind Colors
+                    <ChevronRight className="size-3 text-muted-foreground" />
                   </button>
-                ))}
-                {availableSteps.length > 1 && (
+                  {twSubOpen && (
+                    <div
+                      className="absolute right-full top-0 mr-1 z-[60] max-h-60 w-40 overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
+                      onPointerDown={(e) => e.stopPropagation()}
+                    >
+                      {twPaletteNames.map((name) => {
+                        const steps = twPalettes[name]
+                        const midHex = steps['500'] ?? Object.values(steps)[5]
+                        return (
+                          <button
+                            key={name}
+                            type="button"
+                            className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed hover:bg-accent hover:text-accent-foreground"
+                            onClick={() => {
+                              onLoadTailwindPalette(steps, toPascalCase(name))
+                              setTwSubOpen(false)
+                              setMoreOpen(false)
+                            }}
+                          >
+                            <span
+                              className="size-3 rounded-full shrink-0 border border-border"
+                              style={{ backgroundColor: midHex }}
+                            />
+                            {toPascalCase(name)}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+                {entries.length > 0 && (
                   <>
                     <div className="my-1 h-px bg-border/50" />
                     <button
                       type="button"
-                      className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed font-medium hover:bg-accent hover:text-accent-foreground"
+                      className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed text-destructive hover:bg-accent hover:text-destructive"
                       onClick={() => {
-                        availableSteps.forEach((s) => onAddStep(s))
-                        setAddOpen(false)
+                        onClearEntries()
+                        setMoreOpen(false)
                       }}
                     >
-                      Add all swatches
+                      <Trash2 className="size-3" />
+                      Remove colors
                     </button>
                   </>
                 )}
-
-                {/* Tailwind Colors sub-menu trigger */}
-                <div className="my-1 h-px bg-border/50" />
-                <button
-                  ref={twTriggerRef}
-                  type="button"
-                  className="flex w-full items-center justify-between rounded-md px-2 py-1 text-xs/relaxed font-medium hover:bg-accent hover:text-accent-foreground"
-                  onMouseEnter={() => setTwSubOpen(true)}
-                  onClick={() => setTwSubOpen((v) => !v)}
-                >
-                  Tailwind Colors
-                  <ChevronRight className="size-3 text-muted-foreground" />
-                </button>
               </div>
             )}
           </div>
@@ -255,40 +350,6 @@ export function ComparePanel({
           </Button>
         </div>
       </div>
-
-      {/* Tailwind sub-menu (rendered via portal-like fixed position) */}
-      {twSubOpen && (
-        <div
-          ref={twSubRef}
-          style={twSubStyle}
-          className="z-[60] max-h-60 w-40 overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
-          onMouseLeave={() => setTwSubOpen(false)}
-          onPointerDown={(e) => e.stopPropagation()}
-        >
-          {twPaletteNames.map((name) => {
-            const steps = twPalettes[name]
-            const midHex = steps['500'] ?? Object.values(steps)[5]
-            return (
-              <button
-                key={name}
-                type="button"
-                className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed hover:bg-accent hover:text-accent-foreground"
-                onClick={() => {
-                  onLoadTailwindPalette(steps, toPascalCase(name))
-                  setTwSubOpen(false)
-                  setAddOpen(false)
-                }}
-              >
-                <span
-                  className="size-3 rounded-full shrink-0 border border-border"
-                  style={{ backgroundColor: midHex }}
-                />
-                {toPascalCase(name)}
-              </button>
-            )
-          })}
-        </div>
-      )}
 
       {/* Scrollable body */}
       <div className="flex-1 overflow-y-auto min-h-0">

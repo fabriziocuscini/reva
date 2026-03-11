@@ -3,6 +3,7 @@ import { ChromaPanel } from '@/components/chroma-panel'
 import { ColorPickerInput } from '@/components/color-picker-input'
 import { ComparePanel, type DockSide } from '@/components/compare-panel'
 import { CopyBlock } from '@/components/copy-block'
+import { DockedPaletteStrip } from '@/components/docked-palette-strip'
 import { HuePanel } from '@/components/hue-panel'
 import { LightnessPanel } from '@/components/lightness-panel'
 import { PaletteStrip } from '@/components/palette-strip'
@@ -22,8 +23,18 @@ import type { PalettePreset } from '@/lib/api'
 import { fetchPalettes } from '@/lib/api'
 import { DEFAULT_PARAMS, DISTRIBUTION_PARAM } from '@/lib/constants'
 import type { Preset } from '@/lib/types'
-import { cn } from '@/lib/utils'
-import { Check, LoaderCircle, Moon, RotateCcw, Save, Sun } from 'lucide-react'
+import {
+  ArrowDown,
+  ArrowUp,
+  Check,
+  LoaderCircle,
+  Moon,
+  PanelRightOpen,
+  RotateCcw,
+  Save,
+  Sun,
+  X,
+} from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 /** Convert API response to the Preset shape used by usePalette */
@@ -107,15 +118,16 @@ function PaletteEditor({
   const [benchmarkHexes, setBenchmarkHexes] = useState<Map<number, string>>(new Map())
   const [dockSide, setDockSide] = useState<DockSide>(null)
   const [dragOverZone, setDragOverZone] = useState<'left' | 'right' | null>(null)
+  const [paletteDocked, setPaletteDocked] = useState(false)
+  const [paletteSortAsc, setPaletteSortAsc] = useState(true)
+  const [paletteShowAll, setPaletteShowAll] = useState(true)
   const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const PANEL_WIDTH = 288 // w-72 = 18rem = 288px
   const DROP_ZONE_WIDTH = PANEL_WIDTH
 
   const handlePanelDragMove = useCallback((pos: { clientX: number }) => {
-    if (pos.clientX < DROP_ZONE_WIDTH) {
-      setDragOverZone('left')
-    } else if (pos.clientX > window.innerWidth - DROP_ZONE_WIDTH) {
+    if (pos.clientX > window.innerWidth - DROP_ZONE_WIDTH) {
       setDragOverZone('right')
     } else {
       setDragOverZone(null)
@@ -228,8 +240,19 @@ function PaletteEditor({
 
   const handleLoadTailwindPalette = useCallback(
     (twSteps: Record<string, string>, _displayName: string) => {
-      const newSteps = new Set<number>(compareSteps)
-      const newBenchmarks = new Map(benchmarkHexes)
+      const twStepNumbers = new Set(Object.keys(twSteps).map(Number))
+
+      // Keep only steps that exist in the Tailwind palette
+      const newSteps = new Set<number>()
+      const newBenchmarks = new Map<number, string>()
+
+      for (const step of compareSteps) {
+        if (twStepNumbers.has(step)) {
+          newSteps.add(step)
+          const existing = benchmarkHexes.get(step)
+          if (existing) newBenchmarks.set(step, existing)
+        }
+      }
 
       for (const [stepStr, hex] of Object.entries(twSteps)) {
         const step = Number(stepStr)
@@ -335,6 +358,10 @@ function PaletteEditor({
       onBenchmarkChange={handleBenchmarkChange}
       onRemoveStep={handleRemoveCompareStep}
       onLoadTailwindPalette={handleLoadTailwindPalette}
+      onClearEntries={() => {
+        setCompareSteps(new Set())
+        setBenchmarkHexes(new Map())
+      }}
       onClose={() => {
         setComparePanelOpen(false)
         setCompareSteps(new Set())
@@ -348,8 +375,115 @@ function PaletteEditor({
   return (
     <TooltipProvider>
       <div className="flex min-h-screen">
-        {/* Docked left */}
-        {comparePanelOpen && dockSide === 'left' && comparePanelNode}
+        {/* Palette docked left */}
+        {paletteDocked && validHex && palette.length > 0 && (
+          <div className="w-80 shrink-0 h-screen sticky top-0 border-r border-border overflow-y-auto bg-card flex flex-col">
+            <div className="flex items-center justify-between px-3 py-2 shrink-0">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground select-none">
+                Palette
+              </span>
+              <div className="flex items-center gap-0.5">
+                {isModified && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="icon-sm" onClick={resetParams}>
+                        <RotateCcw className="size-3" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Reset all parameters</TooltipContent>
+                  </Tooltip>
+                )}
+                {isCustomHex ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={() => setSaveDialogOpen(true)}
+                      >
+                        <Save className="size-3" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Save as…</TooltipContent>
+                  </Tooltip>
+                ) : (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={handleSave}
+                        disabled={!hasUnsavedChanges || isSaving}
+                      >
+                        {isSaving ? (
+                          <LoaderCircle className="size-3 animate-spin" />
+                        ) : savedFlash ? (
+                          <Check className="size-3" />
+                        ) : (
+                          <Save className="size-3" />
+                        )}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>{savedFlash ? 'Saved!' : 'Save palette'}</TooltipContent>
+                  </Tooltip>
+                )}
+                <Switch
+                  checked={paletteShowAll}
+                  onCheckedChange={setPaletteShowAll}
+                  title={paletteShowAll ? 'All steps (19)' : 'Tailwind-compatible (11)'}
+                />
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={() => setPaletteSortAsc((v) => !v)}
+                  title={paletteSortAsc ? 'Sort descending' : 'Sort ascending'}
+                >
+                  {paletteSortAsc ? <ArrowUp /> : <ArrowDown />}
+                  <span className="sr-only">
+                    {paletteSortAsc ? 'Sort descending' : 'Sort ascending'}
+                  </span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={() => setPaletteDocked(false)}
+                  className="shrink-0"
+                >
+                  <X />
+                  <span className="sr-only">Close</span>
+                </Button>
+              </div>
+            </div>
+            <div className="px-3 shrink-0">
+              <div
+                className="mt-3 mb-4 transition-opacity duration-150"
+                style={{ opacity: isDiverged ? 0.5 : 1 }}
+                onDoubleClick={() => updateDistribution(DISTRIBUTION_PARAM.default)}
+              >
+                <Slider
+                  value={[params.dist_ease]}
+                  onValueChange={([v]) => updateDistribution(v)}
+                  min={DISTRIBUTION_PARAM.min}
+                  max={DISTRIBUTION_PARAM.max}
+                  step={DISTRIBUTION_PARAM.step}
+                />
+              </div>
+            </div>
+            <div className="px-3 pb-3 flex-1 overflow-y-auto min-h-0">
+              <DockedPaletteStrip
+                palette={
+                  paletteShowAll
+                    ? palette
+                    : palette.filter((s) => s.step % 100 === 0 || s.step === 50 || s.step === 950)
+                }
+                paletteName={activePreset ?? 'Custom'}
+                sortAsc={paletteSortAsc}
+                compareSteps={compareSteps}
+                onCompareToggle={handleCompareToggle}
+              />
+            </div>
+          </div>
+        )}
 
         <div className="flex-1 min-w-0 bg-background">
           <div className="max-w-[1440px] mx-auto px-6 py-5 pb-10">
@@ -376,16 +510,20 @@ function PaletteEditor({
                   onSelectPreset={handleSelectPreset}
                 />
                 <div className="ml-auto flex items-center gap-3 shrink-0">
-                  <div className="flex items-center gap-1.5">
-                    <Label htmlFor="show-alpha" className="text-[10px] text-muted-foreground">
-                      Show alpha
-                    </Label>
-                    <Switch id="show-alpha" checked={showAlpha} onCheckedChange={setShowAlpha} />
-                  </div>
-                  <TabsList>
-                    <TabsTrigger value="palette">Palette</TabsTrigger>
-                    <TabsTrigger value="gradient">Gradient</TabsTrigger>
-                  </TabsList>
+                  {!paletteDocked && (
+                    <div className="flex items-center gap-1.5">
+                      <Label htmlFor="show-alpha" className="text-[10px] text-muted-foreground">
+                        Show alpha
+                      </Label>
+                      <Switch id="show-alpha" checked={showAlpha} onCheckedChange={setShowAlpha} />
+                    </div>
+                  )}
+                  {!paletteDocked && (
+                    <TabsList>
+                      <TabsTrigger value="palette">Palette</TabsTrigger>
+                      <TabsTrigger value="gradient">Gradient</TabsTrigger>
+                    </TabsList>
+                  )}
                   <ColorPickerInput value={midpointHex} onChange={setCustomHex} />
                 </div>
               </div>
@@ -394,99 +532,116 @@ function PaletteEditor({
               {validHex && palette.length > 0 && (
                 <div className="flex flex-col gap-4 min-w-0">
                   {/* Palette strip */}
-                  <Card>
-                    <CardHeader className="flex items-center justify-between">
-                      <CardTitle className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                        Generated palette
-                      </CardTitle>
-                      <div className="flex items-center gap-3">
-                        {isModified && (
+                  {!paletteDocked && (
+                    <Card>
+                      <CardHeader className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                onClick={resetParams}
+                                onClick={() => setPaletteDocked(true)}
                                 className="size-6"
                               >
-                                <RotateCcw className="size-3.5" />
+                                <PanelRightOpen className="size-3.5" />
                               </Button>
                             </TooltipTrigger>
-                            <TooltipContent>Reset all parameters</TooltipContent>
+                            <TooltipContent>Dock to sidebar</TooltipContent>
                           </Tooltip>
-                        )}
-                        {/* Save / Save As — scoped to active palette */}
-                        {isCustomHex ? (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setSaveDialogOpen(true)}
-                            className="gap-1.5"
-                          >
-                            <Save className="size-3.5" />
-                            Save as…
-                          </Button>
-                        ) : (
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={handleSave}
-                                disabled={!hasUnsavedChanges || isSaving}
-                                className="size-6"
-                              >
-                                {isSaving ? (
-                                  <LoaderCircle className="size-3.5 animate-spin" />
-                                ) : savedFlash ? (
-                                  <Check className="size-3.5" />
-                                ) : (
-                                  <Save className="size-3.5" />
-                                )}
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              {savedFlash ? 'Saved!' : 'Save palette'}
-                            </TooltipContent>
-                          </Tooltip>
-                        )}
-                        <div
-                          className="w-32 transition-opacity duration-150"
-                          style={{ opacity: isDiverged ? 0.5 : 1 }}
-                          onDoubleClick={() => updateDistribution(DISTRIBUTION_PARAM.default)}
-                        >
-                          <Slider
-                            value={[params.dist_ease]}
-                            onValueChange={([v]) => updateDistribution(v)}
-                            min={DISTRIBUTION_PARAM.min}
-                            max={DISTRIBUTION_PARAM.max}
-                            step={DISTRIBUTION_PARAM.step}
-                          />
+                          <CardTitle className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                            Generated palette
+                          </CardTitle>
                         </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      {showAlpha && <AlphaStrip midpointHex={midpointHex} />}
-                      <TabsContent value="palette" className="mt-0">
-                        <PaletteStrip
-                          palette={palette}
-                          showLabels={false}
-                          roundedTop={!showAlpha}
-                          compareSteps={compareSteps}
-                          onCompareToggle={handleCompareToggle}
-                        />
-                      </TabsContent>
-                      <TabsContent value="gradient" className="mt-0">
-                        <div
-                          className={`h-10 md:h-12 lg:h-16 ${showAlpha ? 'rounded-b-lg' : 'rounded-lg'}`}
-                          style={{
-                            background: `linear-gradient(to right, ${palette.map((p) => p.hex).join(', ')})`,
-                          }}
-                        />
-                      </TabsContent>
-                      <PaletteStrip palette={palette} labelsOnly />
-                    </CardContent>
-                  </Card>
+                        <div className="flex items-center gap-3">
+                          {isModified && (
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={resetParams}
+                                  className="size-6"
+                                >
+                                  <RotateCcw className="size-3.5" />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>Reset all parameters</TooltipContent>
+                            </Tooltip>
+                          )}
+                          {/* Save / Save As — scoped to active palette */}
+                          {isCustomHex ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setSaveDialogOpen(true)}
+                              className="gap-1.5"
+                            >
+                              <Save className="size-3.5" />
+                              Save as…
+                            </Button>
+                          ) : (
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={handleSave}
+                                  disabled={!hasUnsavedChanges || isSaving}
+                                  className="size-6"
+                                >
+                                  {isSaving ? (
+                                    <LoaderCircle className="size-3.5 animate-spin" />
+                                  ) : savedFlash ? (
+                                    <Check className="size-3.5" />
+                                  ) : (
+                                    <Save className="size-3.5" />
+                                  )}
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                {savedFlash ? 'Saved!' : 'Save palette'}
+                              </TooltipContent>
+                            </Tooltip>
+                          )}
+                          <div
+                            className="w-32 transition-opacity duration-150"
+                            style={{ opacity: isDiverged ? 0.5 : 1 }}
+                            onDoubleClick={() => updateDistribution(DISTRIBUTION_PARAM.default)}
+                          >
+                            <Slider
+                              value={[params.dist_ease]}
+                              onValueChange={([v]) => updateDistribution(v)}
+                              min={DISTRIBUTION_PARAM.min}
+                              max={DISTRIBUTION_PARAM.max}
+                              step={DISTRIBUTION_PARAM.step}
+                            />
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        {showAlpha && <AlphaStrip midpointHex={midpointHex} />}
+                        <TabsContent value="palette" className="mt-0">
+                          <PaletteStrip
+                            palette={palette}
+                            showLabels={false}
+                            roundedTop={!showAlpha}
+                            compareSteps={compareSteps}
+                            onCompareToggle={handleCompareToggle}
+                          />
+                        </TabsContent>
+                        <TabsContent value="gradient" className="mt-0">
+                          <div
+                            className={`h-10 md:h-12 lg:h-16 ${showAlpha ? 'rounded-b-lg' : 'rounded-lg'}`}
+                            style={{
+                              background: `linear-gradient(to right, ${palette.map((p) => p.hex).join(', ')})`,
+                            }}
+                          />
+                        </TabsContent>
+                        <PaletteStrip palette={palette} labelsOnly />
+                      </CardContent>
+                    </Card>
+                  )}
 
                   {/* Lightness panel — sliders + chart */}
                   <LightnessPanel
@@ -541,28 +696,14 @@ function PaletteEditor({
       {/* Floating panel (not docked) */}
       {comparePanelOpen && dockSide === null && comparePanelNode}
 
-      {/* Drop zone overlays — visible only while dragging the panel */}
-      {dragOverZone !== null && (
-        <>
-          <div
-            className={cn(
-              'fixed inset-y-0 left-0 z-40 pointer-events-none transition-opacity duration-150',
-              dragOverZone === 'left' ? 'opacity-100' : 'opacity-0',
-            )}
-            style={{ width: DROP_ZONE_WIDTH }}
-          >
-            <div className="h-full m-2 rounded-md bg-foreground/5" />
-          </div>
-          <div
-            className={cn(
-              'fixed inset-y-0 right-0 z-40 pointer-events-none transition-opacity duration-150',
-              dragOverZone === 'right' ? 'opacity-100' : 'opacity-0',
-            )}
-            style={{ width: DROP_ZONE_WIDTH }}
-          >
-            <div className="h-full m-2 rounded-md bg-foreground/5" />
-          </div>
-        </>
+      {/* Drop zone overlay — right side only */}
+      {dragOverZone === 'right' && (
+        <div
+          className="fixed inset-y-0 right-0 z-40 pointer-events-none opacity-100 transition-opacity duration-150"
+          style={{ width: DROP_ZONE_WIDTH }}
+        >
+          <div className="h-full m-2 rounded-md bg-foreground/5" />
+        </div>
       )}
 
       {/* Save As dialog */}
